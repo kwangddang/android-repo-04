@@ -1,10 +1,20 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
 }
 
 android {
     compileSdk 32
+
+    viewBinding{
+        enabled = true
+    }
+
+    dataBinding{
+        enabled = true
+    }
 
     defaultConfig {
         applicationId "com.example.android_repo_04"
@@ -32,6 +42,18 @@ android {
 }
 
 dependencies {
+
+    //Glide
+    implementation "com.github.bumptech.glide:glide:${glide_version}"
+    annotationProcessor "com.github.bumptech.glide:compiler:${glide_version}"
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    //okhttp3
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
