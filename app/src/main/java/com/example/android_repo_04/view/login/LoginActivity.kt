@@ -12,6 +12,7 @@ import com.example.android_repo_04.BuildConfig
 import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubRepository
 import com.example.android_repo_04.api.RetrofitFactory
+import com.example.android_repo_04.data.UserToken
 import com.example.android_repo_04.databinding.ActivityLoginBinding
 import com.example.android_repo_04.viewmodel.LoginViewModel
 import com.example.android_repo_04.viewmodel.LoginViewModelFactory
@@ -30,7 +31,7 @@ class LoginActivity : AppCompatActivity() {
 
     private val tokenObserver: (String) -> Unit = { token ->
         if (token != "") {
-
+            UserToken.accessToken = token
         }
     }
 
