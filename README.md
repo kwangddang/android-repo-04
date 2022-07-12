@@ -37,3 +37,9 @@
 ----------
 - 브랜치 이름
   - feat / 화면이름
+
+# 구조
+- LoginActivity
+- MainActivity
+- ProfileActivity
+- SearchActivity
