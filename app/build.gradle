@@ -20,7 +20,10 @@ android {
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
     def client_id = properties.getProperty("CLIENT_ID")
     def client_secret = properties.getProperty("CLIENT_SECRET")
-
+    def login_url = properties.getProperty("LOGIN_URL")
+    def base_url = properties.getProperty("BASE_URL")
+    def host = properties.getProperty("HOST")
+    def scheme = properties.getProperty("SCHEME")
     defaultConfig {
         applicationId "com.example.android_repo_04"
         minSdk 21
@@ -31,6 +34,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", 'CLIENT_ID', client_id
         buildConfigField "String", 'CLIENT_SECRET', client_secret
+        buildConfigField "String", 'LOGIN_URL', login_url
+        buildConfigField "String", 'BASE_URL', base_url
+        manifestPlaceholders = [HOST: host]
     }
 
     buildTypes {

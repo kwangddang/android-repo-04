@@ -25,6 +25,17 @@
         <activity
             android:name=".view.MainActivity"
             android:exported="true" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="${HOST}"
+                    android:scheme="android-repo-04" />
+            </intent-filter>
         </activity>
     </application>
 
