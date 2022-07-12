@@ -6,7 +6,7 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Query
 
-interface GitHubService {
+interface GitHubLoginService {
 
     @POST("access_token")
     suspend fun requestToken(
