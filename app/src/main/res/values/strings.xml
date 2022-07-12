@@ -8,4 +8,6 @@
     <string name="main_title">What\'s In My GitHub</string>
     <string name="main_issue">Issue</string>
     <string name="main_notification">Notification</string>
+
+    <string name="code">code</string>
 </resources>

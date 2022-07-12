@@ -1,6 +1,7 @@
 package com.example.android_repo_04.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -10,24 +11,29 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel(private val gitHubRepository: GitHubRepository) : ViewModel() {
 
-    val token = MutableLiveData("")
+    private val _token = MutableLiveData("")
+    val token: LiveData<String> get() = _token
 
     fun requestToken(code: String) {
         CoroutineScope(Dispatchers.IO).launch {
-            GitHubRepository().requestToken(BuildConfig.CLIENT_ID, BuildConfig.CLIENT_SECRET, code) { reponse ->
-                token.postValue(reponse.body()?.accessToken)
+            gitHubRepository.requestToken(BuildConfig.CLIENT_ID, BuildConfig.CLIENT_SECRET, code) { response ->
+                if(response.isSuccessful){
+                    _token.postValue(response.body()?.accessToken)
+                } else{
+                    //TODO 에러처리
+                }
             }
         }
     }
 }
 
-class LoginViewModelFactory: ViewModelProvider.Factory {
+class LoginViewModelFactory(private val gitHubRepository: GitHubRepository): ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel() as T
+            return LoginViewModel(gitHubRepository) as T
         }
-        throw IllegalAccessException("Unkown Viewmodel Class")
+        throw IllegalAccessException()
     }
 }

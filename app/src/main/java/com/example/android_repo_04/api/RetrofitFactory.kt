@@ -9,19 +9,30 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitFactory {
 
-    fun createLoginService(): GitHubLoginService =
-        Retrofit.Builder()
-            .baseUrl(BuildConfig.LOGIN_URL)
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
-            .client(OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().apply { this.level = HttpLoggingInterceptor.Level.BODY }).build())
-            .build()
-            .create(GitHubLoginService::class.java)
+    var loginService: GitHubLoginService? = null
+    var apiService: GitHubApiService? = null
 
-    fun createApiService(): GitHubApiService =
-        Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
-            .client(OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().apply { this.level = HttpLoggingInterceptor.Level.BODY }).build())
-            .build()
-            .create(GitHubApiService::class.java)
+    fun createLoginService(): GitHubLoginService? {
+        if(loginService == null){
+            loginService = Retrofit.Builder()
+                .baseUrl(BuildConfig.LOGIN_URL)
+                .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
+                .client(OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().apply { this.level = HttpLoggingInterceptor.Level.BODY }).build())
+                .build()
+                .create(GitHubLoginService::class.java)
+        }
+        return loginService
+    }
+
+    fun createApiService(): GitHubApiService?{
+        if(apiService == null) {
+            apiService = Retrofit.Builder()
+                .baseUrl(BuildConfig.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
+                .client(OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().apply { this.level = HttpLoggingInterceptor.Level.BODY }).build())
+                .build()
+                .create(GitHubApiService::class.java)
+        }
+        return apiService
+    }
 }
