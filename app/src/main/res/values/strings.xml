@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">android-repo-04</string>
+    <string name="login_title">What\'s In\nMy GitHub</string>
+    <string name="login_login">GitHub 로그인</string>
+
+    <string name="login_client_id">authorize\?client_id\=</string>
+    <string name="code">code</string>
 </resources>
