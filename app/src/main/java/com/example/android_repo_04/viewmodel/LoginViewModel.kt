@@ -1,6 +1,7 @@
 package com.example.android_repo_04.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.android_repo_04.BuildConfig
@@ -10,10 +11,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
+
+    val token = MutableLiveData("")
+
     fun requestToken(code: String) {
         CoroutineScope(Dispatchers.IO).launch {
             GitHubRepository().requestToken(BuildConfig.CLIENT_ID, BuildConfig.CLIENT_SECRET, code) { reponse ->
-                Log.d("Test",reponse.body()?.accessToken.toString())
+                token.postValue(reponse.body()?.accessToken)
             }
         }
     }
