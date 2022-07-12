@@ -14,6 +14,7 @@ import com.example.android_repo_04.api.GitHubRepository
 import com.example.android_repo_04.api.RetrofitFactory
 import com.example.android_repo_04.data.UserToken
 import com.example.android_repo_04.databinding.ActivityLoginBinding
+import com.example.android_repo_04.view.main.MainActivity
 import com.example.android_repo_04.viewmodel.LoginViewModel
 import com.example.android_repo_04.viewmodel.LoginViewModelFactory
 import kotlinx.coroutines.delay
@@ -32,6 +33,7 @@ class LoginActivity : AppCompatActivity() {
     private val tokenObserver: (String) -> Unit = { token ->
         if (token != "") {
             UserToken.accessToken = token
+            startMainActivity()
         }
     }
 
@@ -62,5 +64,10 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setOnClickListeners(){
         binding.btnLoginLogin.setOnClickListener (btnLoginClickListener)
+    }
+
+    private fun startMainActivity(){
+        finishAffinity()
+        startActivity(Intent(this, MainActivity::class.java))
     }
 }
