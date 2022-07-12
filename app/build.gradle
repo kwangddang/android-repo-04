@@ -16,6 +16,11 @@ android {
         enabled = true
     }
 
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    def client_id = properties.getProperty("CLIENT_ID")
+    def client_secret = properties.getProperty("CLIENT_SECRET")
+
     defaultConfig {
         applicationId "com.example.android_repo_04"
         minSdk 21
@@ -24,6 +29,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", 'CLIENT_ID', client_id
+        buildConfigField "String", 'CLIENT_SECRET', client_secret
     }
 
     buildTypes {
