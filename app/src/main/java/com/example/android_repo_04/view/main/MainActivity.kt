@@ -1,4 +1,4 @@
-package com.example.android_repo_04.view
+package com.example.android_repo_04.view.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
