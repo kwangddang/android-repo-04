@@ -23,7 +23,6 @@ android {
     def login_url = properties.getProperty("LOGIN_URL")
     def base_url = properties.getProperty("BASE_URL")
     def host = properties.getProperty("HOST")
-    def scheme = properties.getProperty("SCHEME")
     defaultConfig {
         applicationId "com.example.android_repo_04"
         minSdk 21
