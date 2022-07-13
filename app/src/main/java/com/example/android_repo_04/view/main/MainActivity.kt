@@ -1,5 +1,6 @@
 package com.example.android_repo_04.view.main
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -9,6 +10,7 @@ import com.example.android_repo_04.R
 import com.example.android_repo_04.databinding.ActivityMainBinding
 import com.example.android_repo_04.view.main.issue.IssueFragment
 import com.example.android_repo_04.view.main.notification.NotificationFragment
+import com.example.android_repo_04.view.user.UserActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,6 +38,10 @@ class MainActivity : AppCompatActivity() {
         showNotificationFragment()
     }
 
+    private val imgProfileClickListener: (View) -> Unit = {
+        startActivity(Intent(this, UserActivity::class.java))
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +54,7 @@ class MainActivity : AppCompatActivity() {
     private fun setOnClickListeners(){
         binding.btnMainIssue.setOnClickListener(btnIssueClickListener)
         binding.btnMainNotification.setOnClickListener(btnNotificationClickListener)
+        binding.imgMainProfile.setOnClickListener(imgProfileClickListener)
     }
 
     private fun initFragmentManager() {
