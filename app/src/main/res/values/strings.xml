@@ -11,4 +11,7 @@
     <string name="main_notification">Notification</string>
 
     <string name="code">code</string>
+    <string name="profile_title">Profile</string>
+    <string name="profile_repository">Repositories</string>
+    <string name="profile_star">Starred</string>
 </resources>

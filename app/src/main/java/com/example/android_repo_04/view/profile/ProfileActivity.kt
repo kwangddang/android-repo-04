@@ -1,12 +1,12 @@
-package com.example.android_repo_04.view.user
+package com.example.android_repo_04.view.profile
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.android_repo_04.R
 
-class UserActivity : AppCompatActivity() {
+class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user)
+        setContentView(R.layout.activity_profile)
     }
 }
