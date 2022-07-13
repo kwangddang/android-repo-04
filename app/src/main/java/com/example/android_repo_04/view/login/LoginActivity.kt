@@ -4,23 +4,17 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.example.android_repo_04.BuildConfig
 import com.example.android_repo_04.R
-import com.example.android_repo_04.api.GitHubRepository
-import com.example.android_repo_04.api.RetrofitFactory
-import com.example.android_repo_04.data.UserToken
+import com.example.android_repo_04.api.GitHubLoginRepository
+import com.example.android_repo_04.data.db.UserToken
 import com.example.android_repo_04.databinding.ActivityLoginBinding
 import com.example.android_repo_04.view.main.MainActivity
 import com.example.android_repo_04.viewmodel.LoginViewModel
 import com.example.android_repo_04.viewmodel.LoginViewModelFactory
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
 
@@ -62,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initViewModel() {
         viewModel = ViewModelProvider(this,
-            LoginViewModelFactory(GitHubRepository.getGitInstance()!!)
+            LoginViewModelFactory(GitHubLoginRepository.getGitInstance()!!)
         )[LoginViewModel::class.java]
     }
 
