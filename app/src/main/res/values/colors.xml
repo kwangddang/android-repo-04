@@ -15,5 +15,6 @@
     <color name="yellow">#448CF6</color>
     <color name="purple">#C297FF</color>
 
+    <color name="ripple_effect">#40ffffff</color>
 
 </resources>
