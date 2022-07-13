@@ -9,6 +9,7 @@
         <entry key="app/src/main/res/drawable/btn_ripple_effect.xml" value="0.208" />
         <entry key="app/src/main/res/drawable/btn_round.xml" value="0.238" />
         <entry key="app/src/main/res/drawable/btn_round_ripple.xml" value="0.238" />
+        <entry key="app/src/main/res/drawable/btn_round_selected.xml" value="0.209" />
         <entry key="app/src/main/res/drawable/btn_round_unselected.xml" value="0.238" />
         <entry key="app/src/main/res/drawable/button_round.xml" value="0.196" />
         <entry key="app/src/main/res/drawable/gradient.xml" value="0.165" />
@@ -16,6 +17,8 @@
         <entry key="app/src/main/res/drawable/ic_star.xml" value="0.1065" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_issue.xml" value="0.3958333333333333" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.3958333333333333" />
       </map>
     </option>
   </component>
