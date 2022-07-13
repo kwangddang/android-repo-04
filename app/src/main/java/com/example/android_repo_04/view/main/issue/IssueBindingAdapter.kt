@@ -10,6 +10,7 @@ import java.util.*
 
 object IssueBindingAdapter {
 
+    @JvmStatic
     @BindingAdapter("issueState")
     fun setIssueState(view: ImageView, state: String){
         val drawableId = if(state == "open") {
@@ -19,16 +20,18 @@ object IssueBindingAdapter {
         }
         Glide.with(view.context)
             .load(drawableId)
+            .override(48, 48)
             .into(view)
     }
 
+    @JvmStatic
     @BindingAdapter("issueDate")
     fun setIssueDate(view: TextView, dateString: String){
         val fm = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX")
         val date = fm.parse(dateString)
         val today = Calendar.getInstance()
-        val diffMin: Long = (today.time.time - date.time) / 60000 + 539
-        val diffHour: Long = (today.time.time - date.time) / 3600000 + 9
+        val diffMin: Long = (today.time.time - date.time) / 60000
+        val diffHour: Long = (today.time.time - date.time) / 3600000
 
         if(diffHour < 1){
             view.text = "${diffMin}분 전"
