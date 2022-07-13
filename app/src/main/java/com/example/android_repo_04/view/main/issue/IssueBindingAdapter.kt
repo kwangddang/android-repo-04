@@ -22,7 +22,7 @@ object IssueBindingAdapter {
             .into(view)
     }
 
-    @BindingAdapter("issueData")
+    @BindingAdapter("issueDate")
     fun setIssueDate(view: TextView, dateString: String){
         val fm = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssX")
         val date = fm.parse(dateString)
