@@ -4,13 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import com.example.android_repo_04.R
 import com.example.android_repo_04.databinding.ActivityMainBinding
 import com.example.android_repo_04.view.main.issue.IssueFragment
 import com.example.android_repo_04.view.main.notification.NotificationFragment
-import com.example.android_repo_04.view.user.UserActivity
+import com.example.android_repo_04.view.profile.ProfileActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val imgProfileClickListener: (View) -> Unit = {
-        startActivity(Intent(this, UserActivity::class.java))
+        startActivity(Intent(this, ProfileActivity::class.java))
     }
 
 

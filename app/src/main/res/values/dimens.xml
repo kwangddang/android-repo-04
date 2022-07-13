@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="btn_radius">22dp</dimen>
+    <dimen name="navy_radius">22dp</dimen>
+    <dimen name="primary_radius">12dp</dimen>
 </resources>
