@@ -19,10 +19,10 @@ class LoginViewModel(private val gitHubRepository: GitHubRepository) : ViewModel
     fun requestToken(code: String) {
         CoroutineScope(Dispatchers.IO).launch {
             gitHubRepository.requestToken(BuildConfig.CLIENT_ID, BuildConfig.CLIENT_SECRET, code) { response ->
-                if(response.isSuccessful){
+                if (response.isSuccessful && response.body()?.accessToken != null) {
                     _token.postValue(response.body()?.accessToken)
-                } else{
-                    //TODO 에러처리
+                } else {
+                    _token.postValue("error")
                 }
             }
         }
