@@ -3,7 +3,8 @@
     <string name="login_title">What\'s In\nMy GitHub</string>
     <string name="login_login">GitHub 로그인</string>
 
-    <string name="login_client_id">authorize\?client_id\=</string>
+    <string name="login_path_auth">authorize</string>
+    <string name="login_query_scope">user,repo,notifications</string>
 
     <string name="main_title">What\'s In My GitHub</string>
     <string name="main_issue">Issue</string>

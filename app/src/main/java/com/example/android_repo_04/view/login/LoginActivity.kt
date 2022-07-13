@@ -1,6 +1,7 @@
 package com.example.android_repo_04.view.login
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -28,7 +29,12 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var viewModel: LoginViewModel
 
     private val btnLoginClickListener: (View) -> Unit = {
-        startActivity(Intent(Intent.ACTION_VIEW, "${BuildConfig.LOGIN_URL}${getString(R.string.login_client_id)}${BuildConfig.CLIENT_ID}".toUri()))
+        val loginUri = Uri.parse(BuildConfig.LOGIN_URL).buildUpon() // Login URL을 가진 Uri.Builder Nested 객체 생성
+            .appendPath(getString(R.string.login_path_auth))
+            .appendQueryParameter("client_id", BuildConfig.CLIENT_ID)
+            .appendQueryParameter("scope", getString(R.string.login_query_scope))
+            .build()
+        startActivity(Intent(Intent.ACTION_VIEW, loginUri))
     }
 
     private val tokenObserver: (String) -> Unit = { token ->
