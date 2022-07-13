@@ -1,4 +1,4 @@
-package com.example.android_repo_04.data
+package com.example.android_repo_04.data.dto.token
 
 import com.google.gson.annotations.SerializedName
 

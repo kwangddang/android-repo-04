@@ -1,6 +1,6 @@
 package com.example.android_repo_04.api
 
-import com.example.android_repo_04.data.AuthToken
+import com.example.android_repo_04.data.dto.token.AuthToken
 import retrofit2.Response
 import retrofit2.http.Header
 import retrofit2.http.POST
