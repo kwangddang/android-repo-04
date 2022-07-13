@@ -58,8 +58,13 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun getUserCode() {
-        if (intent.data != null)
+        if (intent.data != null) {
             viewModel.requestToken(intent.data?.getQueryParameter(getString(R.string.code))!!)
+            binding.apply {
+                progressLoginLogin.visibility = View.VISIBLE
+                btnLoginLogin.visibility = View.INVISIBLE
+            }
+        }
     }
 
     private fun setOnClickListeners(){
