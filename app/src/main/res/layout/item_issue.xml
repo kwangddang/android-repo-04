@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_item_issue_container"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/img_issue_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:src="@drawable/ic_issue_open"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/text_issue_repository"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/grey"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_marginStart="12dp"
+        app:layout_constraintStart_toEndOf="@id/img_issue_state"
+        app:layout_constraintEnd_toStartOf="@id/text_issue_date"
+        app:layout_constraintTop_toTopOf="@id/img_issue_state"
+        tools:text="sam/wahtsinmygithub #1"/>
+
+    <TextView
+        android:id="@+id/text_issue_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="1일 전"/>
+
+    <TextView
+        android:id="@+id/text_issue_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@id/text_issue_repository"
+        app:layout_constraintTop_toBottomOf="@id/text_issue_repository"
+        tools:textColor="@color/black"
+        tools:text="프로젝트 요구사항 및 참고자료"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
