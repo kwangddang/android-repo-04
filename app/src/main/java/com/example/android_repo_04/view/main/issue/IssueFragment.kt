@@ -36,6 +36,7 @@ class IssueFragment: Fragment() {
 
     private val spinnerItemSelectedListener = object: AdapterView.OnItemSelectedListener{
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            getSelectedIssues(position)
             spinnerAdapter.selectedPosition = position
         }
 
@@ -68,7 +69,7 @@ class IssueFragment: Fragment() {
         setSpinnerClickListener()
         setOnClickListener()
         observeData()
-        getIssues()
+        getIssues(OPEN)
     }
 
     private fun initViewModel() {
@@ -101,12 +102,28 @@ class IssueFragment: Fragment() {
         viewModel.issue.observe(viewLifecycleOwner, issueObserver)
     }
 
-    private fun getIssues() {
-        viewModel.requestIssues("token ${UserToken.accessToken}")
+    private fun getIssues(state: String) {
+        viewModel.requestIssues("token ${UserToken.accessToken}", state)
+    }
+
+    private fun getSelectedIssues(position: Int) {
+        if (spinnerAdapter.selectedPosition != position) {
+            when (position) {
+                0 -> getIssues(OPEN)
+                1 -> getIssues(CLOSED)
+                2 -> getIssues(ALL)
+            }
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object{
+        const val OPEN = "open"
+        const val CLOSED = "closed"
+        const val ALL = "all"
     }
 }
