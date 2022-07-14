@@ -12,18 +12,14 @@ import kotlinx.coroutines.launch
 
 class NotificationViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewModel() {
 
-    private val _notification = ListLiveData<Notification>()
-    val notification: ListLiveData<Notification> get() = _notification
-
-    private val _removed = MutableLiveData(-2)
-    val removed: MutableLiveData<Int> get() = _removed
+    private val _notification = MutableLiveData<MutableList<Notification>>()
+    val notification: LiveData<MutableList<Notification>> get() = _notification
 
     fun requestNotifications(token: String) {
         CoroutineScope(Dispatchers.IO).launch {
             gitHubApiRepository.requestNotifications(token) {
                 if (it.isSuccessful) {
-                    _notification.clear()
-                    _notification.addAll(it.body()!!.toMutableList())
+                    _notification.postValue(it.body()!!.toMutableList())
                 } else {
 
                 }
@@ -31,21 +27,15 @@ class NotificationViewModel(private val gitHubApiRepository: GitHubApiRepository
         }
     }
 
-    fun removeNotification(position: Int, token: String) {
-        if (token == "") {
-            _removed.postValue(-1)
-            return
-        }
-
-        CoroutineScope(Dispatchers.IO).launch {
+    fun requestToReadNotification(position: Int, token: String, completed: () -> Unit) {
+        CoroutineScope(Dispatchers.Main).launch {
             gitHubApiRepository.requestToReadNotification(
-                notification.value!![position].id,
+                _notification.value!![position].id,
                 token
             ) {
                 if (it.isSuccessful) {
-                    _removed.postValue(position)
+                    completed()
                 } else {
-
                 }
             }
         }
@@ -58,33 +48,5 @@ class NotificationViewModelFactory(private val gitHubApiRepository: GitHubApiRep
             return NotificationViewModel(gitHubApiRepository) as T
         }
         throw IllegalAccessException()
-    }
-}
-
-class ListLiveData<T>: MutableLiveData<MutableList<T>>() {
-    private val temp = mutableListOf<T>()
-
-    init {
-        postValue(temp)
-    }
-
-    fun add(item: T) {
-        temp.add(item)
-        postValue(temp)
-    }
-
-    fun addAll(items: List<T>) {
-        temp.addAll(items)
-        postValue(temp)
-    }
-
-    fun remove(item: T) {
-        temp.remove(item)
-        postValue(temp)
-    }
-
-    fun clear() {
-        temp.clear()
-        postValue(temp)
     }
 }
