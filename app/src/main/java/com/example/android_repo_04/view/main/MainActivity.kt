@@ -3,9 +3,11 @@ package com.example.android_repo_04.view.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.FragmentManager
 import com.example.android_repo_04.R
+import com.example.android_repo_04.data.db.UserToken
 import com.example.android_repo_04.databinding.ActivityMainBinding
 import com.example.android_repo_04.view.main.issue.IssueFragment
 import com.example.android_repo_04.view.main.notification.NotificationFragment
