@@ -15,12 +15,11 @@
         android:paddingStart="24dp"
         android:paddingTop="24dp">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_notification_profile"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:background="@drawable/background_round_navy"
-            android:src="@drawable/ic_user"
+            android:background="@drawable/ic_user"
             bind:notificationOwnerAvatar="@{notification.repository.owner.avatarUrl}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
@@ -37,21 +36,21 @@
 
         <TextView
             android:id="@+id/text_notification_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@{notification.subject.title}"
             android:textColor="@color/white"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="24dp"
             app:layout_constraintTop_toBottomOf="@id/text_notification_repo"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/text_notification_repo"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintEnd_toStartOf="@id/text_notification_update"/>
 
         <TextView
             android:id="@+id/text_notification_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1일 전"
             android:textColor="@color/grey"
             android:layout_marginEnd="24dp"
             bind:notificationDate="@{notification.updatedAt}"
@@ -63,9 +62,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/background_round_white"
-            android:text="1"
             android:textColor="@color/primary"
             android:padding="8dp"
+            android:layout_marginTop="4dp"
             bind:notificationComments="@{notification.repository.full_name}"
             app:layout_constraintTop_toBottomOf="@id/text_notification_update"
             app:layout_constraintEnd_toEndOf="@id/text_notification_update"/>

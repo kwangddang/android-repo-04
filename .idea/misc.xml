@@ -6,6 +6,7 @@
         <entry key="app/src/main/res/drawable/aa.xml" value="0.3065" />
         <entry key="app/src/main/res/drawable/background.xml" value="0.25" />
         <entry key="app/src/main/res/drawable/background_gradient.xml" value="0.375" />
+        <entry key="app/src/main/res/drawable/background_round_white.xml" value="0.1025" />
         <entry key="app/src/main/res/drawable/btn_ripple_effect.xml" value="0.208" />
         <entry key="app/src/main/res/drawable/btn_round.xml" value="0.238" />
         <entry key="app/src/main/res/drawable/btn_round_ripple.xml" value="0.238" />
@@ -18,12 +19,13 @@
         <entry key="app/src/main/res/drawable/icon_ripple_effect.xml" value="0.209" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.22395833333333334" />
         <entry key="app/src/main/res/layout/activity_user.xml" value="0.2015625" />
         <entry key="app/src/main/res/layout/fragment_issue.xml" value="0.3958333333333333" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.3958333333333333" />
         <entry key="app/src/main/res/layout/fragment_notification.xml" value="0.18795289855072464" />
         <entry key="app/src/main/res/layout/item_issue.xml" value="0.234375" />
-        <entry key="app/src/main/res/layout/item_notification.xml" value="0.234375" />
+        <entry key="app/src/main/res/layout/item_notification.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_spinner.xml" value="0.234375" />
       </map>
     </option>
