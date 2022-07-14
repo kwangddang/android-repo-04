@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.android_repo_04.api.GitHubApiRepository
-import com.example.android_repo_04.data.dto.notificaiton.Notification
+import com.example.android_repo_04.data.dto.notification.Notification
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
