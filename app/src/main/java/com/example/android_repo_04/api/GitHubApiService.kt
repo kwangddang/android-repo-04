@@ -1,6 +1,7 @@
 package com.example.android_repo_04.api
 
 import com.example.android_repo_04.data.dto.issue.Issue
+import com.example.android_repo_04.data.dto.notification.Comment
 import com.example.android_repo_04.data.dto.notification.Notification
 import com.example.android_repo_04.data.dto.profile.Star
 import com.example.android_repo_04.data.dto.profile.User
@@ -39,5 +40,5 @@ interface GitHubApiService {
         @Path("owner") owner: String,
         @Path("repo") repo: String,
         @Header("Accept") header: String = "application/json"
-    ): Response<List<String>>
+    ): Response<List<Comment>>
 }

@@ -48,7 +48,7 @@ object NotificationBindingAdapter {
         CoroutineScope(Dispatchers.Main).launch {
             val split = fullName.split('/')
             GitHubApiRepository().requestCommentsCount(split[0], split[1]) {
-                view.text = it.toString()
+                view.text = it.body()!!.size.toString()
             }
         }
     }

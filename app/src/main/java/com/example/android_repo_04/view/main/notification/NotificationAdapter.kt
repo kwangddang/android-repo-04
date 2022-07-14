@@ -8,7 +8,7 @@ import com.example.android_repo_04.databinding.ItemNotificationBinding
 
 class NotificationAdapter: RecyclerView.Adapter<NotificationsViewHolder>() {
 
-    var notifications = listOf<Notification>()
+    var notifications = mutableListOf<Notification>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotificationsViewHolder {
         return NotificationsViewHolder(

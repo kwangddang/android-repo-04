@@ -1,6 +1,7 @@
 package com.example.android_repo_04.api
 
 import com.example.android_repo_04.data.dto.issue.Issue
+import com.example.android_repo_04.data.dto.notification.Comment
 import com.example.android_repo_04.data.dto.notification.Notification
 import com.example.android_repo_04.data.dto.profile.Star
 import com.example.android_repo_04.data.dto.profile.User
@@ -25,10 +26,8 @@ class GitHubApiRepository {
         callback(RetrofitFactory.createApiService()!!.requestNotifications(token = token))
     }
 
-    suspend fun requestCommentsCount(owner: String, repo: String, callback: (Int) -> Unit) {
-        val response = RetrofitFactory.createApiService()!!.requestComments(owner, repo)
-        val comments = response.body()
-        callback(comments!!.size)
+    suspend fun requestCommentsCount(owner: String, repo: String, callback: (Response<List<Comment>>) -> Unit) {
+        callback(RetrofitFactory.createApiService()!!.requestComments(owner, repo))
     }
 
     companion object{
