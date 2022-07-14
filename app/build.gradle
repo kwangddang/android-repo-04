@@ -55,6 +55,9 @@ android {
 
 dependencies {
 
+    //CircleImageView
+    implementation "de.hdodenhof:circleimageview:${circle_imageview_version}"
+
     //KotPref
     implementation "com.chibatching.kotpref:kotpref:${kotpref_version}"
 

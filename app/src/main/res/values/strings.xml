@@ -15,4 +15,7 @@
     <string name="profile_repository">Repositories</string>
     <string name="profile_star">Starred</string>
     <string name="issue_filter">Filter</string>
+    <string name="profile_follower">Followers</string>
+    <string name="profile_point">・</string>
+    <string name="profile_following">Following</string>
 </resources>
