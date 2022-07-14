@@ -1,8 +1,11 @@
 package com.example.android_repo_04.api
 
-class GitHubApiRepository {
-    suspend fun getIssues(token: String, state: String = "open", filter: String = "all"){
+import com.example.android_repo_04.data.dto.issue.Issue
+import retrofit2.Response
 
+class GitHubApiRepository {
+    suspend fun requestIssues(token: String, state: String, filter: String, callback: (Response<Issue>) -> Unit){
+        callback(RetrofitFactory.createApiService()!!.requestIssues(token,state,filter))
     }
 
     companion object{

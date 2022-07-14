@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface GitHubApiService {
     @GET("issues")
-    suspend fun getIssues(
+    suspend fun requestIssues(
         @Header("Authorization") token: String,
         @Query("state") state: String,
         @Query("filter") filter: String
