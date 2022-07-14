@@ -1,7 +1,7 @@
 package com.example.android_repo_04.api
 
 import com.example.android_repo_04.data.dto.issue.Issue
-import com.example.android_repo_04.data.dto.notificaiton.Notification
+import com.example.android_repo_04.data.dto.notification.Notification
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
