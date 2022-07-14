@@ -60,7 +60,7 @@ class IssueFragment: Fragment() {
     }
 
     private fun getIssues() {
-        viewModel.getIssues("token ${UserToken.accessToken}")
+        viewModel.requestIssues("token ${UserToken.accessToken}")
     }
 
     override fun onDestroyView() {
