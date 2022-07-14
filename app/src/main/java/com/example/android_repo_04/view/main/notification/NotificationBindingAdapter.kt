@@ -1,6 +1,5 @@
 package com.example.android_repo_04.view.main.notification
 
-import android.graphics.Bitmap
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -8,8 +7,6 @@ import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.utils.dateToFormattedString
 import com.example.android_repo_04.utils.urlToBitmap
 import kotlinx.coroutines.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 object NotificationBindingAdapter {
 
