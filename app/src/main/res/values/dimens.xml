@@ -3,4 +3,5 @@
     <dimen name="btn_radius">22dp</dimen>
     <dimen name="navy_radius">22dp</dimen>
     <dimen name="primary_radius">12dp</dimen>
+    <dimen name="white_radius">8dp</dimen>
 </resources>
