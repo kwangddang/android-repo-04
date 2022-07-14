@@ -13,6 +13,12 @@ class GitHubApiRepository {
         callback(RetrofitFactory.createApiService()!!.requestNotifications(token = token))
     }
 
+    suspend fun requestCommentsCount(owner: String, repo: String, callback: (Int) -> Unit) {
+        val response = RetrofitFactory.createApiService()!!.requestComments(owner, repo)
+        val comments = response.body()
+        callback(comments!!.size)
+    }
+
     companion object{
         private var instance: GitHubApiRepository? = null
         fun getGitInstance(): GitHubApiRepository? {

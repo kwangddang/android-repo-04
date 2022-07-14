@@ -3,7 +3,7 @@ package com.example.android_repo_04.view.main.notification
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android_repo_04.data.dto.notificaiton.Notification
+import com.example.android_repo_04.data.dto.notification.Notification
 import com.example.android_repo_04.databinding.ItemNotificationBinding
 
 class NotificationAdapter: RecyclerView.Adapter<NotificationsViewHolder>() {
@@ -29,6 +29,6 @@ class NotificationAdapter: RecyclerView.Adapter<NotificationsViewHolder>() {
 
 class NotificationsViewHolder(private val binding: ItemNotificationBinding): RecyclerView.ViewHolder(binding.root){
     fun bind(notification: Notification){
-        binding.imgNotificationProfile
+        binding.notification = notification
     }
 }
