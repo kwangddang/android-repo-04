@@ -6,10 +6,7 @@ import com.example.android_repo_04.data.dto.notification.Notification
 import com.example.android_repo_04.data.dto.profile.Star
 import com.example.android_repo_04.data.dto.profile.User
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface GitHubApiService {
     @GET("issues")
@@ -41,4 +38,11 @@ interface GitHubApiService {
         @Path("repo") repo: String,
         @Header("Accept") header: String = "application/json"
     ): Response<List<Comment>>
+
+    @PATCH("notifications/threads/{id}")
+    suspend fun requestToReadNotification(
+        @Path("id") id: String,
+        @Header("Accept") header: String = "application/json",
+        @Header("Authorization") token: String
+    ): Response<String>
 }

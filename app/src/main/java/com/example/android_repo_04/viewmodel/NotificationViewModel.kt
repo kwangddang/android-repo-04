@@ -31,8 +31,24 @@ class NotificationViewModel(private val gitHubApiRepository: GitHubApiRepository
         }
     }
 
-    fun removeNotification(position: Int) {
-        _removed.postValue(position)
+    fun removeNotification(position: Int, token: String) {
+        if (token == "") {
+            _removed.postValue(-1)
+            return
+        }
+
+        CoroutineScope(Dispatchers.IO).launch {
+            gitHubApiRepository.requestToReadNotification(
+                notification.value!![position].id,
+                token
+            ) {
+                if (it.isSuccessful) {
+                    _removed.postValue(position)
+                } else {
+
+                }
+            }
+        }
     }
 }
 

@@ -75,7 +75,7 @@ class NotificationFragment: Fragment() {
     }
 
     private fun getNotifications() {
-        viewModel.removeNotification(-1)
+        viewModel.removeNotification(-1, "")
     }
 
     private fun setItemTouchHelper() {
@@ -91,7 +91,7 @@ class NotificationFragment: Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 if (direction == ItemTouchHelper.LEFT) {
-                    viewModel.removeNotification(position)
+                    viewModel.removeNotification(position, "token ${UserToken.accessToken}")
                 }
             }
         })
