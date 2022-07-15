@@ -30,15 +30,6 @@ class NotificationFragment: Fragment() {
         notificationAdapter.notifyDataSetChanged()
     }
 
-    private val notificationRemoveObserver: (Int) -> Unit = {
-        if (it < 0) {
-            viewModel.requestNotifications("token ${UserToken.accessToken}")
-        } else {
-            notificationAdapter.notifications.removeAt(it)
-            notificationAdapter.notifyItemRemoved(it)
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -71,11 +62,10 @@ class NotificationFragment: Fragment() {
 
     private fun observeData() {
         viewModel.notification.observe(viewLifecycleOwner, notificationObserver)
-        viewModel.removed.observe(viewLifecycleOwner, notificationRemoveObserver)
     }
 
     private fun getNotifications() {
-        viewModel.removeNotification(-1)
+        viewModel.requestNotifications("token ${UserToken.accessToken}")
     }
 
     private fun setItemTouchHelper() {
@@ -91,7 +81,10 @@ class NotificationFragment: Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 if (direction == ItemTouchHelper.LEFT) {
-                    viewModel.removeNotification(position)
+                    viewModel.requestToReadNotification(position, "token ${UserToken.accessToken}") {
+                        notificationAdapter.notifications.removeAt(position)
+                        notificationAdapter.notifyItemRemoved(position)
+                    }
                 }
             }
         })

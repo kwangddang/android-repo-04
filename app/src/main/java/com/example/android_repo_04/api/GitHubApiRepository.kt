@@ -30,6 +30,10 @@ class GitHubApiRepository {
         callback(RetrofitFactory.createApiService()!!.requestComments(owner, repo))
     }
 
+    suspend fun requestToReadNotification(id: String, token: String, callback: (Response<String>) -> Unit) {
+        callback(RetrofitFactory.createApiService()!!.requestToReadNotification(id, token = token))
+    }
+
     companion object{
         private var instance: GitHubApiRepository? = null
         fun getGitInstance(): GitHubApiRepository? {
