@@ -12,14 +12,14 @@ import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.db.UserToken
 import com.example.android_repo_04.data.dto.notification.Notification
 import com.example.android_repo_04.databinding.FragmentNotificationBinding
-import com.example.android_repo_04.viewmodel.NotificationViewModel
-import com.example.android_repo_04.viewmodel.NotificationViewModelFactory
+import com.example.android_repo_04.viewmodel.MainViewModel
+import com.example.android_repo_04.viewmodel.MainViewModelFactory
 
 class NotificationFragment: Fragment() {
     private var _binding: FragmentNotificationBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: NotificationViewModel
+    private lateinit var viewModel: MainViewModel
 
     private val notificationAdapter: NotificationAdapter by lazy {
         NotificationAdapter()
@@ -41,7 +41,6 @@ class NotificationFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        println(this)
 //        initViewModel()
 //        initAdapter()
 //        observeData()
@@ -51,10 +50,10 @@ class NotificationFragment: Fragment() {
 
     private fun initViewModel() {
         viewModel = ViewModelProvider(this,
-            NotificationViewModelFactory(
+            MainViewModelFactory(
                 GitHubApiRepository.getGitInstance()!!
             )
-        )[NotificationViewModel::class.java]
+        )[MainViewModel::class.java]
     }
 
     private fun initAdapter() {
@@ -62,7 +61,7 @@ class NotificationFragment: Fragment() {
     }
 
     private fun observeData() {
-        viewModel.notification.observe(viewLifecycleOwner, notificationObserver)
+        viewModel.notifications.observe(viewLifecycleOwner, notificationObserver)
     }
 
     private fun getNotifications() {
@@ -82,10 +81,10 @@ class NotificationFragment: Fragment() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
                 if (direction == ItemTouchHelper.LEFT) {
-                    viewModel.requestToReadNotification(position, "token ${UserToken.accessToken}") {
-                        notificationAdapter.notifications.removeAt(position)
-                        notificationAdapter.notifyItemRemoved(position)
-                    }
+//                    viewModel.requestToReadNotification(position, "token ${UserToken.accessToken}") {
+//                        notificationAdapter.notifications.removeAt(position)
+//                        notificationAdapter.notifyItemRemoved(position)
+//                    }
                 }
             }
         })

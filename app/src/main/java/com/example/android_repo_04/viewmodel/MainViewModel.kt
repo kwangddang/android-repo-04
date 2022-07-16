@@ -1,9 +1,6 @@
 package com.example.android_repo_04.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.issue.Issue
@@ -17,8 +14,8 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
     private var _position = MutableLiveData(0)
     val position: LiveData<Int> get() = _position
 
-    private var _notifications = MutableLiveData<List<Notification>>()
-    val notifications: LiveData<List<Notification>> get() = _notifications
+    private var _notifications = MutableLiveData<MutableList<Notification>>()
+    val notifications: LiveData<MutableList<Notification>> get() = _notifications
 
     private val _issue = MutableLiveData<Issue>()
     val issue: LiveData<Issue> get() = _issue
@@ -28,36 +25,37 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
     }
 
     fun requestNotifications(token: String) {
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch {
             gitHubApiRepository.requestNotifications(token) {
-                if (it.isSuccessful) {
-                    _notifications.postValue(it.body()!!.toMutableList())
+                if (it != null) {
+                    _notifications.postValue(it.toMutableList())
                 } else {
-
+                    //TODO 에러처리
                 }
             }
         }
     }
 
-    fun requestToReadNotification(position: Int, token: String, completed: () -> Unit) {
-        CoroutineScope(Dispatchers.Main).launch {
+    fun requestToReadNotification(position: Int, token: String) {
+        viewModelScope.launch {
             gitHubApiRepository.requestToReadNotification(
                 _notifications.value!![position].id,
                 token
             ) {
-                if (it.isSuccessful) {
-                    completed()
+                if (it == "success") {
+                    //TODO 성공처리
                 } else {
+                    //TODO 에러처리
                 }
             }
         }
     }
 
     fun requestIssues(token: String, state: String = "all", filter: String = "all"){
-        CoroutineScope(Dispatchers.IO).launch {
-            gitHubApiRepository.requestIssues(token, state, filter){ response ->
-                if(response.isSuccessful){
-                    _issue.postValue(response.body())
+        viewModelScope.launch {
+            gitHubApiRepository.requestIssues(token, state, filter) {
+                if (it != null){
+                    _issue.postValue(it)
                 } else {
                     //TODO 에러처리
                 }
