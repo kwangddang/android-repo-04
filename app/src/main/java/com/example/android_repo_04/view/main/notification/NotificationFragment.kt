@@ -41,11 +41,12 @@ class NotificationFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViewModel()
-        initAdapter()
-        observeData()
-        getNotifications()
-        setItemTouchHelper()
+        println(this)
+//        initViewModel()
+//        initAdapter()
+//        observeData()
+//        getNotifications()
+//        setItemTouchHelper()
     }
 
     private fun initViewModel() {

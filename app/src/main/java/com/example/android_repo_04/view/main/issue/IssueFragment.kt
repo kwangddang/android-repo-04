@@ -63,13 +63,14 @@ class IssueFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViewModel()
-        initRecyclerAdapter()
-        initSpinnerAdapter()
-        setSpinnerClickListener()
-        setOnClickListener()
-        observeData()
-        getIssues(OPEN)
+        println(this)
+//        initViewModel()
+//        initRecyclerAdapter()
+//        initSpinnerAdapter()
+//        setSpinnerClickListener()
+//        setOnClickListener()
+//        observeData()
+//        getIssues(OPEN)
     }
 
     private fun initViewModel() {
