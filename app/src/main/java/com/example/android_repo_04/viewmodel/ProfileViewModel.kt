@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.profile.User
 import kotlinx.coroutines.CoroutineScope
@@ -38,7 +39,7 @@ class ProfileViewModel(private val gitHubApiRepository: GitHubApiRepository): Vi
 }
 
 class ProfileViewModelFactory(private val gitHubApiRepository: GitHubApiRepository): ViewModelProvider.Factory {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
         if(modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
             return ProfileViewModel(gitHubApiRepository) as T
         }
