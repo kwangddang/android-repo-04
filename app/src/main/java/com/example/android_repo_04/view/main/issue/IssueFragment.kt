@@ -12,14 +12,14 @@ import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.db.UserToken
 import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.databinding.FragmentIssueBinding
-import com.example.android_repo_04.viewmodel.IssueViewModel
-import com.example.android_repo_04.viewmodel.IssueViewModelFactory
+import com.example.android_repo_04.viewmodel.MainViewModel
+import com.example.android_repo_04.viewmodel.MainViewModelFactory
 
 class IssueFragment: Fragment() {
     private var _binding: FragmentIssueBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: IssueViewModel
+    private lateinit var viewModel: MainViewModel
 
     private val issueAdapter: IssueAdapter by lazy {
         IssueAdapter()
@@ -63,20 +63,19 @@ class IssueFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        println(this)
-//        initViewModel()
-//        initRecyclerAdapter()
-//        initSpinnerAdapter()
-//        setSpinnerClickListener()
-//        setOnClickListener()
-//        observeData()
-//        getIssues(OPEN)
+        initViewModel()
+        initRecyclerAdapter()
+        initSpinnerAdapter()
+        setSpinnerClickListener()
+        setOnClickListener()
+        observeData()
+        getIssues(OPEN)
     }
 
     private fun initViewModel() {
         viewModel = ViewModelProvider(this,
-            IssueViewModelFactory(GitHubApiRepository.getGitInstance()!!)
-        )[IssueViewModel::class.java]
+            MainViewModelFactory(GitHubApiRepository.getGitInstance()!!)
+        )[MainViewModel::class.java]
     }
 
     private fun initRecyclerAdapter() {
