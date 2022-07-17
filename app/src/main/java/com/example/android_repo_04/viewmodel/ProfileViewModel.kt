@@ -1,9 +1,13 @@
 package com.example.android_repo_04.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.profile.User
+import com.example.android_repo_04.utils.DataResponse
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewModel() {
@@ -11,11 +15,11 @@ class ProfileViewModel(private val gitHubApiRepository: GitHubApiRepository): Vi
     val user = MutableLiveData<User>()
     val star = MutableLiveData<Int>()
 
-    fun requestUser(token: String) {
+    fun requestUser() {
         viewModelScope.launch {
-            gitHubApiRepository.requestUser(token) {
-                if(it != null) {
-                    user.postValue(it)
+            gitHubApiRepository.requestUser() { response ->
+                if(response is DataResponse.Success) {
+                    user.postValue(response.data!!)
                 } else {
                     //TODO 에러처리
                 }
@@ -23,11 +27,11 @@ class ProfileViewModel(private val gitHubApiRepository: GitHubApiRepository): Vi
         }
     }
 
-    fun requestUserStarred(token: String) {
+    fun requestUserStarred() {
         viewModelScope.launch {
-            gitHubApiRepository.requestUserStarredCount(token) {
-                if(it != -1) {
-                    star.postValue(it)
+            gitHubApiRepository.requestUserStarredCount { response ->
+                if(response is DataResponse.Success) {
+                    star.postValue(response.data!!)
                 } else {
                     //TODO 에러처리
                 }

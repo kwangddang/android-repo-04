@@ -1,16 +1,13 @@
 <resources>
+<!--xml-->
     <string name="app_name">android-repo-04</string>
     <string name="login_title">What\'s In\nMy GitHub</string>
     <string name="login_login">GitHub 로그인</string>
-
-    <string name="login_path_auth">authorize</string>
-    <string name="login_query_scope">user,repo,notifications</string>
 
     <string name="main_title">What\'s In My GitHub</string>
     <string name="main_issue">Issue</string>
     <string name="main_notification">Notification</string>
 
-    <string name="code">code</string>
     <string name="profile_title">Profile</string>
     <string name="profile_repository">Repositories</string>
     <string name="profile_star">Starred</string>
@@ -18,4 +15,24 @@
     <string name="profile_follower">Followers</string>
     <string name="profile_point">・</string>
     <string name="profile_following">Following</string>
+
+<!--class-->
+
+    <string name="code">code</string>
+    <string name="login_path_auth">authorize</string>
+    <string name="login_query_scope">user,repo,notifications</string>
+
+    <string name="toast_error_token">앱의 상태 정보가 정확하지 않습니다. 개발자에게 문의 바랍니다.</string>
+    <string name="toast_error_notification">Notification을 읽는 데 실패하였습니다.</string>
+
+    <string name="tag_issue_fragment">issue</string>
+    <string name="tag_notification_fragment">issue</string>
+
+    <string name="no_location">No Location</string>
+    <string name="no_blog">No blog</string>
+    <string name="no_email">No email</string>
+
+    <string name="state_open">open</string>
+    <string name="state_closed">closed</string>
+    <string name="state_all">all</string>
 </resources>

@@ -34,11 +34,11 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun requestUser() {
-        viewModel.requestUser("token ${UserToken.accessToken}")
+        viewModel.requestUser()
     }
 
     private fun requestUserStarred() {
-        viewModel.requestUserStarred("token ${UserToken.accessToken}")
+        viewModel.requestUserStarred()
     }
 
     private fun initBinding() {
