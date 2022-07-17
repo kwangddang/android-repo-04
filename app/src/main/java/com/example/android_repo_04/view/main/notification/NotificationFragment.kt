@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.db.UserToken
 import com.example.android_repo_04.data.dto.notification.Notification
@@ -25,7 +26,7 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
     private lateinit var viewModel: MainViewModel
 
     private val notificationAdapter: NotificationAdapter by lazy {
-        NotificationAdapter()
+        NotificationAdapter(viewModel)
     }
 
     private val notificationObserver: (MutableList<Notification>) -> Unit = {
@@ -38,7 +39,7 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
             notificationAdapter.notifications.removeAt(it)
             notificationAdapter.notifyItemRemoved(it)
         } else {
-            Toast.makeText(context, "Notification을 읽는 데 실패하였습니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, requireContext().getString(R.string.toast_error_notification), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -73,7 +74,7 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
     }
 
     private fun getNotifications() {
-        viewModel.requestNotifications("token ${UserToken.accessToken}")
+        viewModel.requestNotifications()
     }
 
     private fun setItemTouchHelper() {
@@ -92,6 +93,6 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
      * swipe callback 에서 ui 작업을 수행하기 위함
      */
     override fun swipe(viewHolder: RecyclerView.ViewHolder, direction: Int, position: Int) {
-        viewModel.requestToReadNotification(position, "token ${UserToken.accessToken}")
+        viewModel.requestToReadNotification(position)
     }
 }

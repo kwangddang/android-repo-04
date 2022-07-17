@@ -24,11 +24,41 @@ android {
 
     Properties properties = new Properties()
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+    // info
     def client_id = properties.getProperty("CLIENT_ID")
     def client_secret = properties.getProperty("CLIENT_SECRET")
+    def accept = properties.getProperty("ACCEPT")
+    def host = properties.getProperty("HOST")
+
+    // url
     def login_url = properties.getProperty("LOGIN_URL")
     def base_url = properties.getProperty("BASE_URL")
-    def host = properties.getProperty("HOST")
+    def token_url = properties.getProperty("TOKEN_URL")
+    def issue_url = properties.getProperty("ISSUE_URL")
+    def user_url = properties.getProperty("USER_URL")
+    def user_starred_url = properties.getProperty("USER_STARRED_URL")
+    def notifications_url = properties.getProperty("NOTIFICATIONS_URL")
+    def notifications_read_url = properties.getProperty("NOTIFICATIONS_READ_URL")
+    def comments_url = properties.getProperty("COMMENTS_URL")
+
+    // param
+    def state_param = properties.getProperty("STATE_PARAM")
+    def filter_param = properties.getProperty("FILTER_PARAM")
+    def client_id_param = properties.getProperty("CLIENT_ID_PARAM")
+    def client_secret_param = properties.getProperty("CLIENT_SECRET_PARAM")
+    def code_param = properties.getProperty("CODE_PARAM")
+    def scope_param = properties.getProperty("SCOPE_PARAM")
+
+    // path
+    def owner_path = properties.getProperty("OWNER_PATH")
+    def repo_path = properties.getProperty("REPO_PATH")
+    def id_path = properties.getProperty("ID_PATH")
+
+    // header
+    def accept_header = properties.getProperty("ACCEPT_HEADER")
+    def authorization_header = properties.getProperty("AUTHORIZATION_HEADER")
+
     defaultConfig {
         applicationId "com.example.android_repo_04"
         minSdk 21
@@ -39,9 +69,32 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", 'CLIENT_ID', client_id
         buildConfigField "String", 'CLIENT_SECRET', client_secret
+        buildConfigField "String", 'ACCEPT', accept
+        manifestPlaceholders = [HOST: host]
+
         buildConfigField "String", 'LOGIN_URL', login_url
         buildConfigField "String", 'BASE_URL', base_url
-        manifestPlaceholders = [HOST: host]
+        buildConfigField "String", 'TOKEN_URL', token_url
+        buildConfigField "String", 'ISSUE_URL', issue_url
+        buildConfigField "String", 'USER_URL', user_url
+        buildConfigField "String", 'USER_STARRED_URL', user_starred_url
+        buildConfigField "String", 'NOTIFICATIONS_URL', notifications_url
+        buildConfigField "String", 'NOTIFICATIONS_READ_URL', notifications_read_url
+        buildConfigField "String", 'COMMENTS_URL', comments_url
+
+        buildConfigField "String", 'STATE_PARAM', state_param
+        buildConfigField "String", 'FILTER_PARAM', filter_param
+        buildConfigField "String", 'CLIENT_ID_PARAM', client_id_param
+        buildConfigField "String", 'CLIENT_SECRET_PARAM', client_secret_param
+        buildConfigField "String", 'CODE_PARAM', code_param
+        buildConfigField "String", 'SCOPE_PARAM', scope_param
+
+        buildConfigField "String", 'OWNER_PATH', owner_path
+        buildConfigField "String", 'REPO_PATH', repo_path
+        buildConfigField "String", 'ID_PATH', id_path
+
+        buildConfigField "String", 'ACCEPT_HEADER', accept_header
+        buildConfigField "String", 'AUTHORIZATION_HEADER', authorization_header
     }
 
     buildTypes {

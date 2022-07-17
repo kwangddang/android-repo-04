@@ -104,20 +104,14 @@ class IssueFragment: Fragment() {
 
     private fun getSelectedIssues(position: Int) {
         when (position) {
-            0 -> viewModel.requestIssues("token ${UserToken.accessToken}", OPEN)
-            1 -> viewModel.requestIssues("token ${UserToken.accessToken}", CLOSED)
-            2 -> viewModel.requestIssues("token ${UserToken.accessToken}", ALL)
+            0 -> viewModel.requestIssues(getString(R.string.state_open))
+            1 -> viewModel.requestIssues(getString(R.string.state_closed))
+            2 -> viewModel.requestIssues(getString(R.string.state_all))
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object{
-        const val OPEN = "open"
-        const val CLOSED = "closed"
-        const val ALL = "all"
     }
 }

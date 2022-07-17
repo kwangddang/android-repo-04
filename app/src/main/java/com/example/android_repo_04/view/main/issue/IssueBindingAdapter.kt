@@ -14,7 +14,7 @@ object IssueBindingAdapter {
     @JvmStatic
     @BindingAdapter("issueState")
     fun setIssueState(view: ImageView, state: String){
-        val drawableId = if(state == "open") {
+        val drawableId = if(state == view.context.getString(R.string.state_open)) {
             R.drawable.ic_issue_open
         } else {
             R.drawable.ic_issue_closed
