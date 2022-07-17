@@ -1,15 +1,22 @@
 package com.example.android_repo_04.viewmodel
 
+import androidx.annotation.MainThread
 import androidx.lifecycle.*
-import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.data.dto.notification.Notification
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewModel() {
+    companion object{
+        private lateinit var instance: MainViewModel
+
+        @MainThread
+        fun getInstance(gitHubApiRepository: GitHubApiRepository): MainViewModel {
+            instance = if(::instance.isInitialized) instance else MainViewModel(gitHubApiRepository)
+            return instance
+        }
+    }
 
     private var _position = MutableLiveData(0)
     val position: LiveData<Int> get() = _position
@@ -22,6 +29,8 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
 
     private val _issue = MutableLiveData<Issue>()
     val issue: LiveData<Issue> get() = _issue
+
+    var selectedIssue = 0
 
     fun changePosition(pos: Int) {
         _position.postValue(pos)
@@ -54,7 +63,7 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
         }
     }
 
-    fun requestIssues(token: String, state: String = "all", filter: String = "all"){
+    fun requestIssues(token: String, state: String = "all", filter: String = "all") {
         viewModelScope.launch {
             gitHubApiRepository.requestIssues(token, state, filter) {
                 if (it != null){
