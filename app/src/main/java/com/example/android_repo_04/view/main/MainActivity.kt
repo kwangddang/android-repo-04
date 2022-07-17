@@ -71,14 +71,12 @@ class MainActivity : AppCompatActivity() {
         observeData()
         setOnClickListeners()
         initFragmentManager()
+        getIssues()
+        getNotifications()
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProvider(this,
-            CustomViewModelFactory(
-                GitHubApiRepository.getGitInstance()!!
-            )
-        )[MainViewModel::class.java]
+        viewModel = MainViewModel.getInstance(GitHubApiRepository.getGitInstance()!!)
     }
 
     private fun observeData() {
@@ -99,6 +97,16 @@ class MainActivity : AppCompatActivity() {
                 add(R.id.layout_main_fragment_container, issueFragment, getString(R.string.tag_issue_fragment))
             }
         }
+    }
+
+    private fun getIssues() {
+        if (viewModel.issue.value == null)
+            viewModel.requestIssues(getString(R.string.state_open))
+    }
+
+    private fun getNotifications() {
+        if (viewModel.notifications.value == null)
+            viewModel.requestNotifications()
     }
 
     private fun selectIssue(){

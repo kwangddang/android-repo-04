@@ -57,16 +57,11 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
         initViewModel()
         initAdapter()
         observeData()
-        getNotifications()
         setItemTouchHelper()
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProvider(requireActivity(),
-            CustomViewModelFactory(
-                GitHubApiRepository.getGitInstance()!!
-            )
-        )[MainViewModel::class.java]
+        viewModel = MainViewModel.getInstance(GitHubApiRepository.getGitInstance()!!)
     }
 
     private fun initAdapter() {

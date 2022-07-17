@@ -1,5 +1,6 @@
 package com.example.android_repo_04.viewmodel
 
+import androidx.annotation.MainThread
 import androidx.lifecycle.*
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.issue.Issue
@@ -8,6 +9,15 @@ import com.example.android_repo_04.utils.DataResponse
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewModel() {
+    companion object{
+        private lateinit var instance: MainViewModel
+
+        @MainThread
+        fun getInstance(gitHubApiRepository: GitHubApiRepository): MainViewModel {
+            instance = if(::instance.isInitialized) instance else MainViewModel(gitHubApiRepository)
+            return instance
+        }
+    }
 
     val position = MutableLiveData(0)
 
@@ -19,6 +29,8 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
 
     private val _issue = MutableLiveData<Issue>()
     val issue: LiveData<Issue> get() = _issue
+
+    var selectedIssue = 0
 
     fun requestNotifications() {
         viewModelScope.launch {
@@ -44,7 +56,7 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
         }
     }
 
-    fun requestIssues(state: String = "all", filter: String = "all"){
+    fun requestIssues(state: String = "all", filter: String = "all") {
         viewModelScope.launch {
             gitHubApiRepository.requestIssues(state, filter) { response ->
                 if(response is DataResponse.Success) {

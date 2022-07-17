@@ -36,8 +36,11 @@ class IssueFragment: Fragment() {
 
     private val spinnerItemSelectedListener = object: AdapterView.OnItemSelectedListener{
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            getSelectedIssues(position)
             spinnerAdapter.selectedPosition = position
+            if (viewModel.selectedIssue != position) {
+                viewModel.selectedIssue = position
+                getSelectedIssues(position)
+            }
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -69,13 +72,10 @@ class IssueFragment: Fragment() {
         setSpinnerClickListener()
         setOnClickListener()
         observeData()
-        getIssues(getString(R.string.state_open))
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProvider(requireActivity(),
-            CustomViewModelFactory(GitHubApiRepository.getGitInstance()!!)
-        )[MainViewModel::class.java]
+        viewModel = MainViewModel.getInstance(GitHubApiRepository.getGitInstance()!!)
     }
 
     private fun initRecyclerAdapter() {
@@ -91,7 +91,6 @@ class IssueFragment: Fragment() {
         binding.spinnerIssueOption.viewTreeObserver.addOnWindowFocusChangeListener(spinnerWindowFocusChangeListener)
     }
 
-
     private fun setOnClickListener() {
         binding.layoutIssueInnerContainer.setOnClickListener {
             binding.spinnerIssueOption.performClick()
@@ -102,17 +101,11 @@ class IssueFragment: Fragment() {
         viewModel.issue.observe(viewLifecycleOwner, issueObserver)
     }
 
-    private fun getIssues(state: String) {
-        viewModel.requestIssues(state)
-    }
-
     private fun getSelectedIssues(position: Int) {
-        if (spinnerAdapter.selectedPosition != position) {
-            when (position) {
-                0 -> getIssues(getString(R.string.state_open))
-                1 -> getIssues(getString(R.string.state_closed))
-                2 -> getIssues(getString(R.string.state_all))
-            }
+        when (position) {
+            0 -> viewModel.requestIssues(getString(R.string.state_open))
+            1 -> viewModel.requestIssues(getString(R.string.state_closed))
+            2 -> viewModel.requestIssues(getString(R.string.state_all))
         }
     }
 
