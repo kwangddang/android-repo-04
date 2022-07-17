@@ -39,6 +39,7 @@ class IssueFragment: Fragment() {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             if (viewModel.selectedIssue != position) {
                 viewModel.selectedIssue = position
+                spinnerAdapter.selectedPosition = position
                 getSelectedIssues(position)
             }
         }
