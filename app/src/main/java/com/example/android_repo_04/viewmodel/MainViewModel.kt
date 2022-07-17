@@ -9,8 +9,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewModel() {
 
-    private var _position = MutableLiveData(0)
-    val position: LiveData<Int> get() = _position
+    val position = MutableLiveData(0)
 
     private var _notifications = MutableLiveData<MutableList<Notification>>()
     val notifications: LiveData<MutableList<Notification>> get() = _notifications
@@ -20,10 +19,6 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
 
     private val _issue = MutableLiveData<Issue>()
     val issue: LiveData<Issue> get() = _issue
-
-    fun changePosition(pos: Int) {
-        _position.postValue(pos)
-    }
 
     fun requestNotifications() {
         viewModelScope.launch {

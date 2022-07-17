@@ -61,7 +61,9 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             android:text="@{issue.title}"
+            android:layout_marginEnd="32dp"
             app:layout_constraintStart_toStartOf="@id/text_issue_repository"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_issue_repository"
             tools:text="프로젝트 요구사항 및 참고자료" />
 
@@ -74,7 +76,6 @@
             app:layout_constraintTop_toBottomOf="@id/text_issue_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

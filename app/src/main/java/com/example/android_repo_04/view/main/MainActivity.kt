@@ -51,11 +51,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val btnIssueClickListener: (View) -> Unit = {
-        viewModel.changePosition(0)
+        viewModel.position.value = 0
     }
 
     private val btnNotificationClickListener: (View) -> Unit = {
-        viewModel.changePosition(1)
+        viewModel.position.value = 1
     }
 
     private val imgProfileClickListener: (View) -> Unit = {
@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
     private fun initFragmentManager() {
         if (fragmentManager.fragments.isEmpty()) {
             fragmentManager.commit {
-                viewModel.changePosition(0)
+                viewModel.position.value = 0
                 add(R.id.layout_main_fragment_container, notificationFragment, getString(R.string.tag_notification_fragment))
                 add(R.id.layout_main_fragment_container, issueFragment, getString(R.string.tag_issue_fragment))
             }
@@ -108,8 +108,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun showIssueFragment(){
         fragmentManager.commit {
-            fragmentManager.findFragmentByTag(getString(R.string.tag_issue_fragment))?.let { show(fragmentManager.findFragmentByTag(getString(R.string.tag_issue_fragment))!!) }
-            fragmentManager.findFragmentByTag(getString(R.string.tag_notification_fragment))?.let { hide(fragmentManager.findFragmentByTag(getString(R.string.tag_notification_fragment))!!) }
+            show(fragmentManager.findFragmentByTag(getString(R.string.tag_issue_fragment))!!)
+            hide(fragmentManager.findFragmentByTag(getString(R.string.tag_notification_fragment))!!)
         }
     }
 
@@ -120,8 +120,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun showNotificationFragment(){
         fragmentManager.commit {
-            fragmentManager.findFragmentByTag(getString(R.string.tag_notification_fragment))?.let { show(fragmentManager.findFragmentByTag(getString(R.string.tag_notification_fragment))!!) }
-            fragmentManager.findFragmentByTag(getString(R.string.tag_issue_fragment))?.let { hide(fragmentManager.findFragmentByTag(getString(R.string.tag_issue_fragment))!!) }
+            show(fragmentManager.findFragmentByTag(getString(R.string.tag_notification_fragment))!!)
+            hide(fragmentManager.findFragmentByTag(getString(R.string.tag_issue_fragment))!!)
         }
     }
 }
