@@ -108,8 +108,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun showIssueFragment(){
         fragmentManager.commit {
-            fragmentManager.findFragmentByTag(getString(R.string.tag_issue_fragment))?.let { show(fragmentManager.findFragmentByTag(getString(R.string.tag_issue_fragment))!!) }
-            fragmentManager.findFragmentByTag(getString(R.string.tag_notification_fragment))?.let { hide(fragmentManager.findFragmentByTag(getString(R.string.tag_notification_fragment))!!) }
+            show(fragmentManager.findFragmentByTag(getString(R.string.tag_issue_fragment))!!)
+            hide(fragmentManager.findFragmentByTag(getString(R.string.tag_notification_fragment))!!)
         }
     }
 
@@ -120,8 +120,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun showNotificationFragment(){
         fragmentManager.commit {
-            fragmentManager.findFragmentByTag(getString(R.string.tag_notification_fragment))?.let { show(fragmentManager.findFragmentByTag(getString(R.string.tag_notification_fragment))!!) }
-            fragmentManager.findFragmentByTag(getString(R.string.tag_issue_fragment))?.let { hide(fragmentManager.findFragmentByTag(getString(R.string.tag_issue_fragment))!!) }
+            show(fragmentManager.findFragmentByTag(getString(R.string.tag_notification_fragment))!!)
+            hide(fragmentManager.findFragmentByTag(getString(R.string.tag_issue_fragment))!!)
         }
     }
 }
