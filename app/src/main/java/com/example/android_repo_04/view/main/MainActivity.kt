@@ -15,8 +15,8 @@ import com.example.android_repo_04.databinding.ActivityMainBinding
 import com.example.android_repo_04.view.main.issue.IssueFragment
 import com.example.android_repo_04.view.main.notification.NotificationFragment
 import com.example.android_repo_04.view.profile.ProfileActivity
+import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.MainViewModel
-import com.example.android_repo_04.viewmodel.MainViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViewModel() {
         viewModel = ViewModelProvider(this,
-            MainViewModelFactory(
+            CustomViewModelFactory(
                 GitHubApiRepository.getGitInstance()!!
             )
         )[MainViewModel::class.java]

@@ -1,6 +1,7 @@
 package com.example.android_repo_04.view.main.notification
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +14,8 @@ import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.db.UserToken
 import com.example.android_repo_04.data.dto.notification.Notification
 import com.example.android_repo_04.databinding.FragmentNotificationBinding
+import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.MainViewModel
-import com.example.android_repo_04.viewmodel.MainViewModelFactory
 
 
 class NotificationFragment: Fragment(), NotificationSwipeListener {
@@ -60,8 +61,8 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProvider(this,
-            MainViewModelFactory(
+        viewModel = ViewModelProvider(requireActivity(),
+            CustomViewModelFactory(
                 GitHubApiRepository.getGitInstance()!!
             )
         )[MainViewModel::class.java]
