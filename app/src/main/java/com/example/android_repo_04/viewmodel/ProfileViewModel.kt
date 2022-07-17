@@ -11,9 +11,9 @@ class ProfileViewModel(private val gitHubApiRepository: GitHubApiRepository): Vi
     val user = MutableLiveData<User>()
     val star = MutableLiveData<Int>()
 
-    fun requestUser(token: String) {
+    fun requestUser() {
         viewModelScope.launch {
-            gitHubApiRepository.requestUser(token) {
+            gitHubApiRepository.requestUser() {
                 if(it != null) {
                     user.postValue(it)
                 } else {
@@ -23,9 +23,9 @@ class ProfileViewModel(private val gitHubApiRepository: GitHubApiRepository): Vi
         }
     }
 
-    fun requestUserStarred(token: String) {
+    fun requestUserStarred() {
         viewModelScope.launch {
-            gitHubApiRepository.requestUserStarredCount(token) {
+            gitHubApiRepository.requestUserStarredCount() {
                 if(it != -1) {
                     star.postValue(it)
                 } else {

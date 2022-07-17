@@ -77,7 +77,7 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
     }
 
     private fun getNotifications() {
-        viewModel.requestNotifications("token ${UserToken.accessToken}")
+        viewModel.requestNotifications()
     }
 
     private fun setItemTouchHelper() {
@@ -96,6 +96,6 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
      * swipe callback 에서 ui 작업을 수행하기 위함
      */
     override fun swipe(viewHolder: RecyclerView.ViewHolder, direction: Int, position: Int) {
-        viewModel.requestToReadNotification(position, "token ${UserToken.accessToken}")
+        viewModel.requestToReadNotification(position)
     }
 }

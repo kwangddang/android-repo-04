@@ -103,7 +103,7 @@ class IssueFragment: Fragment() {
     }
 
     private fun getIssues(state: String) {
-        viewModel.requestIssues("token ${UserToken.accessToken}", state)
+        viewModel.requestIssues(state)
     }
 
     private fun getSelectedIssues(position: Int) {

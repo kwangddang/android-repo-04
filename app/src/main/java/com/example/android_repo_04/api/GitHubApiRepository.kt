@@ -10,8 +10,8 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 
 class GitHubApiRepository {
-    suspend fun requestIssues(token: String, state: String, filter: String, callback: (Issue?) -> Unit){
-        val response = RetrofitFactory.createApiService()!!.requestIssues(token,state,filter)
+    suspend fun requestIssues(state: String, filter: String, callback: (Issue?) -> Unit){
+        val response = RetrofitFactory.createApiService()!!.requestIssues(state,filter)
         if (response.isSuccessful) {
             callback(response.body()!!)
         } else {
@@ -19,8 +19,8 @@ class GitHubApiRepository {
         }
     }
 
-    suspend fun requestUser(token: String, callback: (User?) -> Unit) {
-        val response = RetrofitFactory.createApiService()!!.requestUser(token)
+    suspend fun requestUser(callback: (User?) -> Unit) {
+        val response = RetrofitFactory.createApiService()!!.requestUser()
         if (response.isSuccessful) {
             callback(response.body()!!)
         } else {
@@ -28,8 +28,8 @@ class GitHubApiRepository {
         }
     }
 
-    suspend fun requestUserStarredCount(token: String, callback: (Int) -> Unit) {
-        val response = RetrofitFactory.createApiService()!!.requestUserStarred(token)
+    suspend fun requestUserStarredCount(callback: (Int) -> Unit) {
+        val response = RetrofitFactory.createApiService()!!.requestUserStarred()
         if (response.isSuccessful) {
             callback(response.body()!!.size)
         } else {
@@ -37,8 +37,8 @@ class GitHubApiRepository {
         }
     }
 
-    suspend fun requestNotifications(token: String, callback: (List<Notification>?) -> Unit) {
-        val response = RetrofitFactory.createApiService()!!.requestNotifications(token = token)
+    suspend fun requestNotifications(callback: (List<Notification>?) -> Unit) {
+        val response = RetrofitFactory.createApiService()!!.requestNotifications()
         println(response)
         if (response.isSuccessful) {
             callback(response.body()!!)
@@ -56,8 +56,8 @@ class GitHubApiRepository {
         }
     }
 
-    suspend fun requestToReadNotification(id: String, token: String, callback: (String) -> Unit) {
-        val response = RetrofitFactory.createApiService()!!.requestToReadNotification(id, token = token)
+    suspend fun requestToReadNotification(id: String, callback: (String) -> Unit) {
+        val response = RetrofitFactory.createApiService()!!.requestToReadNotification(id)
         if (response.isSuccessful) {
             callback("success")
         } else {

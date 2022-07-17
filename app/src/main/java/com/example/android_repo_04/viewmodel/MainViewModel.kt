@@ -27,9 +27,9 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
         _position.postValue(pos)
     }
 
-    fun requestNotifications(token: String) {
+    fun requestNotifications() {
         viewModelScope.launch {
-            gitHubApiRepository.requestNotifications(token) {
+            gitHubApiRepository.requestNotifications() {
                 if (it != null) {
                     _notifications.postValue(it.toMutableList())
                 } else {
@@ -39,11 +39,10 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
         }
     }
 
-    fun requestToReadNotification(position: Int, token: String) {
+    fun requestToReadNotification(position: Int) {
         viewModelScope.launch {
             gitHubApiRepository.requestToReadNotification(
                 _notifications.value!![position].id,
-                token
             ) {
                 if (it == "success") {
                     _readNotification.postValue(position)
@@ -54,9 +53,9 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
         }
     }
 
-    fun requestIssues(token: String, state: String = "all", filter: String = "all"){
+    fun requestIssues(state: String = "all", filter: String = "all"){
         viewModelScope.launch {
-            gitHubApiRepository.requestIssues(token, state, filter) {
+            gitHubApiRepository.requestIssues(state, filter) {
                 if (it != null){
                     _issue.postValue(it)
                 } else {

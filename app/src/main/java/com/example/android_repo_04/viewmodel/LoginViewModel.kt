@@ -1,5 +1,6 @@
 package com.example.android_repo_04.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.*
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.android_repo_04.BuildConfig
@@ -14,6 +15,7 @@ class LoginViewModel(private val gitHubLoginRepository: GitHubLoginRepository) :
     val token: LiveData<String> get() = _token
 
     fun requestToken(code: String) {
+        Log.d("Test", "호출")
         viewModelScope.launch {
             gitHubLoginRepository.requestToken(BuildConfig.CLIENT_ID, BuildConfig.CLIENT_SECRET, code) { response ->
                 if (response.accessToken != "") {

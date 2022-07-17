@@ -13,6 +13,6 @@ interface GitHubLoginService {
         @Query("client_id") clientId: String,
         @Query("client_secret") clientSecret: String,
         @Query("code") code: String,
-        @Header("Accept") header: String = "application/json"
+        @Header("Accept") accept: String = "application/json"
     ): Response<AuthToken>
 }
