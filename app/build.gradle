@@ -29,6 +29,13 @@ android {
     def login_url = properties.getProperty("LOGIN_URL")
     def base_url = properties.getProperty("BASE_URL")
     def host = properties.getProperty("HOST")
+    def token_url = properties.getProperty("TOKEN_URL")
+    def issue_url = properties.getProperty("ISSUE_URL")
+    def user_url = properties.getProperty("USER_URL")
+    def user_starred_url = properties.getProperty("USER_STARRED_URL")
+    def notifications_url = properties.getProperty("NOTIFICATIONS_URL")
+    def notifications_read_url = properties.getProperty("NOTIFICATIONS_READ_URL")
+    def comments_url = properties.getProperty("COMMENTS_URL")
     defaultConfig {
         applicationId "com.example.android_repo_04"
         minSdk 21
@@ -41,6 +48,13 @@ android {
         buildConfigField "String", 'CLIENT_SECRET', client_secret
         buildConfigField "String", 'LOGIN_URL', login_url
         buildConfigField "String", 'BASE_URL', base_url
+        buildConfigField "String", 'TOKEN_URL', token_url
+        buildConfigField "String", 'ISSUE_URL', issue_url
+        buildConfigField "String", 'USER_URL', user_url
+        buildConfigField "String", 'USER_STARRED_URL', user_starred_url
+        buildConfigField "String", 'NOTIFICATIONS_URL', notifications_url
+        buildConfigField "String", 'NOTIFICATIONS_READ_URL', notifications_read_url
+        buildConfigField "String", 'COMMENTS_URL', comments_url
         manifestPlaceholders = [HOST: host]
     }
 
