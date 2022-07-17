@@ -26,7 +26,7 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
     private lateinit var viewModel: MainViewModel
 
     private val notificationAdapter: NotificationAdapter by lazy {
-        NotificationAdapter()
+        NotificationAdapter(viewModel)
     }
 
     private val notificationObserver: (MutableList<Notification>) -> Unit = {

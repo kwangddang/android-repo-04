@@ -26,7 +26,7 @@
     <string name="toast_error_notification">Notification을 읽는 데 실패하였습니다.</string>
 
     <string name="tag_issue_fragment">issue</string>
-    <string name="tag_notification_fragment">issue</string>
+    <string name="tag_notification_fragment">notification</string>
 
     <string name="no_location">No Location</string>
     <string name="no_blog">No blog</string>
