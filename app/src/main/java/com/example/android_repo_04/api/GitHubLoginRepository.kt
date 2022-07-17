@@ -5,8 +5,13 @@ import retrofit2.Response
 
 class GitHubLoginRepository {
 
-    suspend fun requestToken(clientId: String, clientSecret: String, code: String, callback: (Response<AuthToken>) -> Unit){
-        callback(RetrofitFactory.createLoginService()!!.requestToken(clientId,clientSecret,code))
+    suspend fun requestToken(clientId: String, clientSecret: String, code: String, callback: (AuthToken) -> Unit){
+        val response = RetrofitFactory.createLoginService()!!.requestToken(clientId, clientSecret, code)
+        if (response.isSuccessful && response.body()?.accessToken != null) {
+            callback(response.body()!!)
+        } else {
+            callback(AuthToken("", "", ""))
+        }
     }
 
     companion object{

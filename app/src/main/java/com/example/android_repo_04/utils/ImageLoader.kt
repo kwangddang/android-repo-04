@@ -1,4 +1,3 @@
-@file: JvmName("ImageLoader")
 package com.example.android_repo_04.utils
 
 import android.graphics.Bitmap
