@@ -17,6 +17,9 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
     private var _notifications = MutableLiveData<MutableList<Notification>>()
     val notifications: LiveData<MutableList<Notification>> get() = _notifications
 
+    private var _readNotification = MutableLiveData<Int>()
+    val readNotification: LiveData<Int> get() = _readNotification
+
     private val _issue = MutableLiveData<Issue>()
     val issue: LiveData<Issue> get() = _issue
 
@@ -43,9 +46,9 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
                 token
             ) {
                 if (it == "success") {
-                    //TODO 성공처리
+                    _readNotification.postValue(position)
                 } else {
-                    //TODO 에러처리
+                    _readNotification.postValue(-1)
                 }
             }
         }
