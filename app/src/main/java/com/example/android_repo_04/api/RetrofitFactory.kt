@@ -12,8 +12,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitFactory {
 
-    var loginService: GitHubLoginService? = null
-    var apiService: GitHubApiService? = null
+    private var loginService: GitHubLoginService? = null
+    private var apiService: GitHubApiService? = null
 
     fun createLoginService(): GitHubLoginService? {
         if (loginService == null) {
@@ -42,8 +42,8 @@ object RetrofitFactory {
     class HeaderInterceptor() : Interceptor {
         override fun intercept(chain: Interceptor.Chain): Response {
             val newRequest = chain.request().newBuilder()
-                .addHeader("Authorization", "token ${UserToken.accessToken}")
-                .addHeader("Accept", "application/json")
+                .addHeader(BuildConfig.AUTHORIZATION_HEADER, "token ${UserToken.accessToken}")
+                .addHeader(BuildConfig.ACCEPT_HEADER, BuildConfig.ACCEPT)
                 .build()
             return chain.proceed(newRequest)
         }

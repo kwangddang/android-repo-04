@@ -1,6 +1,5 @@
 package com.example.android_repo_04.api
 
-import android.os.Build
 import com.example.android_repo_04.BuildConfig
 import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.data.dto.notification.Comment
@@ -8,13 +7,16 @@ import com.example.android_repo_04.data.dto.notification.Notification
 import com.example.android_repo_04.data.dto.profile.Star
 import com.example.android_repo_04.data.dto.profile.User
 import retrofit2.Response
-import retrofit2.http.*
+import retrofit2.http.GET
+import retrofit2.http.PATCH
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface GitHubApiService {
     @GET(BuildConfig.ISSUE_URL)
     suspend fun requestIssues(
-        @Query("state") state: String,
-        @Query("filter") filter: String
+        @Query(BuildConfig.STATE_PARAM) state: String,
+        @Query(BuildConfig.FILTER_PARAM) filter: String
     ): Response<Issue>
 
     @GET(BuildConfig.USER_URL)
@@ -28,12 +30,12 @@ interface GitHubApiService {
 
     @GET(BuildConfig.COMMENTS_URL)
     suspend fun requestComments(
-        @Path("owner") owner: String,
-        @Path("repo") repo: String,
+        @Path(BuildConfig.OWNER_PATH) owner: String,
+        @Path(BuildConfig.REPO_PATH) repo: String,
     ): Response<List<Comment>>
 
     @PATCH(BuildConfig.NOTIFICATIONS_READ_URL)
     suspend fun requestToReadNotification(
-        @Path("id") id: String,
+        @Path(BuildConfig.ID_PATH) id: String,
     ): Response<String>
 }
