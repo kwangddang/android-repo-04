@@ -45,8 +45,8 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentNotificationBinding.inflate(inflater,container,false)
+    ): View {
+        _binding = FragmentNotificationBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -81,8 +81,10 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
     }
 
     private fun setItemTouchHelper() {
-        val itemTouchHelper = ItemTouchHelper(NotificationSwipeCallback(this))
-        itemTouchHelper.attachToRecyclerView(binding.recyclerNotifications)
+        context?.let {
+            val itemTouchHelper = ItemTouchHelper(NotificationSwipeCallback(it, this))
+            itemTouchHelper.attachToRecyclerView(binding.recyclerNotifications)
+        }
     }
 
     override fun onDestroyView() {
