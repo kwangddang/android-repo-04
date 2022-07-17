@@ -19,8 +19,7 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
         }
     }
 
-    private var _position = MutableLiveData(0)
-    val position: LiveData<Int> get() = _position
+    val position = MutableLiveData(0)
 
     private var _notifications = MutableLiveData<MutableList<Notification>>()
     val notifications: LiveData<MutableList<Notification>> get() = _notifications
@@ -33,12 +32,7 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
 
     var selectedIssue = 0
 
-    fun changePosition(pos: Int) {
-        _position.postValue(pos)
-    }
-
     fun requestNotifications() {
-        println("알림요청!!")
         viewModelScope.launch {
             gitHubApiRepository.requestNotifications() { response ->
                 if (response is DataResponse.Success) {
@@ -63,7 +57,6 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
     }
 
     fun requestIssues(state: String = "all", filter: String = "all") {
-        println("이슈요청!!")
         viewModelScope.launch {
             gitHubApiRepository.requestIssues(state, filter) { response ->
                 if(response is DataResponse.Success) {

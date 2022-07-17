@@ -31,8 +31,7 @@ class IssueFragment: Fragment() {
     }
 
     private val issueObserver: (Issue) -> Unit = { issue ->
-        issueAdapter.issue = issue
-        issueAdapter.notifyDataSetChanged()
+        issueAdapter.replaceItem(issue)
     }
 
     private val spinnerItemSelectedListener = object: AdapterView.OnItemSelectedListener{
