@@ -1,22 +1,22 @@
 package com.example.android_repo_04.view.main.notification
 
-import android.graphics.Bitmap
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.android_repo_04.api.GitHubApiRepository
+import com.example.android_repo_04.utils.DataResponse
 import com.example.android_repo_04.utils.dateToFormattedString
 import com.example.android_repo_04.utils.urlToBitmap
 import kotlinx.coroutines.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 object NotificationBindingAdapter {
 
     @JvmStatic
-    @BindingAdapter("notificationOwnerAvatar")
-    fun setNotificationOwnerAvatar(view: ImageView, avatarUrl: String) {
-        urlToBitmap(avatarUrl) {
+    @BindingAdapter("notificationOwnerAvatar", "viewModel")
+    fun setNotificationOwnerAvatar(view: ImageView, avatarUrl: String, viewModel: ViewModel) {
+        urlToBitmap(avatarUrl, viewModel) {
             view.setImageBitmap(it)
         }
     }
@@ -28,12 +28,15 @@ object NotificationBindingAdapter {
     }
 
     @JvmStatic
-    @BindingAdapter("notificationComments")
-    fun setNotificationComments(view: TextView, fullName: String) {
-        CoroutineScope(Dispatchers.Main).launch {
+    @BindingAdapter("notificationComments", "viewModel")
+    fun setNotificationComments(view: TextView, fullName: String, viewModel: ViewModel) {
+        viewModel.viewModelScope.launch {
             val split = fullName.split('/')
-            GitHubApiRepository().requestCommentsCount(split[0], split[1]) {
-                view.text = it.body()!!.size.toString()
+            GitHubApiRepository().requestCommentsCount(split[0], split[1]) { response ->
+                if(response is DataResponse.Success)
+                    view.text = response.data!!.toString()
+                else if(response is DataResponse.Error)
+                    view.text = "0"
             }
         }
     }

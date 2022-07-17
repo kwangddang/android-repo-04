@@ -6,22 +6,30 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.commit
+import androidx.lifecycle.ViewModelProvider
 import com.example.android_repo_04.R
+import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.db.UserToken
 import com.example.android_repo_04.databinding.ActivityMainBinding
 import com.example.android_repo_04.view.main.issue.IssueFragment
 import com.example.android_repo_04.view.main.notification.NotificationFragment
 import com.example.android_repo_04.view.profile.ProfileActivity
+import com.example.android_repo_04.viewmodel.CustomViewModelFactory
+import com.example.android_repo_04.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private var _binding: ActivityMainBinding? = null
+    private val binding: ActivityMainBinding get() = requireNotNull(_binding)
 
-    private val issueFragment : IssueFragment by lazy {
+    private lateinit var viewModel: MainViewModel
+
+    private val issueFragment: IssueFragment by lazy {
         IssueFragment()
     }
 
-    private val notificationFragment : NotificationFragment by lazy {
+    private val notificationFragment: NotificationFragment by lazy {
         NotificationFragment()
     }
 
@@ -29,27 +37,52 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager
     }
 
+    private val positionObserver: (Int) -> Unit = {
+        when (it) {
+            0 -> {
+                selectIssue()
+                showIssueFragment()
+            }
+            1 -> {
+                selectNotification()
+                showNotificationFragment()
+            }
+        }
+    }
+
     private val btnIssueClickListener: (View) -> Unit = {
-        selectIssue()
-        showIssueFragment()
+        viewModel.changePosition(0)
     }
 
     private val btnNotificationClickListener: (View) -> Unit = {
-        selectNotification()
-        showNotificationFragment()
+        viewModel.changePosition(1)
     }
 
     private val imgProfileClickListener: (View) -> Unit = {
         startActivity(Intent(this, ProfileActivity::class.java))
     }
 
-
+    /* onCreate */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        initViewModel()
+        observeData()
         setOnClickListeners()
         initFragmentManager()
+    }
+
+    private fun initViewModel() {
+        viewModel = ViewModelProvider(this,
+            CustomViewModelFactory(
+                GitHubApiRepository.getGitInstance()!!
+            )
+        )[MainViewModel::class.java]
+    }
+
+    private fun observeData() {
+        viewModel.position.observe(this, positionObserver)
     }
 
     private fun setOnClickListeners(){
@@ -59,10 +92,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFragmentManager() {
-        fragmentManager.beginTransaction().apply {
-            add(R.id.layout_main_fragment_container, notificationFragment)
-            add(R.id.layout_main_fragment_container, issueFragment)
-        }.commit()
+        if (fragmentManager.fragments.isEmpty()) {
+            fragmentManager.commit {
+                viewModel.changePosition(0)
+                add(R.id.layout_main_fragment_container, notificationFragment, getString(R.string.tag_notification_fragment))
+                add(R.id.layout_main_fragment_container, issueFragment, getString(R.string.tag_issue_fragment))
+            }
+        }
     }
 
     private fun selectIssue(){
@@ -71,8 +107,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showIssueFragment(){
-        fragmentManager.beginTransaction().hide(notificationFragment).commit()
-        fragmentManager.beginTransaction().show(issueFragment).commit()
+        fragmentManager.commit {
+            fragmentManager.findFragmentByTag(getString(R.string.tag_issue_fragment))?.let { show(fragmentManager.findFragmentByTag(getString(R.string.tag_issue_fragment))!!) }
+            fragmentManager.findFragmentByTag(getString(R.string.tag_notification_fragment))?.let { hide(fragmentManager.findFragmentByTag(getString(R.string.tag_notification_fragment))!!) }
+        }
     }
 
     private fun selectNotification(){
@@ -81,7 +119,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showNotificationFragment(){
-        fragmentManager.beginTransaction().hide(issueFragment).commit()
-        fragmentManager.beginTransaction().show(notificationFragment).commit()
+        fragmentManager.commit {
+            fragmentManager.findFragmentByTag(getString(R.string.tag_notification_fragment))?.let { show(fragmentManager.findFragmentByTag(getString(R.string.tag_notification_fragment))!!) }
+            fragmentManager.findFragmentByTag(getString(R.string.tag_issue_fragment))?.let { hide(fragmentManager.findFragmentByTag(getString(R.string.tag_issue_fragment))!!) }
+        }
     }
 }

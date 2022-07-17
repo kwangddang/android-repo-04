@@ -1,8 +1,9 @@
-@file: JvmName("ImageLoader")
 package com.example.android_repo_04.utils
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -12,7 +13,7 @@ import java.net.URL
 
 val savedAvatars = mutableMapOf<String, Bitmap>()
 
-fun urlToBitmap(url: String, completed: (Bitmap?) -> Unit) {
+fun urlToBitmap(url: String, viewModel: ViewModel, completed: (Bitmap?) -> Unit) {
     if (url == "") {
         completed(null)
         return
@@ -23,7 +24,7 @@ fun urlToBitmap(url: String, completed: (Bitmap?) -> Unit) {
         return
     }
 
-    GlobalScope.launch(Dispatchers.IO) {
+    viewModel.viewModelScope.launch(Dispatchers.IO) {
         try {
             val bitmap = BitmapFactory.decodeStream(URL(url).openStream())
             savedAvatars[url] = bitmap

@@ -1,19 +1,22 @@
 package com.example.android_repo_04.api
 
 import com.example.android_repo_04.BuildConfig
+import com.example.android_repo_04.data.db.UserToken
 import com.google.gson.GsonBuilder
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitFactory {
 
-    var loginService: GitHubLoginService? = null
-    var apiService: GitHubApiService? = null
+    private var loginService: GitHubLoginService? = null
+    private var apiService: GitHubApiService? = null
 
     fun createLoginService(): GitHubLoginService? {
-        if(loginService == null){
+        if (loginService == null) {
             loginService = Retrofit.Builder()
                 .baseUrl(BuildConfig.LOGIN_URL)
                 .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
@@ -24,15 +27,25 @@ object RetrofitFactory {
         return loginService
     }
 
-    fun createApiService(): GitHubApiService?{
-        if(apiService == null) {
+    fun createApiService(): GitHubApiService? {
+        if (apiService == null) {
             apiService = Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
-                .client(OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().apply { this.level = HttpLoggingInterceptor.Level.BODY }).build())
+                .client(OkHttpClient.Builder().addInterceptor(HeaderInterceptor()).build())
                 .build()
                 .create(GitHubApiService::class.java)
         }
         return apiService
+    }
+
+    class HeaderInterceptor() : Interceptor {
+        override fun intercept(chain: Interceptor.Chain): Response {
+            val newRequest = chain.request().newBuilder()
+                .addHeader(BuildConfig.AUTHORIZATION_HEADER, "token ${UserToken.accessToken}")
+                .addHeader(BuildConfig.ACCEPT_HEADER, BuildConfig.ACCEPT)
+                .build()
+            return chain.proceed(newRequest)
+        }
     }
 }

@@ -1,28 +1,32 @@
 package com.example.android_repo_04.view.main.notification
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.db.UserToken
 import com.example.android_repo_04.data.dto.notification.Notification
 import com.example.android_repo_04.databinding.FragmentNotificationBinding
-import com.example.android_repo_04.viewmodel.NotificationViewModel
-import com.example.android_repo_04.viewmodel.NotificationViewModelFactory
+import com.example.android_repo_04.viewmodel.CustomViewModelFactory
+import com.example.android_repo_04.viewmodel.MainViewModel
 
-class NotificationFragment: Fragment() {
+
+class NotificationFragment: Fragment(), NotificationSwipeListener {
     private var _binding: FragmentNotificationBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: NotificationViewModel
+    private lateinit var viewModel: MainViewModel
 
     private val notificationAdapter: NotificationAdapter by lazy {
-        NotificationAdapter()
+        NotificationAdapter(viewModel)
     }
 
     private val notificationObserver: (MutableList<Notification>) -> Unit = {
@@ -30,12 +34,12 @@ class NotificationFragment: Fragment() {
         notificationAdapter.notifyDataSetChanged()
     }
 
-    private val notificationRemoveObserver: (Int) -> Unit = {
-        if (it < 0) {
-            viewModel.requestNotifications("token ${UserToken.accessToken}")
-        } else {
+    private val readNotificationObserver: (Int) -> Unit = {
+        if (it >= 0) {
             notificationAdapter.notifications.removeAt(it)
             notificationAdapter.notifyItemRemoved(it)
+        } else {
+            Toast.makeText(context, requireContext().getString(R.string.toast_error_notification), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -43,8 +47,8 @@ class NotificationFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentNotificationBinding.inflate(inflater,container,false)
+    ): View {
+        _binding = FragmentNotificationBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -58,11 +62,11 @@ class NotificationFragment: Fragment() {
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProvider(this,
-            NotificationViewModelFactory(
+        viewModel = ViewModelProvider(requireActivity(),
+            CustomViewModelFactory(
                 GitHubApiRepository.getGitInstance()!!
             )
-        )[NotificationViewModel::class.java]
+        )[MainViewModel::class.java]
     }
 
     private fun initAdapter() {
@@ -70,36 +74,30 @@ class NotificationFragment: Fragment() {
     }
 
     private fun observeData() {
-        viewModel.notification.observe(viewLifecycleOwner, notificationObserver)
-        viewModel.removed.observe(viewLifecycleOwner, notificationRemoveObserver)
+        viewModel.notifications.observe(viewLifecycleOwner, notificationObserver)
+        viewModel.readNotification.observe(viewLifecycleOwner, readNotificationObserver)
     }
 
     private fun getNotifications() {
-        viewModel.removeNotification(-1)
+        viewModel.requestNotifications()
     }
 
     private fun setItemTouchHelper() {
-        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.adapterPosition
-                if (direction == ItemTouchHelper.LEFT) {
-                    viewModel.removeNotification(position)
-                }
-            }
-        })
-        itemTouchHelper.attachToRecyclerView(binding.recyclerNotifications)
+        context?.let {
+            val itemTouchHelper = ItemTouchHelper(NotificationSwipeCallback(it, this))
+            itemTouchHelper.attachToRecyclerView(binding.recyclerNotifications)
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    /**
+     * swipe callback 에서 ui 작업을 수행하기 위함
+     */
+    override fun swipe(viewHolder: RecyclerView.ViewHolder, direction: Int, position: Int) {
+        viewModel.requestToReadNotification(position)
     }
 }

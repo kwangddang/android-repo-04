@@ -1,5 +1,6 @@
 package com.example.android_repo_04.api
 
+import com.example.android_repo_04.BuildConfig
 import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.data.dto.notification.Comment
 import com.example.android_repo_04.data.dto.notification.Notification
@@ -7,38 +8,34 @@ import com.example.android_repo_04.data.dto.profile.Star
 import com.example.android_repo_04.data.dto.profile.User
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Header
+import retrofit2.http.PATCH
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface GitHubApiService {
-    @GET("issues")
+    @GET(BuildConfig.ISSUE_URL)
     suspend fun requestIssues(
-        @Header("Authorization") token: String,
-        @Query("state") state: String,
-        @Query("filter") filter: String
+        @Query(BuildConfig.STATE_PARAM) state: String,
+        @Query(BuildConfig.FILTER_PARAM) filter: String
     ): Response<Issue>
 
-    @GET("user")
-    suspend fun requestUser(
-        @Header("Authorization") token: String
-    ): Response<User>
+    @GET(BuildConfig.USER_URL)
+    suspend fun requestUser(): Response<User>
 
-    @GET("user/starred")
-    suspend fun requestUserStarred(
-        @Header("Authorization") token: String
-    ): Response<List<Star>>
+    @GET(BuildConfig.USER_STARRED_URL)
+    suspend fun requestUserStarred(): Response<List<Star>>
 
-    @GET("notifications")
-    suspend fun requestNotifications(
-        @Header("Accept") header: String = "application/json",
-        @Header("Authorization") token: String
-    ): Response<List<Notification>>
+    @GET(BuildConfig.NOTIFICATIONS_URL)
+    suspend fun requestNotifications(): Response<List<Notification>>
 
-    @GET("repos/{owner}/{repo}/comments")
+    @GET(BuildConfig.COMMENTS_URL)
     suspend fun requestComments(
-        @Path("owner") owner: String,
-        @Path("repo") repo: String,
-        @Header("Accept") header: String = "application/json"
+        @Path(BuildConfig.OWNER_PATH) owner: String,
+        @Path(BuildConfig.REPO_PATH) repo: String,
     ): Response<List<Comment>>
+
+    @PATCH(BuildConfig.NOTIFICATIONS_READ_URL)
+    suspend fun requestToReadNotification(
+        @Path(BuildConfig.ID_PATH) id: String,
+    ): Response<String>
 }

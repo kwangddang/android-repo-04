@@ -1,6 +1,7 @@
 package com.example.android_repo_04.view.main.issue
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,14 +13,14 @@ import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.db.UserToken
 import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.databinding.FragmentIssueBinding
-import com.example.android_repo_04.viewmodel.IssueViewModel
-import com.example.android_repo_04.viewmodel.IssueViewModelFactory
+import com.example.android_repo_04.viewmodel.CustomViewModelFactory
+import com.example.android_repo_04.viewmodel.MainViewModel
 
 class IssueFragment: Fragment() {
     private var _binding: FragmentIssueBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: IssueViewModel
+    private lateinit var viewModel: MainViewModel
 
     private val issueAdapter: IssueAdapter by lazy {
         IssueAdapter()
@@ -69,13 +70,13 @@ class IssueFragment: Fragment() {
         setSpinnerClickListener()
         setOnClickListener()
         observeData()
-        getIssues(OPEN)
+        getIssues(getString(R.string.state_open))
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProvider(this,
-            IssueViewModelFactory(GitHubApiRepository.getGitInstance()!!)
-        )[IssueViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity(),
+            CustomViewModelFactory(GitHubApiRepository.getGitInstance()!!)
+        )[MainViewModel::class.java]
     }
 
     private fun initRecyclerAdapter() {
@@ -103,15 +104,15 @@ class IssueFragment: Fragment() {
     }
 
     private fun getIssues(state: String) {
-        viewModel.requestIssues("token ${UserToken.accessToken}", state)
+        viewModel.requestIssues(state)
     }
 
     private fun getSelectedIssues(position: Int) {
         if (spinnerAdapter.selectedPosition != position) {
             when (position) {
-                0 -> getIssues(OPEN)
-                1 -> getIssues(CLOSED)
-                2 -> getIssues(ALL)
+                0 -> getIssues(getString(R.string.state_open))
+                1 -> getIssues(getString(R.string.state_closed))
+                2 -> getIssues(getString(R.string.state_all))
             }
         }
     }
@@ -119,11 +120,5 @@ class IssueFragment: Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object{
-        const val OPEN = "open"
-        const val CLOSED = "closed"
-        const val ALL = "all"
     }
 }
