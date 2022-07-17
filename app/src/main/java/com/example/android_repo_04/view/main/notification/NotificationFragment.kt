@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -15,7 +16,8 @@ import com.example.android_repo_04.databinding.FragmentNotificationBinding
 import com.example.android_repo_04.viewmodel.MainViewModel
 import com.example.android_repo_04.viewmodel.MainViewModelFactory
 
-class NotificationFragment: Fragment() {
+
+class NotificationFragment: Fragment(), NotificationSwipeListener {
     private var _binding: FragmentNotificationBinding? = null
     private val binding get() = _binding!!
 
@@ -30,6 +32,15 @@ class NotificationFragment: Fragment() {
         notificationAdapter.notifyDataSetChanged()
     }
 
+    private val readNotificationObserver: (Int) -> Unit = {
+        if (it >= 0) {
+            notificationAdapter.notifications.removeAt(it)
+            notificationAdapter.notifyItemRemoved(it)
+        } else {
+            Toast.makeText(context, "Notification을 읽는 데 실패하였습니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,11 +52,11 @@ class NotificationFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        initViewModel()
-//        initAdapter()
-//        observeData()
-//        getNotifications()
-//        setItemTouchHelper()
+        initViewModel()
+        initAdapter()
+        observeData()
+        getNotifications()
+        setItemTouchHelper()
     }
 
     private fun initViewModel() {
@@ -62,6 +73,7 @@ class NotificationFragment: Fragment() {
 
     private fun observeData() {
         viewModel.notifications.observe(viewLifecycleOwner, notificationObserver)
+        viewModel.readNotification.observe(viewLifecycleOwner, readNotificationObserver)
     }
 
     private fun getNotifications() {
@@ -69,30 +81,19 @@ class NotificationFragment: Fragment() {
     }
 
     private fun setItemTouchHelper() {
-        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.adapterPosition
-                if (direction == ItemTouchHelper.LEFT) {
-//                    viewModel.requestToReadNotification(position, "token ${UserToken.accessToken}") {
-//                        notificationAdapter.notifications.removeAt(position)
-//                        notificationAdapter.notifyItemRemoved(position)
-//                    }
-                }
-            }
-        })
+        val itemTouchHelper = ItemTouchHelper(NotificationSwipeCallback(this))
         itemTouchHelper.attachToRecyclerView(binding.recyclerNotifications)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    /**
+     * swipe callback 에서 ui 작업을 수행하기 위함
+     */
+    override fun swipe(viewHolder: RecyclerView.ViewHolder, direction: Int, position: Int) {
+        viewModel.requestToReadNotification(position, "token ${UserToken.accessToken}")
     }
 }
