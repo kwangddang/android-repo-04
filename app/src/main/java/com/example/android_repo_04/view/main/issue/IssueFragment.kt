@@ -36,9 +36,9 @@ class IssueFragment: Fragment() {
 
     private val spinnerItemSelectedListener = object: AdapterView.OnItemSelectedListener{
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            spinnerAdapter.selectedPosition = position
             if (viewModel.selectedIssue != position) {
                 viewModel.selectedIssue = position
-                spinnerAdapter.selectedPosition = position
                 getSelectedIssues(position)
             }
         }
