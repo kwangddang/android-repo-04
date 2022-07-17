@@ -7,6 +7,10 @@
         <variable
             name="notification"
             type="com.example.android_repo_04.data.dto.notification.Notification" />
+
+        <variable
+            name="vm"
+            type="androidx.lifecycle.ViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,6 +25,7 @@
             android:layout_height="24dp"
             android:background="@drawable/ic_user"
             bind:notificationOwnerAvatar="@{notification.repository.owner.avatarUrl}"
+            bind:viewModel="@{vm}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
@@ -71,6 +76,7 @@
             android:layout_marginTop="8dp"
             android:gravity="center"
             bind:notificationComments="@{notification.repository.full_name}"
+            bind:viewModel="@{vm}"
             app:layout_constraintTop_toBottomOf="@id/text_notification_update"
             app:layout_constraintEnd_toEndOf="@id/text_notification_update"/>
 
