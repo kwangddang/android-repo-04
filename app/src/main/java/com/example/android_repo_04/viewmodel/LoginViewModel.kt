@@ -23,12 +23,3 @@ class LoginViewModel(private val gitHubLoginRepository: GitHubLoginRepository) :
         }
     }
 }
-
-class LoginViewModelFactory(private val gitHubRepository: GitHubLoginRepository): ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
-            return LoginViewModel(gitHubRepository) as T
-        }
-        throw IllegalAccessException()
-    }
-}

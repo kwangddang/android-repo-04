@@ -39,12 +39,3 @@ class ProfileViewModel(private val gitHubApiRepository: GitHubApiRepository): Vi
         }
     }
 }
-
-class ProfileViewModelFactory(private val gitHubApiRepository: GitHubApiRepository): ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
-        if(modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
-            return ProfileViewModel(gitHubApiRepository) as T
-        }
-        throw IllegalAccessException()
-    }
-}

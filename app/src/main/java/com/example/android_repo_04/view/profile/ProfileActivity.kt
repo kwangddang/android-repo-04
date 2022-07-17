@@ -7,8 +7,8 @@ import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.db.UserToken
 import com.example.android_repo_04.databinding.ActivityProfileBinding
+import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.ProfileViewModel
-import com.example.android_repo_04.viewmodel.ProfileViewModelFactory
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -29,7 +29,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun initViewModel() {
         viewModel = ViewModelProvider(this,
-            ProfileViewModelFactory(GitHubApiRepository.getGitInstance()!!)
+            CustomViewModelFactory(GitHubApiRepository.getGitInstance()!!)
         )[ProfileViewModel::class.java]
     }
 

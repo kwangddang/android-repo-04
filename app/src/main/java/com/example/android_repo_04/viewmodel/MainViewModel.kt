@@ -61,12 +61,3 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
         }
     }
 }
-
-class MainViewModelFactory(private val gitHubApiRepository: GitHubApiRepository): ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-            return MainViewModel(gitHubApiRepository) as T
-        }
-        throw IllegalAccessException()
-    }
-}

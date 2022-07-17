@@ -1,6 +1,7 @@
 package com.example.android_repo_04.view.main.issue
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +13,8 @@ import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.db.UserToken
 import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.databinding.FragmentIssueBinding
+import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.MainViewModel
-import com.example.android_repo_04.viewmodel.MainViewModelFactory
 
 class IssueFragment: Fragment() {
     private var _binding: FragmentIssueBinding? = null
@@ -73,8 +74,8 @@ class IssueFragment: Fragment() {
     }
 
     private fun initViewModel() {
-        viewModel = ViewModelProvider(this,
-            MainViewModelFactory(GitHubApiRepository.getGitInstance()!!)
+        viewModel = ViewModelProvider(requireActivity(),
+            CustomViewModelFactory(GitHubApiRepository.getGitInstance()!!)
         )[MainViewModel::class.java]
     }
 

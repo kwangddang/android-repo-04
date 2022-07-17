@@ -14,8 +14,8 @@ import com.example.android_repo_04.api.GitHubLoginRepository
 import com.example.android_repo_04.data.db.UserToken
 import com.example.android_repo_04.databinding.ActivityLoginBinding
 import com.example.android_repo_04.view.main.MainActivity
+import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.LoginViewModel
-import com.example.android_repo_04.viewmodel.LoginViewModelFactory
 
 class LoginActivity : AppCompatActivity() {
 
@@ -57,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initViewModel() {
         viewModel = ViewModelProvider(this,
-            LoginViewModelFactory(GitHubLoginRepository.getGitInstance()!!)
+            CustomViewModelFactory(GitHubLoginRepository.getGitInstance()!!)
         )[LoginViewModel::class.java]
     }
 
