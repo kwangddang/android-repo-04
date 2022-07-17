@@ -1,12 +1,10 @@
 package com.example.android_repo_04.viewmodel
 
 import androidx.lifecycle.*
-import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.data.dto.notification.Notification
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import com.example.android_repo_04.utils.DataResponse
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewModel() {
@@ -29,9 +27,9 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
 
     fun requestNotifications() {
         viewModelScope.launch {
-            gitHubApiRepository.requestNotifications() {
-                if (it != null) {
-                    _notifications.postValue(it.toMutableList())
+            gitHubApiRepository.requestNotifications() { response ->
+                if (response is DataResponse.Success) {
+                    _notifications.postValue(response.data?.toMutableList())
                 } else {
                     //TODO 에러처리
                 }
@@ -41,10 +39,8 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
 
     fun requestToReadNotification(position: Int) {
         viewModelScope.launch {
-            gitHubApiRepository.requestToReadNotification(
-                _notifications.value!![position].id,
-            ) {
-                if (it == "success") {
+            gitHubApiRepository.requestToReadNotification(notifications.value!![position].id) { response ->
+                if (response is DataResponse.Success) {
                     _readNotification.postValue(position)
                 } else {
                     _readNotification.postValue(-1)
@@ -55,9 +51,9 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
 
     fun requestIssues(state: String = "all", filter: String = "all"){
         viewModelScope.launch {
-            gitHubApiRepository.requestIssues(state, filter) {
-                if (it != null){
-                    _issue.postValue(it)
+            gitHubApiRepository.requestIssues(state, filter) { response ->
+                if(response is DataResponse.Success) {
+                    _issue.postValue(response.data!!)
                 } else {
                     //TODO 에러처리
                 }

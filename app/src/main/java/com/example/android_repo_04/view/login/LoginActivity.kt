@@ -33,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private val tokenObserver: (String) -> Unit = { token ->
-        if (token == "error") {
+        if (token.length < 5 && token != "") {
             Toast.makeText(this, "앱의 상태 정보가 정확하지 않습니다. 개발자에게 문의 바랍니다.", Toast.LENGTH_SHORT).show()
             binding.apply {
                 progressLoginLogin.visibility = View.INVISIBLE
