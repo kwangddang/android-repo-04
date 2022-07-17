@@ -26,15 +26,15 @@ class LoginActivity : AppCompatActivity() {
     private val btnLoginClickListener: (View) -> Unit = {
         val loginUri = Uri.parse(BuildConfig.LOGIN_URL).buildUpon() // Login URL을 가진 Uri.Builder Nested 객체 생성
             .appendPath(getString(R.string.login_path_auth))
-            .appendQueryParameter("client_id", BuildConfig.CLIENT_ID)
-            .appendQueryParameter("scope", getString(R.string.login_query_scope))
+            .appendQueryParameter(BuildConfig.CLIENT_ID_PARAM, BuildConfig.CLIENT_ID)
+            .appendQueryParameter(BuildConfig.SCOPE_PARAM, getString(R.string.login_query_scope))
             .build()
         startActivity(Intent(Intent.ACTION_VIEW, loginUri))
     }
 
     private val tokenObserver: (String) -> Unit = { token ->
         if (token.length < 5 && token != "") {
-            Toast.makeText(this, "앱의 상태 정보가 정확하지 않습니다. 개발자에게 문의 바랍니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.error_token), Toast.LENGTH_SHORT).show()
             binding.apply {
                 progressLoginLogin.visibility = View.INVISIBLE
                 btnLoginLogin.visibility = View.VISIBLE

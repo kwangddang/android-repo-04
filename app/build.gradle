@@ -48,6 +48,7 @@ android {
     def client_id_param = properties.getProperty("CLIENT_ID_PARAM")
     def client_secret_param = properties.getProperty("CLIENT_SECRET_PARAM")
     def code_param = properties.getProperty("CODE_PARAM")
+    def scope_param = properties.getProperty("SCOPE_PARAM")
 
     // path
     def owner_path = properties.getProperty("OWNER_PATH")
@@ -68,6 +69,9 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", 'CLIENT_ID', client_id
         buildConfigField "String", 'CLIENT_SECRET', client_secret
+        buildConfigField "String", 'ACCEPT', accept
+        manifestPlaceholders = [HOST: host]
+
         buildConfigField "String", 'LOGIN_URL', login_url
         buildConfigField "String", 'BASE_URL', base_url
         buildConfigField "String", 'TOKEN_URL', token_url
@@ -77,18 +81,20 @@ android {
         buildConfigField "String", 'NOTIFICATIONS_URL', notifications_url
         buildConfigField "String", 'NOTIFICATIONS_READ_URL', notifications_read_url
         buildConfigField "String", 'COMMENTS_URL', comments_url
+
         buildConfigField "String", 'STATE_PARAM', state_param
         buildConfigField "String", 'FILTER_PARAM', filter_param
         buildConfigField "String", 'CLIENT_ID_PARAM', client_id_param
         buildConfigField "String", 'CLIENT_SECRET_PARAM', client_secret_param
         buildConfigField "String", 'CODE_PARAM', code_param
+        buildConfigField "String", 'SCOPE_PARAM', scope_param
+
         buildConfigField "String", 'OWNER_PATH', owner_path
         buildConfigField "String", 'REPO_PATH', repo_path
         buildConfigField "String", 'ID_PATH', id_path
+
         buildConfigField "String", 'ACCEPT_HEADER', accept_header
         buildConfigField "String", 'AUTHORIZATION_HEADER', authorization_header
-        buildConfigField "String", 'ACCEPT', accept
-        manifestPlaceholders = [HOST: host]
     }
 
     buildTypes {

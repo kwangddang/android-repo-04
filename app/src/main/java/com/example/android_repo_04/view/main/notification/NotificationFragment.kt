@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.db.UserToken
 import com.example.android_repo_04.data.dto.notification.Notification
@@ -37,7 +38,7 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
             notificationAdapter.notifications.removeAt(it)
             notificationAdapter.notifyItemRemoved(it)
         } else {
-            Toast.makeText(context, "Notification을 읽는 데 실패하였습니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, requireContext().getString(R.string.toast_error_notification), Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -95,8 +95,8 @@ class MainActivity : AppCompatActivity() {
         if (fragmentManager.fragments.isEmpty()) {
             fragmentManager.commit {
                 viewModel.changePosition(0)
-                add(R.id.layout_main_fragment_container, notificationFragment, "notification")
-                add(R.id.layout_main_fragment_container, issueFragment, "issue")
+                add(R.id.layout_main_fragment_container, notificationFragment, getString(R.string.tag_notification_fragment))
+                add(R.id.layout_main_fragment_container, issueFragment, getString(R.string.tag_issue_fragment))
             }
         }
     }
@@ -108,8 +108,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun showIssueFragment(){
         fragmentManager.commit {
-            fragmentManager.findFragmentByTag("issue")?.let { show(fragmentManager.findFragmentByTag("issue")!!) }
-            fragmentManager.findFragmentByTag("notification")?.let { hide(fragmentManager.findFragmentByTag("notification")!!) }
+            fragmentManager.findFragmentByTag(getString(R.string.tag_issue_fragment))?.let { show(fragmentManager.findFragmentByTag(getString(R.string.tag_issue_fragment))!!) }
+            fragmentManager.findFragmentByTag(getString(R.string.tag_notification_fragment))?.let { hide(fragmentManager.findFragmentByTag(getString(R.string.tag_notification_fragment))!!) }
         }
     }
 
@@ -120,8 +120,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun showNotificationFragment(){
         fragmentManager.commit {
-            fragmentManager.findFragmentByTag("notification")?.let { show(fragmentManager.findFragmentByTag("notification")!!) }
-            fragmentManager.findFragmentByTag("issue")?.let { hide(fragmentManager.findFragmentByTag("issue")!!) }
+            fragmentManager.findFragmentByTag(getString(R.string.tag_notification_fragment))?.let { show(fragmentManager.findFragmentByTag(getString(R.string.tag_notification_fragment))!!) }
+            fragmentManager.findFragmentByTag(getString(R.string.tag_issue_fragment))?.let { hide(fragmentManager.findFragmentByTag(getString(R.string.tag_issue_fragment))!!) }
         }
     }
 }
