@@ -1,11 +1,9 @@
 package com.example.android_repo_04.view.profile
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
-import com.example.android_repo_04.data.db.UserToken
 import com.example.android_repo_04.databinding.ActivityProfileBinding
 import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.ProfileViewModel

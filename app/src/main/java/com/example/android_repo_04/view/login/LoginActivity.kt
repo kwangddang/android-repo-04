@@ -2,16 +2,15 @@ package com.example.android_repo_04.view.login
 
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.android_repo_04.BuildConfig
 import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubLoginRepository
-import com.example.android_repo_04.data.db.UserToken
+import com.example.android_repo_04.api.RetrofitFactory
 import com.example.android_repo_04.databinding.ActivityLoginBinding
 import com.example.android_repo_04.view.main.MainActivity
 import com.example.android_repo_04.viewmodel.CustomViewModelFactory
@@ -40,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
                 btnLoginLogin.visibility = View.VISIBLE
             }
         } else if (token != "") {
-            UserToken.accessToken = token
+            RetrofitFactory.accessToken = token
             startMainActivity()
         }
     }
