@@ -6,6 +6,7 @@ import com.example.android_repo_04.data.dto.notification.Comment
 import com.example.android_repo_04.data.dto.notification.Notification
 import com.example.android_repo_04.data.dto.profile.Star
 import com.example.android_repo_04.data.dto.profile.User
+import com.example.android_repo_04.data.dto.search.Search
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.PATCH
@@ -38,4 +39,10 @@ interface GitHubApiService {
     suspend fun requestToReadNotification(
         @Path(BuildConfig.ID_PATH) id: String,
     ): Response<String>
+
+    @GET("search/repositories")
+    suspend fun requestSearchRepositories(
+        @Query("q") query: String,
+        @Query("page") page: Int
+    ): Response<Search>
 }
