@@ -78,6 +78,8 @@
                 android:textColor="@color/white"
                 android:textColorHint="@color/grey"
                 android:textSize="16sp"
+                android:inputType="text"
+                android:imeOptions="actionDone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/img_search_cancel"
                 app:layout_constraintStart_toEndOf="@id/img_search_search"

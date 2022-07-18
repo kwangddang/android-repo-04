@@ -2,6 +2,7 @@ package com.example.android_repo_04.view.search
 
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.android_repo_04.R
@@ -58,6 +59,7 @@ class SearchActivity : AppCompatActivity() {
         initBinding()
         initAdapter()
         setOnClickListeners()
+        setOnEditorActionListener()
         observeData()
     }
 
@@ -78,6 +80,16 @@ class SearchActivity : AppCompatActivity() {
 
     private fun setOnClickListeners() {
         binding.imgSearchSearch.setOnClickListener(imgSearchClickListener)
+    }
+
+    private fun setOnEditorActionListener() {
+        binding.editSearchSearch.setOnEditorActionListener { v, actionId, event ->
+            if(actionId == EditorInfo.IME_ACTION_DONE) {
+                getSearchItems(v.text.toString())
+                true
+            }
+            false
+        }
     }
 
     private fun observeData() {
