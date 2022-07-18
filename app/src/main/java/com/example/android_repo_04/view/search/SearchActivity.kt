@@ -32,7 +32,7 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private val editorActionListener: (TextView, Int, KeyEvent) -> Boolean = { view, actionId, event ->
+    private val editorActionListener: (TextView, Int, KeyEvent?) -> Boolean = { view, actionId, event ->
         if(actionId == EditorInfo.IME_ACTION_DONE) {
             binding.progressSearchLoading.visibility = View.VISIBLE
             getSearchItems(view.text.toString())
