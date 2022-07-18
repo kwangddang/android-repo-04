@@ -56,6 +56,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val imgProfileClickListener: (View) -> Unit = {
+        val intent = Intent(this, ProfileActivity::class.java)
+        intent.putExtra(getString(R.string.user_info),viewModel.user.value)
         startActivity(Intent(this, ProfileActivity::class.java))
     }
 
@@ -69,15 +71,22 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initViewModel()
+        initBinding()
         observeData()
         setOnClickListeners()
         initFragmentManager()
         getIssues()
         getNotifications()
+        getUser()
     }
 
     private fun initViewModel() {
         viewModel = MainViewModel.getInstance(GitHubApiRepository.getGitInstance()!!)
+    }
+
+    private fun initBinding() {
+        binding.vm = viewModel
+        binding.lifecycleOwner = this
     }
 
     private fun observeData() {
@@ -109,6 +118,10 @@ class MainActivity : AppCompatActivity() {
     private fun getNotifications() {
         if (viewModel.notifications.value == null)
             viewModel.requestNotifications()
+    }
+
+    private fun getUser() {
+        viewModel.requestUser()
     }
 
     private fun selectIssue(){

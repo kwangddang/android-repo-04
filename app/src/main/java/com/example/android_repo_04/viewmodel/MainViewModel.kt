@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.data.dto.notification.Notification
+import com.example.android_repo_04.data.dto.profile.User
 import com.example.android_repo_04.utils.DataResponse
 import kotlinx.coroutines.launch
 
@@ -29,6 +30,8 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
 
     private val _issue = MutableLiveData<Issue>()
     val issue: LiveData<Issue> get() = _issue
+
+    val user = MutableLiveData<User>()
 
     var selectedIssue = 0
 
@@ -61,6 +64,18 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
             gitHubApiRepository.requestIssues(state, filter) { response ->
                 if(response is DataResponse.Success) {
                     _issue.postValue(response.data!!)
+                } else {
+                    //TODO 에러처리
+                }
+            }
+        }
+    }
+
+    fun requestUser() {
+        viewModelScope.launch {
+            gitHubApiRepository.requestUser() { response ->
+                if(response is DataResponse.Success) {
+                    user.postValue(response.data!!)
                 } else {
                     //TODO 에러처리
                 }

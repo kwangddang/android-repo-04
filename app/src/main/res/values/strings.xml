@@ -18,6 +18,8 @@
 
     <!--class-->
 
+    <string name="user_info">userInfo</string>
+
     <string name="code">code</string>
     <string name="login_path_auth">authorize</string>
     <string name="login_query_scope">user,repo,notifications</string>
