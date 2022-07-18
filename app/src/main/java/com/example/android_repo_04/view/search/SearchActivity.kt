@@ -22,6 +22,7 @@ class SearchActivity : AppCompatActivity() {
     private val searchItemsObserver: (Search) -> Unit = { search ->
         binding.progressSearchLoading.visibility = View.INVISIBLE
         searchAdapter.replaceItem(search)
+        binding.refreshSearch.isRefreshing = false
     }
 
     private val searchTextObserver: (String) -> Unit = { text ->
@@ -57,6 +58,7 @@ class SearchActivity : AppCompatActivity() {
         initBinding()
         initAdapter()
         setOnClickListeners()
+        setRefreshListener()
         setOnEditorActionListener()
         observeData()
     }
@@ -80,6 +82,12 @@ class SearchActivity : AppCompatActivity() {
         binding.imgSearchSearch.setOnClickListener(imgSearchClickListener)
         binding.imgSearchBack.setOnClickListener { onBackPressed() }
         binding.imgSearchCancel.setOnClickListener { binding.editSearchSearch.setText("") }
+    }
+
+    private fun setRefreshListener() {
+        binding.refreshSearch.setOnRefreshListener {
+            getSearchItems(binding.editSearchSearch.text.toString())
+        }
     }
 
     private fun setOnEditorActionListener() {
