@@ -19,9 +19,20 @@ class SearchViewModel(private val repository: GitHubApiRepository): ViewModel() 
     fun requestSearchRepositories(query: String, page: Int = 1) {
         viewModelScope.launch {
             repository.requestSearchRepositories(query,page) { response ->
-                if(response is DataResponse.Success) {
-                    _searchItems.postValue(response.data!!)
-                } else if(response is DataResponse.Error) {
+                if (response is DataResponse.Success) {
+                    if (page == 1) {
+                        _searchItems.postValue(response.data!!)
+                    } else {
+                        val tempSearch = searchItems.value
+                        tempSearch?.let {
+                            val tempItems = it.items.toMutableList()
+                            tempItems.addAll(response.data!!.items)
+                            _searchItems.postValue(
+                                Search(tempItems, it.total_count)
+                            )
+                        }
+                    }
+                } else if (response is DataResponse.Error) {
 
                 }
             }

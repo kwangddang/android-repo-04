@@ -14,7 +14,7 @@ import com.example.android_repo_04.databinding.ActivitySearchBinding
 import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.SearchViewModel
 
-class SearchActivity : AppCompatActivity() {
+class SearchActivity : AppCompatActivity(), SearchRefreshListener {
 
     private lateinit var viewModel: SearchViewModel
     private lateinit var binding: ActivitySearchBinding
@@ -35,7 +35,7 @@ class SearchActivity : AppCompatActivity() {
 
     private val editorActionListener: (TextView, Int, KeyEvent?) -> Boolean = { view, actionId, event ->
         if(actionId == EditorInfo.IME_ACTION_DONE) {
-            binding.progressSearchLoading.visibility = View.VISIBLE
+            showProgress()
             getSearchItems(view.text.toString())
             true
         }
@@ -60,6 +60,7 @@ class SearchActivity : AppCompatActivity() {
         setOnClickListeners()
         setRefreshListener()
         setOnEditorActionListener()
+        setOnScrollListener()
         observeData()
     }
 
@@ -94,6 +95,12 @@ class SearchActivity : AppCompatActivity() {
         binding.editSearchSearch.setOnEditorActionListener(editorActionListener)
     }
 
+    private fun setOnScrollListener() {
+        binding.recyclerSearch.addOnScrollListener(
+            SearchScrollListener(viewModel, this)
+        )
+    }
+
     private fun observeData() {
         viewModel.searchItems.observe(this, searchItemsObserver)
         viewModel.searchText.observe(this, searchTextObserver)
@@ -123,5 +130,9 @@ class SearchActivity : AppCompatActivity() {
             textSearchEmptyTitle.visibility = View.INVISIBLE
             textSearchEmptyDescription.visibility = View.INVISIBLE
         }
+    }
+
+    override fun showProgress() {
+        binding.progressSearchLoading.visibility = View.VISIBLE
     }
 }
