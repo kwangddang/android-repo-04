@@ -80,6 +80,8 @@ class SearchActivity : AppCompatActivity() {
 
     private fun setOnClickListeners() {
         binding.imgSearchSearch.setOnClickListener(imgSearchClickListener)
+        binding.imgSearchBack.setOnClickListener { onBackPressed() }
+        binding.imgSearchCancel.setOnClickListener { binding.editSearchSearch.setText("") }
     }
 
     private fun setOnEditorActionListener() {
