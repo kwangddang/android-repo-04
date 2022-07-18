@@ -2,6 +2,8 @@ package com.example.android_repo_04.view.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,14 +12,14 @@ import com.example.android_repo_04.data.dto.search.Search
 import com.example.android_repo_04.data.dto.search.SearchItem
 import com.example.android_repo_04.databinding.ItemSearchBinding
 
-class SearchAdapter: ListAdapter<SearchItem, SearchViewHolder>(diffUtil){
+class SearchAdapter(private val viewModel: ViewModel): ListAdapter<SearchItem, SearchViewHolder>(diffUtil){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         return SearchViewHolder(ItemSearchBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), viewModel)
     }
 
     fun replaceItem(item: Search) {
@@ -36,7 +38,8 @@ class SearchAdapter: ListAdapter<SearchItem, SearchViewHolder>(diffUtil){
 }
 
 class SearchViewHolder(private val binding: ItemSearchBinding): RecyclerView.ViewHolder(binding.root) {
-    fun bind(searchItem: SearchItem) {
+    fun bind(searchItem: SearchItem, viewModel: ViewModel) {
         binding.searchItem = searchItem
+        binding.vm = viewModel
     }
 }

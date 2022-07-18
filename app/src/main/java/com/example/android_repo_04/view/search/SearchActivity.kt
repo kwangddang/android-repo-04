@@ -1,7 +1,9 @@
 package com.example.android_repo_04.view.search
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.android_repo_04.R
@@ -21,7 +23,11 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private val searchAdapter: SearchAdapter by lazy {
-        SearchAdapter()
+        SearchAdapter(viewModel)
+    }
+
+    private val imgSearchClickListener: (View) -> Unit = {
+        getSearchItems(binding.editSearchSearch.text.toString())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,8 +36,8 @@ class SearchActivity : AppCompatActivity() {
         setContentView(binding.root)
         initViewModel()
         initAdapter()
+        setOnClickListeners()
         observeData()
-        getSearchItems()
     }
 
     private fun initViewModel() {
@@ -44,11 +50,15 @@ class SearchActivity : AppCompatActivity() {
         binding.recyclerSearch.adapter = searchAdapter
     }
 
+    private fun setOnClickListeners() {
+        binding.imgSearchSearch.setOnClickListener(imgSearchClickListener)
+    }
+
     private fun observeData() {
         viewModel.searchItems.observe(this, searchItemsObserver)
     }
 
-    private fun getSearchItems() {
-        viewModel.requestSearchRepositories("kotlin")
+    private fun getSearchItems(query: String) {
+        viewModel.requestSearchRepositories(query)
     }
 }

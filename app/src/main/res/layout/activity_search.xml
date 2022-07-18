@@ -35,12 +35,37 @@
             android:textSize="16sp" />
     </androidx.appcompat.widget.Toolbar>
 
-    <EditText
-        android:id="@+id/edit_search_search"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/layout_search_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/background_round_navy"
+        android:layout_marginHorizontal="24dp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
+        android:gravity="center_vertical"
         app:layout_constraintTop_toBottomOf="@id/layout_search_toolbar"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/edit_search_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"/>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/img_search_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/icon_ripple_effect"
+            android:src="@drawable/ic_search"
+            app:layout_constraintTop_toTopOf="@id/edit_search_search"
+            app:layout_constraintStart_toEndOf="@id/edit_search_search"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_search"
@@ -49,9 +74,8 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_search_search"
+        app:layout_constraintTop_toBottomOf="@id/layout_search_search"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/item_search"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
