@@ -117,9 +117,6 @@ dependencies {
     //CircleImageView
     implementation "de.hdodenhof:circleimageview:${circle_imageview_version}"
 
-    //KotPref
-    implementation "com.chibatching.kotpref:kotpref:${kotpref_version}"
-
     //Glide
     implementation "com.github.bumptech.glide:glide:${glide_version}"
     annotationProcessor "com.github.bumptech.glide:compiler:${glide_version}"

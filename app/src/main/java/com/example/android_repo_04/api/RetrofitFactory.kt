@@ -1,7 +1,6 @@
 package com.example.android_repo_04.api
 
 import com.example.android_repo_04.BuildConfig
-import com.example.android_repo_04.data.db.UserToken
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -14,6 +13,7 @@ object RetrofitFactory {
 
     private var loginService: GitHubLoginService? = null
     private var apiService: GitHubApiService? = null
+    var accessToken: String = ""
 
     fun createLoginService(): GitHubLoginService? {
         if (loginService == null) {
@@ -42,7 +42,7 @@ object RetrofitFactory {
     class HeaderInterceptor() : Interceptor {
         override fun intercept(chain: Interceptor.Chain): Response {
             val newRequest = chain.request().newBuilder()
-                .addHeader(BuildConfig.AUTHORIZATION_HEADER, "token ${UserToken.accessToken}")
+                .addHeader(BuildConfig.AUTHORIZATION_HEADER, "token $accessToken")
                 .addHeader(BuildConfig.ACCEPT_HEADER, BuildConfig.ACCEPT)
                 .build()
             return chain.proceed(newRequest)
