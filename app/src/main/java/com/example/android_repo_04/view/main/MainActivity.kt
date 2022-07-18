@@ -15,6 +15,7 @@ import com.example.android_repo_04.databinding.ActivityMainBinding
 import com.example.android_repo_04.view.main.issue.IssueFragment
 import com.example.android_repo_04.view.main.notification.NotificationFragment
 import com.example.android_repo_04.view.profile.ProfileActivity
+import com.example.android_repo_04.view.search.SearchActivity
 import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.MainViewModel
 
@@ -62,6 +63,10 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, ProfileActivity::class.java))
     }
 
+    private val imgSearchClickListener: (View) -> Unit = {
+        startActivity(Intent(this,SearchActivity::class.java))
+    }
+
     /* onCreate */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,6 +92,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnMainIssue.setOnClickListener(btnIssueClickListener)
         binding.btnMainNotification.setOnClickListener(btnNotificationClickListener)
         binding.imgMainProfile.setOnClickListener(imgProfileClickListener)
+        binding.imgMainSearch.setOnClickListener(imgSearchClickListener)
     }
 
     private fun initFragmentManager() {

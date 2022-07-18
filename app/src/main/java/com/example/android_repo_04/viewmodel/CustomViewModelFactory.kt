@@ -13,6 +13,8 @@ class CustomViewModelFactory(private val repository: Any) : ViewModelProvider.Fa
             MainViewModel(repository as GitHubApiRepository) as T
         } else if (modelClass.isAssignableFrom(ProfileViewModel::class.java)) {
             ProfileViewModel(repository as GitHubApiRepository) as T
+        } else if (modelClass.isAssignableFrom(SearchViewModel::class.java)) {
+            SearchViewModel(repository as GitHubApiRepository) as T
         } else {
             super.create(modelClass)
         }

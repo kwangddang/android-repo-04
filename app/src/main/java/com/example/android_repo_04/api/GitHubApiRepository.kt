@@ -3,6 +3,7 @@ package com.example.android_repo_04.api
 import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.data.dto.notification.Notification
 import com.example.android_repo_04.data.dto.profile.User
+import com.example.android_repo_04.data.dto.search.Search
 import com.example.android_repo_04.utils.DataResponse
 
 class GitHubApiRepository {
@@ -59,6 +60,16 @@ class GitHubApiRepository {
             callback(DataResponse.Error(errorCode = response.code()))
         }
     }
+
+    suspend fun requestSearchRepositories(query: String, page: Int, callback: (DataResponse<Search>) -> Unit) {
+        val response = RetrofitFactory.createApiService()!!.requestSearchRepositories(query,page)
+        if(response.isSuccessful) {
+            callback(DataResponse.Success(data = response.body()))
+        } else {
+            callback(DataResponse.Error(errorCode = response.code()))
+        }
+    }
+
 
     companion object {
         private var instance: GitHubApiRepository? = null
