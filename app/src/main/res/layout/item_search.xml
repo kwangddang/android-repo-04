@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_item_search_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_item_search_profile"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_user"/>
+
+    <TextView
+        android:id="@+id/text_item_search_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/grey"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/img_item_search_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/img_item_search_profile"
+        app:layout_constraintBottom_toBottomOf="@id/img_item_search_profile"
+        tools:text="JetBrains"/>
+
+    <TextView
+        android:id="@+id/text_item_search_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintStart_toStartOf="@id/text_item_search_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_item_search_name"
+        tools:text="Kotlin"/>
+
+    <TextView
+        android:id="@+id/text_item_search_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:maxLines="3"
+        android:ellipsize="end"
+        app:layout_constraintStart_toStartOf="@+id/text_item_search_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_item_search_title"
+        tools:text="The Kotlin Programming Language"/>
+
+    <ImageView
+        android:id="@+id/img_item_search_star"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:src="@drawable/ic_star_filled"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="@id/text_item_search_description"
+        app:layout_constraintTop_toBottomOf="@id/text_item_search_description"/>
+
+    <TextView
+        android:id="@+id/text_item_search_star_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/grey"
+        android:textSize="16sp"
+        android:paddingHorizontal="4dp"
+        app:layout_constraintStart_toEndOf="@id/img_item_search_star"
+        app:layout_constraintTop_toTopOf="@id/img_item_search_star"
+        app:layout_constraintBottom_toBottomOf="@id/img_item_search_star"
+        tools:text="41.4k"/>
+
+    <ImageView
+        android:id="@+id/img_item_search_language"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:src="@drawable/ic_user"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/text_item_search_star_count"
+        app:layout_constraintTop_toTopOf="@id/img_item_search_star"
+        app:layout_constraintBottom_toBottomOf="@id/img_item_search_star"/>
+
+    <TextView
+        android:id="@+id/text_item_search_language_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/grey"
+        android:textSize="16sp"
+        android:paddingHorizontal="4dp"
+        app:layout_constraintStart_toEndOf="@id/img_item_search_language"
+        app:layout_constraintTop_toTopOf="@id/img_item_search_language"
+        app:layout_constraintBottom_toBottomOf="@id/img_item_search_language"
+        tools:text="Kotlin"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
