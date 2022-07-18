@@ -10,6 +10,9 @@ import com.example.android_repo_04.utils.DataResponse
 import kotlinx.coroutines.launch
 
 class SearchViewModel(private val repository: GitHubApiRepository): ViewModel() {
+
+    var searchText = MutableLiveData("")
+
     private val _searchItems = MutableLiveData<Search>()
     val searchItems: LiveData<Search> get() = _searchItems
 

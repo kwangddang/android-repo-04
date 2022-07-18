@@ -1,8 +1,6 @@
 package com.example.android_repo_04.view.search
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -22,6 +20,28 @@ class SearchActivity : AppCompatActivity() {
         searchAdapter.replaceItem(search)
     }
 
+    private val searchTextObserver: (String) -> Unit = { text ->
+        if(text.isNotEmpty()) {
+            binding.apply {
+                layoutSearchInnerContainer.setBackgroundResource(R.drawable.background_round_navy_selected)
+                imgSearchCancel.visibility = View.VISIBLE
+                imgSearchSearch.visibility = View.GONE
+                recyclerSearch.visibility = View.VISIBLE
+                textSearchEmptyTitle.visibility = View.INVISIBLE
+                textSearchEmptyDescription.visibility = View.INVISIBLE
+            }
+        } else {
+            binding.apply {
+                layoutSearchInnerContainer.setBackgroundResource(R.drawable.background_round_navy)
+                imgSearchCancel.visibility = View.GONE
+                imgSearchSearch.visibility = View.VISIBLE
+                recyclerSearch.visibility = View.INVISIBLE
+                textSearchEmptyTitle.visibility = View.VISIBLE
+                textSearchEmptyDescription.visibility = View.VISIBLE
+            }
+        }
+    }
+
     private val searchAdapter: SearchAdapter by lazy {
         SearchAdapter(viewModel)
     }
@@ -35,6 +55,7 @@ class SearchActivity : AppCompatActivity() {
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initViewModel()
+        initBinding()
         initAdapter()
         setOnClickListeners()
         observeData()
@@ -44,6 +65,11 @@ class SearchActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this,
             CustomViewModelFactory(GitHubApiRepository.getGitInstance()!!)
         )[SearchViewModel::class.java]
+    }
+
+    private fun initBinding() {
+        binding.vm = viewModel
+        binding.lifecycleOwner = this
     }
 
     private fun initAdapter() {
@@ -56,6 +82,7 @@ class SearchActivity : AppCompatActivity() {
 
     private fun observeData() {
         viewModel.searchItems.observe(this, searchItemsObserver)
+        viewModel.searchText.observe(this, searchTextObserver)
     }
 
     private fun getSearchItems(query: String) {
