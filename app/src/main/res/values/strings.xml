@@ -36,4 +36,6 @@
     <string name="state_closed">closed</string>
     <string name="state_all">all</string>
     <string name="search_title">Search</string>
+    <string name="search_empty_description">Search all of GitHub for People,\nRepositories, Organizations, Isuues,\nand Pull Requests.</string>
+    <string name="search_empty_title">Find Your Stuff</string>
 </resources>

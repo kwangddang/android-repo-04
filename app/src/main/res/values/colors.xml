@@ -17,4 +17,20 @@
 
     <color name="ripple_effect">#40ffffff</color>
 
+<!--language-->
+    <color name="java_script">#f1e05a</color>
+    <color name="html">#e44b23</color>
+    <color name="java">#b07219</color>
+    <color name="python">#3572A5</color>
+    <color name="jupyter_notebook">#da5b0b</color>
+    <color name="c">#555555</color>
+    <color name="c_sharp">#178600</color>
+    <color name="c_plus">#ec306a</color>
+    <color name="css">#563d7c</color>
+    <color name="dart">#00B4AB</color>
+    <color name="php">#4F5D95</color>
+    <color name="type_script">#2b7489</color>
+    <color name="kotlin">#975eff</color>
+    <color name="transparent">#00000000</color>
+
 </resources>

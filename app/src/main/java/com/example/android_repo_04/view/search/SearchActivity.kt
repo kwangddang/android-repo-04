@@ -1,9 +1,10 @@
 package com.example.android_repo_04.view.search
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.android_repo_04.R
@@ -19,7 +20,25 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySearchBinding
 
     private val searchItemsObserver: (Search) -> Unit = { search ->
+        binding.progressSearchLoading.visibility = View.INVISIBLE
         searchAdapter.replaceItem(search)
+    }
+
+    private val searchTextObserver: (String) -> Unit = { text ->
+        if(text.isNotEmpty()) {
+            showItems()
+        } else {
+            showHintText()
+        }
+    }
+
+    private val editorActionListener: (TextView, Int, KeyEvent) -> Boolean = { view, actionId, event ->
+        if(actionId == EditorInfo.IME_ACTION_DONE) {
+            binding.progressSearchLoading.visibility = View.VISIBLE
+            getSearchItems(view.text.toString())
+            true
+        }
+        false
     }
 
     private val searchAdapter: SearchAdapter by lazy {
@@ -35,8 +54,10 @@ class SearchActivity : AppCompatActivity() {
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initViewModel()
+        initBinding()
         initAdapter()
         setOnClickListeners()
+        setOnEditorActionListener()
         observeData()
     }
 
@@ -46,19 +67,53 @@ class SearchActivity : AppCompatActivity() {
         )[SearchViewModel::class.java]
     }
 
+    private fun initBinding() {
+        binding.vm = viewModel
+        binding.lifecycleOwner = this
+    }
+
     private fun initAdapter() {
         binding.recyclerSearch.adapter = searchAdapter
     }
 
     private fun setOnClickListeners() {
         binding.imgSearchSearch.setOnClickListener(imgSearchClickListener)
+        binding.imgSearchBack.setOnClickListener { onBackPressed() }
+        binding.imgSearchCancel.setOnClickListener { binding.editSearchSearch.setText("") }
+    }
+
+    private fun setOnEditorActionListener() {
+        binding.editSearchSearch.setOnEditorActionListener(editorActionListener)
     }
 
     private fun observeData() {
         viewModel.searchItems.observe(this, searchItemsObserver)
+        viewModel.searchText.observe(this, searchTextObserver)
     }
 
     private fun getSearchItems(query: String) {
         viewModel.requestSearchRepositories(query)
+    }
+
+    private fun showHintText() {
+        binding.apply {
+            layoutSearchInnerContainer.setBackgroundResource(R.drawable.background_round_navy)
+            imgSearchCancel.visibility = View.GONE
+            imgSearchSearch.visibility = View.VISIBLE
+            recyclerSearch.visibility = View.INVISIBLE
+            textSearchEmptyTitle.visibility = View.VISIBLE
+            textSearchEmptyDescription.visibility = View.VISIBLE
+        }
+    }
+
+    private fun showItems() {
+        binding.apply {
+            layoutSearchInnerContainer.setBackgroundResource(R.drawable.background_round_navy_selected)
+            imgSearchCancel.visibility = View.VISIBLE
+            imgSearchSearch.visibility = View.GONE
+            recyclerSearch.visibility = View.VISIBLE
+            textSearchEmptyTitle.visibility = View.INVISIBLE
+            textSearchEmptyDescription.visibility = View.INVISIBLE
+        }
     }
 }

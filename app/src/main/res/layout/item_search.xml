@@ -17,7 +17,8 @@
         android:id="@+id/layout_item_search_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="16dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_item_search_profile"
@@ -26,7 +27,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             bind:searchOwnerAvatar="@{searchItem.owner.avatarUrl}"
-            bind:viewModel="@{vm}"/>
+            bind:viewModel="@{vm}"
+            tools:src="@color/primary"/>
 
         <TextView
             android:id="@+id/text_item_search_name"
@@ -34,7 +36,7 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textColor="@color/grey"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:text="@{searchItem.owner.login}"
             app:layout_constraintStart_toEndOf="@id/img_item_search_profile"
             app:layout_constraintEnd_toEndOf="parent"
@@ -52,6 +54,7 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:text="@{searchItem.name}"
+            android:layout_marginTop="4dp"
             app:layout_constraintStart_toStartOf="@id/text_item_search_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_item_search_name"
@@ -87,21 +90,22 @@
             android:textColor="@color/grey"
             android:textSize="16sp"
             android:paddingHorizontal="4dp"
-            android:text="@{Integer.toString(searchItem.stargazers_count)}"
             app:layout_constraintStart_toEndOf="@id/img_item_search_star"
             app:layout_constraintTop_toTopOf="@id/img_item_search_star"
             app:layout_constraintBottom_toBottomOf="@id/img_item_search_star"
+            bind:starCountFormat="@{searchItem.stargazers_count}"
             tools:text="41.4k" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_item_search_language"
             android:layout_width="18dp"
             android:layout_height="18dp"
-            android:src="@drawable/ic_user"
             android:layout_marginStart="8dp"
             app:layout_constraintStart_toEndOf="@id/text_item_search_star_count"
             app:layout_constraintTop_toTopOf="@id/img_item_search_star"
-            app:layout_constraintBottom_toBottomOf="@id/img_item_search_star" />
+            app:layout_constraintBottom_toBottomOf="@id/img_item_search_star"
+            bind:languageColor="@{searchItem.language}"
+            tools:src="@color/primary"/>
 
         <TextView
             android:id="@+id/text_item_search_language_type"
