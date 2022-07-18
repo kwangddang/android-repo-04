@@ -52,6 +52,18 @@ object SearchBindingAdapter {
     }
 
     @JvmStatic
+    @BindingAdapter("starCountFormat")
+    fun setStarCountFormat(view: TextView, count: Int) {
+        if(count / 1000000 > 0) {
+            view.text = "${count / 1000000}.${count % 1000000 / 100000}m"
+        } else if(count / 1000 > 0) {
+            view.text = "${count / 1000}.${count % 1000 / 100}k"
+        } else {
+            view.text = count.toString()
+        }
+    }
+
+    @JvmStatic
     @BindingAdapter("searchText")
     fun setSearchText(view: EditText, text: String){}
 

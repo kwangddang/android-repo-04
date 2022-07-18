@@ -54,6 +54,7 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:text="@{searchItem.name}"
+            android:layout_marginTop="4dp"
             app:layout_constraintStart_toStartOf="@id/text_item_search_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_item_search_name"
@@ -89,10 +90,10 @@
             android:textColor="@color/grey"
             android:textSize="16sp"
             android:paddingHorizontal="4dp"
-            android:text="@{Integer.toString(searchItem.stargazers_count)}"
             app:layout_constraintStart_toEndOf="@id/img_item_search_star"
             app:layout_constraintTop_toTopOf="@id/img_item_search_star"
             app:layout_constraintBottom_toBottomOf="@id/img_item_search_star"
+            bind:starCountFormat="@{searchItem.stargazers_count}"
             tools:text="41.4k" />
 
         <de.hdodenhof.circleimageview.CircleImageView
