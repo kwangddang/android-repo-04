@@ -38,4 +38,8 @@ class SearchViewModel(private val repository: GitHubApiRepository): ViewModel() 
             }
         }
     }
+
+    fun clearItems() {
+        _searchItems.postValue(Search(listOf(), 0))
+    }
 }

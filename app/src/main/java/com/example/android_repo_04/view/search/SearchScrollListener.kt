@@ -13,7 +13,7 @@ class SearchScrollListener(
         val lastVisibleItemPosition = (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
         val itemTotalCount = recyclerView.adapter!!.itemCount - 1
 
-        if (lastVisibleItemPosition == itemTotalCount) {
+        if (lastVisibleItemPosition == itemTotalCount && itemTotalCount >= 0) {
             listener.showProgress()
             viewModel.requestSearchRepositories(
                 viewModel.searchText.value.toString(),

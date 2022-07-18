@@ -21,14 +21,16 @@ class SearchActivity : AppCompatActivity(), SearchRefreshListener {
 
     private val searchItemsObserver: (Search) -> Unit = { search ->
         binding.progressSearchLoading.visibility = View.INVISIBLE
-        searchAdapter.replaceItem(search)
+        searchAdapter.replaceItem(search.items)
         binding.refreshSearch.isRefreshing = false
     }
 
     private val searchTextObserver: (String) -> Unit = { text ->
-        if(text.isNotEmpty()) {
+        if (text.isNotEmpty()) {
             showItems()
         } else {
+            viewModel.clearItems()
+            binding.progressSearchLoading.visibility = View.INVISIBLE
             showHintText()
         }
     }
