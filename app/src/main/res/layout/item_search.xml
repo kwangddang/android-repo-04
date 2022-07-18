@@ -95,15 +95,16 @@
             app:layout_constraintBottom_toBottomOf="@id/img_item_search_star"
             tools:text="41.4k" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_item_search_language"
             android:layout_width="18dp"
             android:layout_height="18dp"
-            android:src="@drawable/ic_user"
             android:layout_marginStart="8dp"
             app:layout_constraintStart_toEndOf="@id/text_item_search_star_count"
             app:layout_constraintTop_toTopOf="@id/img_item_search_star"
-            app:layout_constraintBottom_toBottomOf="@id/img_item_search_star" />
+            app:layout_constraintBottom_toBottomOf="@id/img_item_search_star"
+            bind:languageColor="@{searchItem.language}"
+            tools:src="@color/primary"/>
 
         <TextView
             android:id="@+id/text_item_search_language_type"
