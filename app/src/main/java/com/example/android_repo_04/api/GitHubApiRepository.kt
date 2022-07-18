@@ -61,8 +61,8 @@ class GitHubApiRepository {
         }
     }
 
-    suspend fun requestSearchRepositories(q: String, page: Int, callback: (DataResponse<Search>) -> Unit) {
-        val response = RetrofitFactory.createApiService()!!.requestSearchRepositories(q,page)
+    suspend fun requestSearchRepositories(query: String, page: Int, callback: (DataResponse<Search>) -> Unit) {
+        val response = RetrofitFactory.createApiService()!!.requestSearchRepositories(query,page)
         if(response.isSuccessful) {
             callback(DataResponse.Success(data = response.body()))
         } else {
