@@ -10,8 +10,8 @@ import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.data.dto.notification.Notification
 import com.example.android_repo_04.data.dto.profile.User
 import com.example.android_repo_04.utils.DataResponse
-import com.example.android_repo_04.view.Event
-import com.example.android_repo_04.view.emit
+import com.example.android_repo_04.utils.Event
+import com.example.android_repo_04.utils.emit
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewModel() {

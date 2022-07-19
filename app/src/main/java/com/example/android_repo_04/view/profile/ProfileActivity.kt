@@ -1,14 +1,13 @@
 package com.example.android_repo_04.view.profile
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.android_repo_04.R
-import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.profile.User
 import com.example.android_repo_04.databinding.ActivityProfileBinding
-import com.example.android_repo_04.view.Event
+import com.example.android_repo_04.utils.Event
+import com.example.android_repo_04.utils.EventObserver
 import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.ProfileViewModel
 
@@ -21,7 +20,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var user: User
     private var starCount: Int = 0
 
-    private val clickEventObserver: (Event<Unit>) -> Unit = { event ->
+    private val clickEventObserver: (Unit) -> Unit = { event ->
         onBackPressed()
     }
 
@@ -57,6 +56,6 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun observeData() {
-        viewModel.clickEvent.observe(this, clickEventObserver)
+        viewModel.clickEvent.observe(this, EventObserver(clickEventObserver))
     }
 }

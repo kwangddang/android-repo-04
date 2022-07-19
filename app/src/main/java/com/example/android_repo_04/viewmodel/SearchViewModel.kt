@@ -8,11 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.search.Search
 import com.example.android_repo_04.utils.DataResponse
-import com.example.android_repo_04.view.Event
-import com.example.android_repo_04.view.emit
+import com.example.android_repo_04.utils.Event
 import com.example.android_repo_04.utils.debounce
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
+import com.example.android_repo_04.utils.emit
 import kotlinx.coroutines.launch
 
 class SearchViewModel(private val repository: GitHubApiRepository): ViewModel() {

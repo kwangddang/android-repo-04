@@ -1,7 +1,6 @@
 package com.example.android_repo_04.view.main.issue
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,8 @@ import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.databinding.FragmentIssueBinding
-import com.example.android_repo_04.view.Event
+import com.example.android_repo_04.utils.Event
+import com.example.android_repo_04.utils.EventObserver
 import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.MainViewModel
 
@@ -34,14 +34,12 @@ class IssueFragment: Fragment() {
         binding.refreshIssueIssue.isRefreshing = false
     }
 
-    private val issueRefreshEventObserver: (Event<Unit>) -> Unit = { event ->
-        if(event.getContentIfNotHandled() != null)
-            getSelectedIssues(viewModel.selectedIssue.value!!)
+    private val issueRefreshEventObserver: (Unit) -> Unit = { event ->
+        getSelectedIssues(viewModel.selectedIssue.value!!)
     }
 
-    private val issueClickEventObserver: (Event<Unit>) -> Unit = { event ->
-        if(event.getContentIfNotHandled() != null)
-            binding.spinnerIssueOption.performClick()
+    private val issueClickEventObserver: (Unit) -> Unit = { event ->
+        binding.spinnerIssueOption.performClick()
     }
 
     private val selectedIssueObserver: (Int) -> Unit = { position ->
@@ -91,8 +89,8 @@ class IssueFragment: Fragment() {
 
     private fun observeData() {
         viewModel.issue.observe(viewLifecycleOwner, issueObserver)
-        viewModel.issueRefreshEvent.observe(viewLifecycleOwner, issueRefreshEventObserver)
-        viewModel.issueClickEvent.observe(viewLifecycleOwner, issueClickEventObserver)
+        viewModel.issueRefreshEvent.observe(viewLifecycleOwner, EventObserver(issueRefreshEventObserver))
+        viewModel.issueClickEvent.observe(viewLifecycleOwner, EventObserver(issueClickEventObserver))
         viewModel.selectedIssue.observe(viewLifecycleOwner, selectedIssueObserver)
     }
 

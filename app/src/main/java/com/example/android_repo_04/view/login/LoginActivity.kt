@@ -3,7 +3,6 @@ package com.example.android_repo_04.view.login
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +12,8 @@ import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubLoginRepository
 import com.example.android_repo_04.api.RetrofitFactory
 import com.example.android_repo_04.databinding.ActivityLoginBinding
-import com.example.android_repo_04.view.Event
+import com.example.android_repo_04.utils.Event
+import com.example.android_repo_04.utils.EventObserver
 import com.example.android_repo_04.view.main.MainActivity
 import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.LoginViewModel
@@ -37,8 +37,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private val clickEventObserver: (Event<Unit>) -> Unit = { clicked ->
-        val loginUri = Uri.parse(BuildConfig.LOGIN_URL).buildUpon() // Login URL을 가진 Uri.Builder Nested 객체 생성
+    private val clickEventObserver: (Unit) -> Unit = { event ->
+        val loginUri = Uri.parse(BuildConfig.LOGIN_URL).buildUpon()
             .appendPath(getString(R.string.login_path_auth))
             .appendQueryParameter(BuildConfig.CLIENT_ID_PARAM, BuildConfig.CLIENT_ID)
             .appendQueryParameter(BuildConfig.SCOPE_PARAM, getString(R.string.login_query_scope))
@@ -69,7 +69,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun observeData() {
         viewModel.token.observe(this, tokenObserver)
-        viewModel.clickEvent.observe(this, clickEventObserver)
+        viewModel.clickEvent.observe(this, EventObserver(clickEventObserver))
     }
 
     private fun getUserCode() {

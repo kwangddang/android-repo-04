@@ -1,13 +1,11 @@
 package com.example.android_repo_04.viewmodel
 
-import androidx.lifecycle.*
-import androidx.lifecycle.viewmodel.CreationExtras
-import com.example.android_repo_04.api.GitHubApiRepository
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.example.android_repo_04.data.dto.profile.User
-import com.example.android_repo_04.utils.DataResponse
-import com.example.android_repo_04.view.Event
-import com.example.android_repo_04.view.emit
-import kotlinx.coroutines.launch
+import com.example.android_repo_04.utils.Event
+import com.example.android_repo_04.utils.emit
 
 class ProfileViewModel(): ViewModel() {
     val user = MutableLiveData<User>()

@@ -9,7 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.databinding.ActivityMainBinding
-import com.example.android_repo_04.view.Event
+import com.example.android_repo_04.utils.Event
+import com.example.android_repo_04.utils.EventObserver
 import com.example.android_repo_04.view.main.issue.IssueFragment
 import com.example.android_repo_04.view.main.notification.NotificationFragment
 import com.example.android_repo_04.view.profile.ProfileActivity
@@ -49,8 +50,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val clickEventObserver: (Event<Int>) -> Unit = { event ->
-        when(event.getContentIfNotHandled()) {
+    private val clickEventObserver: (Int) -> Unit = { event ->
+        when(event) {
             R.id.img_main_profile -> showProfileActivity()
             R.id.img_main_search -> showSearchActivity()
             R.id.btn_main_notification -> viewModel.position.value = 1
@@ -90,7 +91,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun observeData() {
         viewModel.position.observe(this, positionObserver)
-        viewModel.mainClickEvent.observe(this, clickEventObserver)
+        viewModel.mainClickEvent.observe(this, EventObserver(clickEventObserver))
     }
 
     private fun initFragmentManager() {
