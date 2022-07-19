@@ -13,6 +13,7 @@ import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubLoginRepository
 import com.example.android_repo_04.api.RetrofitFactory
 import com.example.android_repo_04.databinding.ActivityLoginBinding
+import com.example.android_repo_04.view.Event
 import com.example.android_repo_04.view.main.MainActivity
 import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.LoginViewModel
@@ -36,15 +37,13 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private val clickEventObserver: (Boolean) -> Unit = { clicked ->
-        if(clicked) {
-            val loginUri = Uri.parse(BuildConfig.LOGIN_URL).buildUpon() // Login URL을 가진 Uri.Builder Nested 객체 생성
-                .appendPath(getString(R.string.login_path_auth))
-                .appendQueryParameter(BuildConfig.CLIENT_ID_PARAM, BuildConfig.CLIENT_ID)
-                .appendQueryParameter(BuildConfig.SCOPE_PARAM, getString(R.string.login_query_scope))
-                .build()
-            startActivity(Intent(Intent.ACTION_VIEW, loginUri))
-        }
+    private val clickEventObserver: (Event<Unit>) -> Unit = { clicked ->
+        val loginUri = Uri.parse(BuildConfig.LOGIN_URL).buildUpon() // Login URL을 가진 Uri.Builder Nested 객체 생성
+            .appendPath(getString(R.string.login_path_auth))
+            .appendQueryParameter(BuildConfig.CLIENT_ID_PARAM, BuildConfig.CLIENT_ID)
+            .appendQueryParameter(BuildConfig.SCOPE_PARAM, getString(R.string.login_query_scope))
+            .build()
+        startActivity(Intent(Intent.ACTION_VIEW, loginUri))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

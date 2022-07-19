@@ -5,6 +5,8 @@ import androidx.lifecycle.*
 import com.example.android_repo_04.BuildConfig
 import com.example.android_repo_04.api.GitHubLoginRepository
 import com.example.android_repo_04.utils.DataResponse
+import com.example.android_repo_04.view.Event
+import com.example.android_repo_04.view.emit
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val gitHubLoginRepository: GitHubLoginRepository) : ViewModel() {
@@ -12,7 +14,8 @@ class LoginViewModel(private val gitHubLoginRepository: GitHubLoginRepository) :
     private val _token = MutableLiveData("")
     val token: LiveData<String> get() = _token
 
-    val clickEvent = MutableLiveData<Boolean>(false)
+    private val _clickEvent = MutableLiveData<Event<Unit>>()
+    val clickEvent: LiveData<Event<Unit>> get() = _clickEvent
 
     fun requestToken(code: String) {
         viewModelScope.launch {
@@ -26,7 +29,7 @@ class LoginViewModel(private val gitHubLoginRepository: GitHubLoginRepository) :
         }
     }
 
-    fun clickEvent() {
-        clickEvent.value = true
+    fun setClickEvent() {
+        _clickEvent.emit()
     }
 }

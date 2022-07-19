@@ -1,14 +1,18 @@
 package com.example.android_repo_04.viewmodel
 
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.data.dto.notification.Notification
 import com.example.android_repo_04.data.dto.profile.User
 import com.example.android_repo_04.utils.DataResponse
+import com.example.android_repo_04.view.Event
+import com.example.android_repo_04.view.emit
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewModel() {
@@ -23,6 +27,9 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
 
     private val _issue = MutableLiveData<Issue>()
     val issue: LiveData<Issue> get() = _issue
+
+    private val _clickEvent = MutableLiveData<Event<Int>>()
+    val clickEvent: LiveData<Event<Int>> get() = _clickEvent
 
     val user = MutableLiveData<User>()
     val starCount = MutableLiveData<Int>()
@@ -87,5 +94,9 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
                 }
             }
         }
+    }
+
+    fun setClickEvent(view: View) {
+        _clickEvent.emit(view.id)
     }
 }

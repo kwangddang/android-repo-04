@@ -36,7 +36,7 @@
             android:backgroundTint="@color/primary"
             android:padding="16dp"
             android:text="@string/login_login"
-            android:onClick="@{() -> vm.clickEvent()}"
+            android:onClick="@{() -> vm.setClickEvent()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
