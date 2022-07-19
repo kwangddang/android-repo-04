@@ -57,7 +57,7 @@
             android:background="@drawable/ic_user"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_profile_toolbar"
-            bind:profileImage="@{vm.user.avatar_url}" />
+            bind:profileImage="@{vm.user.avatarUrl}" />
 
         <TextView
             android:id="@+id/text_profile_display_name"
@@ -311,7 +311,7 @@
                 android:id="@+id/text_profile_repository_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{Integer.toString(vm.user.public_repos + vm.user.total_private_repos)}"
+                android:text="@{Integer.toString(vm.user.publicRepos + vm.user.totalPrivateRepos)}"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/text_profile_repository"

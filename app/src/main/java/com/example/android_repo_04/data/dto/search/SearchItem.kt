@@ -1,6 +1,7 @@
 package com.example.android_repo_04.data.dto.search
 
 import com.example.android_repo_04.data.dto.Owner
+import com.google.gson.annotations.SerializedName
 
 data class SearchItem(
     val id: Long,
@@ -8,5 +9,5 @@ data class SearchItem(
     val name: String,
     val language: String?,
     val owner: Owner,
-    val stargazers_count: Int
+    @SerializedName("stargazers_count") val stargazersCount: Int
 )

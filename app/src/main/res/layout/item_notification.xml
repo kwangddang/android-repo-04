@@ -33,7 +33,7 @@
             android:id="@+id/text_notification_repo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{notification.repository.full_name}"
+            android:text="@{notification.repository.fullName}"
             android:textColor="@color/grey"
             android:maxLines="1"
             android:ellipsize="end"
@@ -75,7 +75,7 @@
             android:padding="4dp"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            bind:notificationComments="@{notification.repository.full_name}"
+            bind:notificationComments="@{notification.repository.fullName}"
             bind:viewModel="@{vm}"
             app:layout_constraintTop_toBottomOf="@id/text_notification_update"
             app:layout_constraintEnd_toEndOf="@id/text_notification_update"/>

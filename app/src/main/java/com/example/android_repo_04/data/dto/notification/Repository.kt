@@ -4,6 +4,6 @@ import com.example.android_repo_04.data.dto.Owner
 import com.google.gson.annotations.SerializedName
 
 data class Repository(
-    @SerializedName("full_name") val full_name: String,
-    @SerializedName("owner") val owner: Owner
+    val owner: Owner,
+    @SerializedName("full_name") val fullName: String
 )

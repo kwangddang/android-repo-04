@@ -93,7 +93,7 @@
             app:layout_constraintStart_toEndOf="@id/img_item_search_star"
             app:layout_constraintTop_toTopOf="@id/img_item_search_star"
             app:layout_constraintBottom_toBottomOf="@id/img_item_search_star"
-            bind:starCountFormat="@{searchItem.stargazers_count}"
+            bind:starCountFormat="@{searchItem.stargazersCount}"
             tools:text="41.4k" />
 
         <de.hdodenhof.circleimageview.CircleImageView
