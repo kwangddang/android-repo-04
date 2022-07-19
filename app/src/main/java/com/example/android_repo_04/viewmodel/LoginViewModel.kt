@@ -1,5 +1,6 @@
 package com.example.android_repo_04.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.android_repo_04.BuildConfig
 import com.example.android_repo_04.api.GitHubLoginRepository
@@ -11,6 +12,8 @@ class LoginViewModel(private val gitHubLoginRepository: GitHubLoginRepository) :
     private val _token = MutableLiveData("")
     val token: LiveData<String> get() = _token
 
+    val clickEvent = MutableLiveData<Boolean>(false)
+
     fun requestToken(code: String) {
         viewModelScope.launch {
             gitHubLoginRepository.requestToken(BuildConfig.CLIENT_ID, BuildConfig.CLIENT_SECRET, code) { response ->
@@ -21,5 +24,9 @@ class LoginViewModel(private val gitHubLoginRepository: GitHubLoginRepository) :
                 }
             }
         }
+    }
+
+    fun clickEvent() {
+        clickEvent.value = true
     }
 }
