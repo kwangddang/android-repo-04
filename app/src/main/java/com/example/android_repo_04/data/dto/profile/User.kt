@@ -7,11 +7,11 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class User(
     val login: String,
-    val name: String,
-    val location: String,
-    val bio: String,
-    val blog: String,
-    val email: String,
+    val name: String?,
+    val location: String?,
+    val bio: String?,
+    val blog: String?,
+    val email: String?,
     val followers: Int,
     val following: Int,
     @SerializedName("avatar_url") val avatarUrl: String,
