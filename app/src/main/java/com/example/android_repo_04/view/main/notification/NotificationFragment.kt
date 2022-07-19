@@ -13,6 +13,7 @@ import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.notification.Notification
 import com.example.android_repo_04.databinding.FragmentNotificationBinding
+import com.example.android_repo_04.view.Event
 import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.MainViewModel
 
@@ -42,6 +43,10 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
         }
     }
 
+    private val swipeRefreshEventObserver: (Event<Unit>) -> Unit = {
+        viewModel.requestNotifications()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -54,9 +59,9 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
+        initBinding()
         initAdapter()
         observeData()
-        setRefreshListener()
         setItemTouchHelper()
     }
 
@@ -66,6 +71,11 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
         )[MainViewModel::class.java]
     }
 
+    private fun initBinding() {
+        binding.vm = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+    }
+
     private fun initAdapter() {
         binding.recyclerNotifications.adapter = notificationAdapter
     }
@@ -73,12 +83,7 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
     private fun observeData() {
         viewModel.notifications.observe(viewLifecycleOwner, notificationObserver)
         viewModel.readNotification.observe(viewLifecycleOwner, readNotificationObserver)
-    }
-
-    private fun setRefreshListener() {
-        binding.refreshNotifications.setOnRefreshListener {
-            viewModel.requestNotifications()
-        }
+        viewModel.swipeRefreshEvent.observe(viewLifecycleOwner, swipeRefreshEventObserver)
     }
 
     private fun setItemTouchHelper() {

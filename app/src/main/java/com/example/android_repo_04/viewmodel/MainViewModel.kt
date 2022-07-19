@@ -1,5 +1,6 @@
 package com.example.android_repo_04.viewmodel
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -30,6 +31,9 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
 
     private val _clickEvent = MutableLiveData<Event<Int>>()
     val clickEvent: LiveData<Event<Int>> get() = _clickEvent
+
+    private val _swipeRefreshEvent = MutableLiveData<Event<Unit>>()
+    val swipeRefreshEvent: LiveData<Event<Unit>> get() = _swipeRefreshEvent
 
     val user = MutableLiveData<User>()
     val starCount = MutableLiveData<Int>()
@@ -98,5 +102,9 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
 
     fun setClickEvent(view: View) {
         _clickEvent.emit(view.id)
+    }
+
+    fun setSwipeRefreshEvent() {
+        _swipeRefreshEvent.emit()
     }
 }
