@@ -1,5 +1,6 @@
 package com.example.android_repo_04.viewmodel
 
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,6 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.search.Search
 import com.example.android_repo_04.utils.DataResponse
+import com.example.android_repo_04.view.Event
+import com.example.android_repo_04.view.emit
 import kotlinx.coroutines.launch
 
 class SearchViewModel(private val repository: GitHubApiRepository): ViewModel() {
@@ -15,6 +18,12 @@ class SearchViewModel(private val repository: GitHubApiRepository): ViewModel() 
 
     private val _searchItems = MutableLiveData<Search>()
     val searchItems: LiveData<Search> get() = _searchItems
+
+    private val _clickEvent = MutableLiveData<Event<Int>>()
+    val clickEvent: LiveData<Event<Int>> get() = _clickEvent
+
+    private val _refreshEvent = MutableLiveData<Event<Unit>>()
+    val refreshEvent: LiveData<Event<Unit>> get() = _refreshEvent
 
     fun requestSearchRepositories(query: String, page: Int = 1) {
         viewModelScope.launch {
@@ -41,5 +50,13 @@ class SearchViewModel(private val repository: GitHubApiRepository): ViewModel() 
 
     fun clearItems() {
         _searchItems.postValue(Search(listOf(), 0))
+    }
+
+    fun setClickEvent(view: View) {
+        _clickEvent.emit(view.id)
+    }
+
+    fun setRefreshEvent() {
+        _refreshEvent.emit()
     }
 }

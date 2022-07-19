@@ -15,7 +15,7 @@ class ProfileViewModel(): ViewModel() {
     private val _clickEvent = MutableLiveData<Event<Unit>>()
     val clickEvent: LiveData<Event<Unit>> get() = _clickEvent
 
-    fun clickEvent() {
+    fun setClickEvent() {
         _clickEvent.emit()
     }
 }

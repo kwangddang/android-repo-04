@@ -12,6 +12,7 @@ import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.profile.User
 import com.example.android_repo_04.data.dto.search.Search
 import com.example.android_repo_04.databinding.ActivitySearchBinding
+import com.example.android_repo_04.view.Event
 import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.SearchViewModel
 
@@ -36,23 +37,23 @@ class SearchActivity : AppCompatActivity(), SearchRefreshListener {
         }
     }
 
-    private val editorActionListener: (TextView, Int, KeyEvent?) -> Boolean = { view, actionId, event ->
-        if(actionId == EditorInfo.IME_ACTION_DONE) {
-            showProgress()
-            getSearchItems(view.text.toString())
-            true
+    private val clickEventObserver: (Event<Int>) -> Unit = { event ->
+        when(event.getContentIfNotHandled()) {
+            R.id.img_search_back -> onBackPressed()
+            R.id.img_search_cancel -> binding.editSearchSearch.setText("")
         }
-        false
+    }
+
+    private val refreshEventObserver: (Event<Unit>) -> Unit = { event ->
+        if(event.getContentIfNotHandled() != null) {
+            getSearchItems(binding.editSearchSearch.text.toString())
+        }
     }
 
     private val searchAdapter: SearchAdapter by lazy {
         SearchAdapter(viewModel)
     }
-
-    private val imgSearchClickListener: (View) -> Unit = {
-        getSearchItems(binding.editSearchSearch.text.toString())
-    }
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchBinding.inflate(layoutInflater)
@@ -60,9 +61,6 @@ class SearchActivity : AppCompatActivity(), SearchRefreshListener {
         initViewModel()
         initBinding()
         initAdapter()
-        setOnClickListeners()
-        setRefreshListener()
-        setOnEditorActionListener()
         setOnScrollListener()
         observeData()
     }
@@ -82,33 +80,17 @@ class SearchActivity : AppCompatActivity(), SearchRefreshListener {
         binding.recyclerSearch.adapter = searchAdapter
     }
 
-    private fun setOnClickListeners() {
-        binding.imgSearchSearch.setOnClickListener(imgSearchClickListener)
-        binding.imgSearchBack.setOnClickListener { onBackPressed() }
-        binding.imgSearchCancel.setOnClickListener { binding.editSearchSearch.setText("") }
-    }
-
-    private fun setRefreshListener() {
-        binding.refreshSearch.setOnRefreshListener {
-            getSearchItems(binding.editSearchSearch.text.toString())
-        }
-    }
-
-    private fun setOnEditorActionListener() {
-        binding.editSearchSearch.setOnEditorActionListener(editorActionListener)
-    }
-
     private fun setOnScrollListener() {
-        binding.recyclerSearch.addOnScrollListener(
-            SearchScrollListener(viewModel, this)
-        )
+        binding.recyclerSearch.addOnScrollListener(SearchScrollListener(viewModel, this))
     }
 
     private fun observeData() {
         viewModel.searchItems.observe(this, searchItemsObserver)
         viewModel.searchText.observe(this, searchTextObserver)
+        viewModel.clickEvent.observe(this, clickEventObserver)
+        viewModel.refreshEvent.observe(this, refreshEventObserver)
     }
-
+            
     private fun getSearchItems(query: String) {
         viewModel.requestSearchRepositories(query)
     }
