@@ -1,16 +1,17 @@
 package com.example.android_repo_04.view.main.issue
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.databinding.FragmentIssueBinding
+import com.example.android_repo_04.view.Event
 import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.MainViewModel
 
@@ -33,24 +34,20 @@ class IssueFragment: Fragment() {
         binding.refreshIssueIssue.isRefreshing = false
     }
 
-    private val spinnerItemSelectedListener = object: AdapterView.OnItemSelectedListener{
-        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            spinnerAdapter.selectedPosition = position
-            if (viewModel.selectedIssue != position) {
-                viewModel.selectedIssue = position
-                getSelectedIssues(position)
-            }
-        }
-
-        override fun onNothingSelected(parent: AdapterView<*>?) {
-        }
+    private val issueRefreshEventObserver: (Event<Unit>) -> Unit = { event ->
+        if(event.getContentIfNotHandled() != null)
+            getSelectedIssues(viewModel.selectedIssue.value!!)
     }
 
-    private val spinnerWindowFocusChangeListener: (Boolean) -> Unit = {
-        if(it) {
-            binding.layoutIssueInnerContainer.setBackgroundResource(R.drawable.background_round_navy)
-        } else {
-            binding.layoutIssueInnerContainer.setBackgroundResource(R.drawable.background_round_navy_selected)
+    private val issueClickEventObserver: (Event<Unit>) -> Unit = { event ->
+        if(event.getContentIfNotHandled() != null)
+            binding.spinnerIssueOption.performClick()
+    }
+
+    private val selectedIssueObserver: (Int) -> Unit = { position ->
+        if(viewModel.prevSelectedIssue != position) {
+            viewModel.prevSelectedIssue = position
+            getSelectedIssues(position)
         }
     }
 
@@ -66,11 +63,9 @@ class IssueFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
-        initRecyclerAdapter()
         initSpinnerAdapter()
-        setRefreshListener()
-        setSpinnerClickListener()
-        setOnClickListener()
+        initBinding()
+        initRecyclerAdapter()
         observeData()
     }
 
@@ -80,33 +75,25 @@ class IssueFragment: Fragment() {
         )[MainViewModel::class.java]
     }
 
-    private fun initRecyclerAdapter() {
-        binding.recyclerIssueIssue.adapter = issueAdapter
+    private fun initBinding() {
+        binding.vm = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
     }
 
     private fun initSpinnerAdapter() {
         binding.spinnerIssueOption.adapter = spinnerAdapter
     }
 
-    private fun setRefreshListener() {
-        binding.refreshIssueIssue.setOnRefreshListener {
-            getSelectedIssues(spinnerAdapter.selectedPosition)
-        }
+    private fun initRecyclerAdapter() {
+        binding.recyclerIssueIssue.adapter = issueAdapter
     }
 
-    private fun setSpinnerClickListener() {
-        binding.spinnerIssueOption.onItemSelectedListener = spinnerItemSelectedListener
-        binding.spinnerIssueOption.viewTreeObserver.addOnWindowFocusChangeListener(spinnerWindowFocusChangeListener)
-    }
-
-    private fun setOnClickListener() {
-        binding.layoutIssueInnerContainer.setOnClickListener {
-            binding.spinnerIssueOption.performClick()
-        }
-    }
 
     private fun observeData() {
         viewModel.issue.observe(viewLifecycleOwner, issueObserver)
+        viewModel.issueRefreshEvent.observe(viewLifecycleOwner, issueRefreshEventObserver)
+        viewModel.issueClickEvent.observe(viewLifecycleOwner, issueClickEventObserver)
+        viewModel.selectedIssue.observe(viewLifecycleOwner, selectedIssueObserver)
     }
 
     private fun getSelectedIssues(position: Int) {

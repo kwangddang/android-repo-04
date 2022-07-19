@@ -2,8 +2,6 @@ package com.example.android_repo_04.view.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
@@ -92,7 +90,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun observeData() {
         viewModel.position.observe(this, positionObserver)
-        viewModel.clickEvent.observe(this, clickEventObserver)
+        viewModel.mainClickEvent.observe(this, clickEventObserver)
     }
 
     private fun initFragmentManager() {

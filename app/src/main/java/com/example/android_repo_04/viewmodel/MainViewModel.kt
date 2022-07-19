@@ -1,12 +1,10 @@
 package com.example.android_repo_04.viewmodel
 
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.data.dto.notification.Notification
@@ -29,16 +27,23 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
     private val _issue = MutableLiveData<Issue>()
     val issue: LiveData<Issue> get() = _issue
 
-    private val _clickEvent = MutableLiveData<Event<Int>>()
-    val clickEvent: LiveData<Event<Int>> get() = _clickEvent
+    private val _mainClickEvent = MutableLiveData<Event<Int>>()
+    val mainClickEvent: LiveData<Event<Int>> get() = _mainClickEvent
 
-    private val _swipeRefreshEvent = MutableLiveData<Event<Unit>>()
-    val swipeRefreshEvent: LiveData<Event<Unit>> get() = _swipeRefreshEvent
+    private val _notificationRefreshEvent = MutableLiveData<Event<Unit>>()
+    val notificationRefreshEvent: LiveData<Event<Unit>> get() = _notificationRefreshEvent
+
+    private val _issueRefreshEvent = MutableLiveData<Event<Unit>>()
+    val issueRefreshEvent: LiveData<Event<Unit>> get() = _issueRefreshEvent
+
+    private val _issueClickEvent = MutableLiveData<Event<Unit>>()
+    val issueClickEvent: LiveData<Event<Unit>> get() = _issueClickEvent
 
     val user = MutableLiveData<User>()
     val starCount = MutableLiveData<Int>()
 
-    var selectedIssue = 0
+    var selectedIssue = MutableLiveData(0)
+    var prevSelectedIssue = 0
 
     fun requestNotifications() {
         viewModelScope.launch {
@@ -100,11 +105,19 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
         }
     }
 
-    fun setClickEvent(view: View) {
-        _clickEvent.emit(view.id)
+    fun setMainClickEvent(view: View) {
+        _mainClickEvent.emit(view.id)
     }
 
-    fun setSwipeRefreshEvent() {
-        _swipeRefreshEvent.emit()
+    fun setNotificationRefreshEvent() {
+        _notificationRefreshEvent.emit()
+    }
+
+    fun setIssueRefreshEvent() {
+        _issueRefreshEvent.emit()
+    }
+
+    fun setIssueClickEvent() {
+        _issueClickEvent.emit()
     }
 }

@@ -43,7 +43,7 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
         }
     }
 
-    private val swipeRefreshEventObserver: (Event<Unit>) -> Unit = {
+    private val notificationRefreshEventObserver: (Event<Unit>) -> Unit = {
         viewModel.requestNotifications()
     }
 
@@ -83,7 +83,7 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
     private fun observeData() {
         viewModel.notifications.observe(viewLifecycleOwner, notificationObserver)
         viewModel.readNotification.observe(viewLifecycleOwner, readNotificationObserver)
-        viewModel.swipeRefreshEvent.observe(viewLifecycleOwner, swipeRefreshEventObserver)
+        viewModel.notificationRefreshEvent.observe(viewLifecycleOwner, notificationRefreshEventObserver)
     }
 
     private fun setItemTouchHelper() {
