@@ -1,11 +1,13 @@
 package com.example.android_repo_04.view.search
 
 import android.os.Bundle
+import android.text.Editable
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
@@ -36,15 +38,6 @@ class SearchActivity : AppCompatActivity(), SearchRefreshListener {
         }
     }
 
-    private val editorActionListener: (TextView, Int, KeyEvent?) -> Boolean = { view, actionId, event ->
-        if(actionId == EditorInfo.IME_ACTION_DONE) {
-            showProgress()
-            getSearchItems(view.text.toString())
-            true
-        }
-        false
-    }
-
     private val searchAdapter: SearchAdapter by lazy {
         SearchAdapter(viewModel)
     }
@@ -62,7 +55,7 @@ class SearchActivity : AppCompatActivity(), SearchRefreshListener {
         initAdapter()
         setOnClickListeners()
         setRefreshListener()
-        setOnEditorActionListener()
+        setOnEditorListener()
         setOnScrollListener()
         observeData()
     }
@@ -94,8 +87,14 @@ class SearchActivity : AppCompatActivity(), SearchRefreshListener {
         }
     }
 
-    private fun setOnEditorActionListener() {
-        binding.editSearchSearch.setOnEditorActionListener(editorActionListener)
+    private fun setOnEditorListener() {
+        binding.editSearchSearch.addTextChangedListener { editable ->
+            if (!editable.isNullOrEmpty())
+                viewModel.change(500L) {
+                    showProgress()
+                    getSearchItems(editable.toString())
+                }
+        }
     }
 
     private fun setOnScrollListener() {
