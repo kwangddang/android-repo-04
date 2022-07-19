@@ -36,14 +36,16 @@ class SearchActivity : AppCompatActivity(), SearchRefreshListener {
             binding.progressSearchLoading.visibility = View.INVISIBLE
             showHintText()
         }
+        viewModel.change(500L) {
+            if (text.isNotEmpty() && text.isNotBlank()) {
+                showProgress()
+                getSearchItems(text)
+            }
+        }
     }
 
     private val searchAdapter: SearchAdapter by lazy {
         SearchAdapter(viewModel)
-    }
-
-    private val imgSearchClickListener: (View) -> Unit = {
-        getSearchItems(binding.editSearchSearch.text.toString())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +57,6 @@ class SearchActivity : AppCompatActivity(), SearchRefreshListener {
         initAdapter()
         setOnClickListeners()
         setRefreshListener()
-        setOnEditorListener()
         setOnScrollListener()
         observeData()
     }
@@ -76,7 +77,6 @@ class SearchActivity : AppCompatActivity(), SearchRefreshListener {
     }
 
     private fun setOnClickListeners() {
-        binding.imgSearchSearch.setOnClickListener(imgSearchClickListener)
         binding.imgSearchBack.setOnClickListener { onBackPressed() }
         binding.imgSearchCancel.setOnClickListener { binding.editSearchSearch.setText("") }
     }
@@ -84,16 +84,6 @@ class SearchActivity : AppCompatActivity(), SearchRefreshListener {
     private fun setRefreshListener() {
         binding.refreshSearch.setOnRefreshListener {
             getSearchItems(binding.editSearchSearch.text.toString())
-        }
-    }
-
-    private fun setOnEditorListener() {
-        binding.editSearchSearch.addTextChangedListener { editable ->
-            if (!editable.isNullOrEmpty())
-                viewModel.change(500L) {
-                    showProgress()
-                    getSearchItems(editable.toString())
-                }
         }
     }
 

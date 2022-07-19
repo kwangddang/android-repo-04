@@ -6,7 +6,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
-var job: Job? = null
+private var job: Job? = null
 
 fun debounce(
     time: Long,
