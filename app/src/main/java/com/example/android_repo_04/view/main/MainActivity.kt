@@ -56,7 +56,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val imgProfileClickListener: (View) -> Unit = {
-        startActivity(Intent(this, ProfileActivity::class.java))
+        val intent = Intent(this, ProfileActivity::class.java)
+        intent.putExtra(getString(R.string.user_info),viewModel.user.value)
+        intent.putExtra(getString(R.string.star_count), viewModel.starCount.value)
+        startActivity(intent)
     }
 
     private val imgSearchClickListener: (View) -> Unit = {
@@ -69,15 +72,27 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initViewModel()
+        initBinding()
         observeData()
         setOnClickListeners()
         initFragmentManager()
+        requestApi()
+    }
+
+    private fun requestApi() {
         getIssues()
         getNotifications()
+        getUser()
+        getUserStarred()
     }
 
     private fun initViewModel() {
         viewModel = MainViewModel.getInstance(GitHubApiRepository.getGitInstance()!!)
+    }
+
+    private fun initBinding() {
+        binding.vm = viewModel
+        binding.lifecycleOwner = this
     }
 
     private fun observeData() {
@@ -109,6 +124,14 @@ class MainActivity : AppCompatActivity() {
     private fun getNotifications() {
         if (viewModel.notifications.value == null)
             viewModel.requestNotifications()
+    }
+
+    private fun getUser() {
+        viewModel.requestUser()
+    }
+
+    private fun getUserStarred() {
+        viewModel.requestUserStarred()
     }
 
     private fun selectIssue(){

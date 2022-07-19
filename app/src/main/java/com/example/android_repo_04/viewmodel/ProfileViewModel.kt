@@ -10,32 +10,7 @@ import com.example.android_repo_04.data.dto.profile.User
 import com.example.android_repo_04.utils.DataResponse
 import kotlinx.coroutines.launch
 
-class ProfileViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewModel() {
-
+class ProfileViewModel(): ViewModel() {
     val user = MutableLiveData<User>()
     val star = MutableLiveData<Int>()
-
-    fun requestUser() {
-        viewModelScope.launch {
-            gitHubApiRepository.requestUser() { response ->
-                if(response is DataResponse.Success) {
-                    user.postValue(response.data!!)
-                } else {
-                    //TODO 에러처리
-                }
-            }
-        }
-    }
-
-    fun requestUserStarred() {
-        viewModelScope.launch {
-            gitHubApiRepository.requestUserStarredCount { response ->
-                if(response is DataResponse.Success) {
-                    star.postValue(response.data!!)
-                } else {
-                    //TODO 에러처리
-                }
-            }
-        }
-    }
 }
