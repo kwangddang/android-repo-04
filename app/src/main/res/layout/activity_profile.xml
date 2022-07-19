@@ -35,6 +35,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/icon_ripple_effect"
                 android:padding="8dp"
+                android:onClick="@{() -> vm.setClickEvent()}"
                 android:src="@drawable/ic_back" />
 
             <TextView

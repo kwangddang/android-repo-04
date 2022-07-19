@@ -12,6 +12,8 @@ import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubLoginRepository
 import com.example.android_repo_04.api.RetrofitFactory
 import com.example.android_repo_04.databinding.ActivityLoginBinding
+import com.example.android_repo_04.utils.Event
+import com.example.android_repo_04.utils.EventObserver
 import com.example.android_repo_04.view.main.MainActivity
 import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.LoginViewModel
@@ -21,15 +23,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
 
     private lateinit var viewModel: LoginViewModel
-
-    private val btnLoginClickListener: (View) -> Unit = {
-        val loginUri = Uri.parse(BuildConfig.LOGIN_URL).buildUpon() // Login URL을 가진 Uri.Builder Nested 객체 생성
-            .appendPath(getString(R.string.login_path_auth))
-            .appendQueryParameter(BuildConfig.CLIENT_ID_PARAM, BuildConfig.CLIENT_ID)
-            .appendQueryParameter(BuildConfig.SCOPE_PARAM, getString(R.string.login_query_scope))
-            .build()
-        startActivity(Intent(Intent.ACTION_VIEW, loginUri))
-    }
 
     private val tokenObserver: (String) -> Unit = { token ->
         if (token.length < 5 && token != "") {
@@ -44,12 +37,21 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private val clickEventObserver: (Unit) -> Unit = { event ->
+        val loginUri = Uri.parse(BuildConfig.LOGIN_URL).buildUpon()
+            .appendPath(getString(R.string.login_path_auth))
+            .appendQueryParameter(BuildConfig.CLIENT_ID_PARAM, BuildConfig.CLIENT_ID)
+            .appendQueryParameter(BuildConfig.SCOPE_PARAM, getString(R.string.login_query_scope))
+            .build()
+        startActivity(Intent(Intent.ACTION_VIEW, loginUri))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initViewModel()
-        setOnClickListeners()
+        initBinding()
         getUserCode()
         observeData()
     }
@@ -60,8 +62,14 @@ class LoginActivity : AppCompatActivity() {
         )[LoginViewModel::class.java]
     }
 
+    private fun initBinding() {
+        binding.vm = viewModel
+        binding.lifecycleOwner = this
+    }
+
     private fun observeData() {
         viewModel.token.observe(this, tokenObserver)
+        viewModel.clickEvent.observe(this, EventObserver(clickEventObserver))
     }
 
     private fun getUserCode() {
@@ -72,10 +80,6 @@ class LoginActivity : AppCompatActivity() {
                 btnLoginLogin.visibility = View.INVISIBLE
             }
         }
-    }
-
-    private fun setOnClickListeners(){
-        binding.btnLoginLogin.setOnClickListener (btnLoginClickListener)
     }
 
     private fun startMainActivity(){

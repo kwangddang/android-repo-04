@@ -1,69 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_issue_container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@drawable/background_gradient">
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_issue_inner_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:background="@drawable/background_round_navy">
+    <data>
+        <variable
+            name="vm"
+            type="com.example.android_repo_04.viewmodel.MainViewModel" />
+    </data>
 
-        <ImageView
-            android:id="@+id/img_issue_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_filter"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <TextView
-            android:id="@+id/text_issue_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            android:text="@string/issue_filter"
-            android:layout_marginStart="16dp"
-            app:layout_constraintStart_toEndOf="@id/img_issue_filter"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <Spinner
-            android:id="@+id/spinner_issue_option"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:popupBackground="@drawable/background_spinner"
-            android:dropDownVerticalOffset="48dp"
-            android:dropDownWidth="180dp"
-            android:backgroundTint="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/refresh_issue_issue"
+    <LinearLayout
+        android:id="@+id/layout_issue_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@drawable/background_gradient">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_issue_issue"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_issue_inner_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:background="@drawable/background_issue_filter"
+            android:onClick="@{() -> vm.setIssueClickEvent()}">
+
+            <ImageView
+                android:id="@+id/img_issue_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_filter"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/text_issue_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/white"
+                android:text="@string/issue_filter"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toEndOf="@id/img_issue_filter"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <Spinner
+                android:id="@+id/spinner_issue_option"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:popupBackground="@drawable/background_spinner"
+                android:dropDownVerticalOffset="48dp"
+                android:dropDownWidth="180dp"
+                android:backgroundTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                bind:selectedSpinnerItem="@={vm.selectedIssue}"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refresh_issue_issue"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="16dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_issue"/>
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            app:onRefreshListener="@{() -> vm.setIssueRefreshEvent()}">
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_issue_issue"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_issue" />
 
-</LinearLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
+</layout>

@@ -1,5 +1,6 @@
 package com.example.android_repo_04.viewmodel
 
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,6 +10,8 @@ import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.data.dto.notification.Notification
 import com.example.android_repo_04.data.dto.profile.User
 import com.example.android_repo_04.utils.DataResponse
+import com.example.android_repo_04.utils.Event
+import com.example.android_repo_04.utils.emit
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewModel() {
@@ -24,10 +27,23 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
     private val _issue = MutableLiveData<MutableList<Issue>>()
     val issue: LiveData<MutableList<Issue>> get() = _issue
 
+    private val _mainClickEvent = MutableLiveData<Event<Int>>()
+    val mainClickEvent: LiveData<Event<Int>> get() = _mainClickEvent
+
+    private val _notificationRefreshEvent = MutableLiveData<Event<Unit>>()
+    val notificationRefreshEvent: LiveData<Event<Unit>> get() = _notificationRefreshEvent
+
+    private val _issueRefreshEvent = MutableLiveData<Event<Unit>>()
+    val issueRefreshEvent: LiveData<Event<Unit>> get() = _issueRefreshEvent
+
+    private val _issueClickEvent = MutableLiveData<Event<Unit>>()
+    val issueClickEvent: LiveData<Event<Unit>> get() = _issueClickEvent
+
     val user = MutableLiveData<User>()
     val starCount = MutableLiveData<Int>()
 
-    var selectedIssue = 0
+    var selectedIssue = MutableLiveData(0)
+    var prevSelectedIssue = 0
 
     fun requestNotifications() {
         viewModelScope.launch {
@@ -87,5 +103,21 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
                 }
             }
         }
+    }
+
+    fun setMainClickEvent(view: View) {
+        _mainClickEvent.emit(view.id)
+    }
+
+    fun setNotificationRefreshEvent() {
+        _notificationRefreshEvent.emit()
+    }
+
+    fun setIssueRefreshEvent() {
+        _issueRefreshEvent.emit()
+    }
+
+    fun setIssueClickEvent() {
+        _issueClickEvent.emit()
     }
 }

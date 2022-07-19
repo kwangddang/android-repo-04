@@ -9,7 +9,6 @@ import com.example.android_repo_04.utils.DataResponse
 class GitHubApiRepository {
     suspend fun requestIssues(state: String, filter: String, callback: (DataResponse<List<Issue>?>) -> Unit) {
         val response = RetrofitFactory.createApiService()!!.requestIssues(state, filter)
-
         if (response.isSuccessful) {
             callback(DataResponse.Success(data = response.body()))
         } else {

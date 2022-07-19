@@ -2,7 +2,6 @@ package com.example.android_repo_04.view.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
@@ -10,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.databinding.ActivityMainBinding
+import com.example.android_repo_04.utils.Event
+import com.example.android_repo_04.utils.EventObserver
 import com.example.android_repo_04.view.main.issue.IssueFragment
 import com.example.android_repo_04.view.main.notification.NotificationFragment
 import com.example.android_repo_04.view.profile.ProfileActivity
@@ -49,23 +50,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val btnIssueClickListener: (View) -> Unit = {
-        viewModel.position.value = 0
-    }
-
-    private val btnNotificationClickListener: (View) -> Unit = {
-        viewModel.position.value = 1
-    }
-
-    private val imgProfileClickListener: (View) -> Unit = {
-        val intent = Intent(this, ProfileActivity::class.java)
-        intent.putExtra(getString(R.string.user_info), viewModel.user.value)
-        intent.putExtra(getString(R.string.star_count), viewModel.starCount.value)
-        startActivity(intent)
-    }
-
-    private val imgSearchClickListener: (View) -> Unit = {
-        startActivity(Intent(this,SearchActivity::class.java))
+    private val clickEventObserver: (Int) -> Unit = { event ->
+        when(event) {
+            R.id.img_main_profile -> showProfileActivity()
+            R.id.img_main_search -> showSearchActivity()
+            R.id.btn_main_notification -> viewModel.position.value = 1
+            R.id.btn_main_issue -> viewModel.position.value = 0
+        }
     }
 
     /* onCreate */
@@ -76,7 +67,6 @@ class MainActivity : AppCompatActivity() {
         initViewModel()
         initBinding()
         observeData()
-        setOnClickListeners()
         initFragmentManager()
         requestApi()
     }
@@ -101,13 +91,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun observeData() {
         viewModel.position.observe(this, positionObserver)
-    }
-
-    private fun setOnClickListeners(){
-        binding.btnMainIssue.setOnClickListener(btnIssueClickListener)
-        binding.btnMainNotification.setOnClickListener(btnNotificationClickListener)
-        binding.imgMainProfile.setOnClickListener(imgProfileClickListener)
-        binding.imgMainSearch.setOnClickListener(imgSearchClickListener)
+        viewModel.mainClickEvent.observe(this, EventObserver(clickEventObserver))
     }
 
     private fun initFragmentManager() {
@@ -160,5 +144,16 @@ class MainActivity : AppCompatActivity() {
             show(fragmentManager.findFragmentByTag(getString(R.string.tag_notification_fragment))!!)
             hide(fragmentManager.findFragmentByTag(getString(R.string.tag_issue_fragment))!!)
         }
+    }
+
+    private fun showProfileActivity() {
+        val intent = Intent(this, ProfileActivity::class.java)
+        intent.putExtra(getString(R.string.user_info), viewModel.user.value)
+        intent.putExtra(getString(R.string.star_count), viewModel.starCount.value)
+        startActivity(intent)
+    }
+
+    private fun showSearchActivity() {
+        startActivity(Intent(this, SearchActivity::class.java))
     }
 }
