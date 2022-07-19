@@ -22,8 +22,8 @@ class SearchAdapter(private val viewModel: ViewModel): ListAdapter<SearchItem, S
         holder.bind(getItem(position), viewModel)
     }
 
-    fun replaceItem(item: Search) {
-        submitList(item.items)
+    fun replaceItem(item: List<SearchItem>) {
+        submitList(item)
     }
 
     companion object {

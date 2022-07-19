@@ -28,6 +28,7 @@ class IssueFragment: Fragment() {
 
     private val issueObserver: (Issue) -> Unit = { issue ->
         issueAdapter.replaceItem(issue)
+        binding.refreshIssueIssue.isRefreshing = false
     }
 
     private val spinnerItemSelectedListener = object: AdapterView.OnItemSelectedListener{
@@ -65,6 +66,7 @@ class IssueFragment: Fragment() {
         initViewModel()
         initRecyclerAdapter()
         initSpinnerAdapter()
+        setRefreshListener()
         setSpinnerClickListener()
         setOnClickListener()
         observeData()
@@ -80,6 +82,12 @@ class IssueFragment: Fragment() {
 
     private fun initSpinnerAdapter() {
         binding.spinnerIssueOption.adapter = spinnerAdapter
+    }
+
+    private fun setRefreshListener() {
+        binding.refreshIssueIssue.setOnRefreshListener {
+            getSelectedIssues(spinnerAdapter.selectedPosition)
+        }
     }
 
     private fun setSpinnerClickListener() {
