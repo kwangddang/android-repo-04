@@ -8,6 +8,7 @@ import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.profile.User
 import com.example.android_repo_04.databinding.ActivityProfileBinding
+import com.example.android_repo_04.view.Event
 import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.ProfileViewModel
 
@@ -20,6 +21,10 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var user: User
     private var starCount: Int = 0
 
+    private val clickEventObserver: (Event<Unit>) -> Unit = { event ->
+        onBackPressed()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
@@ -27,7 +32,7 @@ class ProfileActivity : AppCompatActivity() {
         getUserInfo()
         initViewModel()
         initBinding()
-        setOnClickListeners()
+        observeData()
     }
 
     private fun getUserInfo() {
@@ -51,7 +56,7 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun setOnClickListeners() {
-        binding.imgProfileBack.setOnClickListener { onBackPressed() }
+    private fun observeData() {
+        viewModel.clickEvent.observe(this, clickEventObserver)
     }
 }
