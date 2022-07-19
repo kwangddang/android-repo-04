@@ -1,7 +1,9 @@
 package com.example.android_repo_04.viewmodel
 
-import androidx.annotation.MainThread
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.data.dto.notification.Notification
@@ -10,15 +12,6 @@ import com.example.android_repo_04.utils.DataResponse
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewModel() {
-    companion object{
-        private lateinit var instance: MainViewModel
-
-        @MainThread
-        fun getInstance(gitHubApiRepository: GitHubApiRepository): MainViewModel {
-            instance = if(::instance.isInitialized) instance else MainViewModel(gitHubApiRepository)
-            return instance
-        }
-    }
 
     val position = MutableLiveData(0)
 

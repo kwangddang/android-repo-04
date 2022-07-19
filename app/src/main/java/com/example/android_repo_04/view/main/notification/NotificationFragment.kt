@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.notification.Notification
 import com.example.android_repo_04.databinding.FragmentNotificationBinding
+import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.MainViewModel
 
 
@@ -59,7 +61,9 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
     }
 
     private fun initViewModel() {
-        viewModel = MainViewModel.getInstance(GitHubApiRepository.getGitInstance()!!)
+        viewModel = ViewModelProvider(requireActivity(),
+            CustomViewModelFactory(GitHubApiRepository.getGitInstance()!!)
+        )[MainViewModel::class.java]
     }
 
     private fun initAdapter() {

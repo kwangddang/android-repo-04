@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.databinding.FragmentIssueBinding
+import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.MainViewModel
 
 class IssueFragment: Fragment() {
@@ -73,7 +75,9 @@ class IssueFragment: Fragment() {
     }
 
     private fun initViewModel() {
-        viewModel = MainViewModel.getInstance(GitHubApiRepository.getGitInstance()!!)
+        viewModel = ViewModelProvider(requireActivity(),
+            CustomViewModelFactory(GitHubApiRepository.getGitInstance()!!)
+        )[MainViewModel::class.java]
     }
 
     private fun initRecyclerAdapter() {
