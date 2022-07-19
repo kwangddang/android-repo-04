@@ -24,8 +24,8 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
     private var _readNotification = MutableLiveData<Int>()
     val readNotification: LiveData<Int> get() = _readNotification
 
-    private val _issue = MutableLiveData<Issue>()
-    val issue: LiveData<Issue> get() = _issue
+    private val _issue = MutableLiveData<MutableList<Issue>>()
+    val issue: LiveData<MutableList<Issue>> get() = _issue
 
     private val _mainClickEvent = MutableLiveData<Event<Int>>()
     val mainClickEvent: LiveData<Event<Int>> get() = _mainClickEvent
@@ -73,7 +73,7 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
         viewModelScope.launch {
             gitHubApiRepository.requestIssues(state, filter) { response ->
                 if(response is DataResponse.Success) {
-                    _issue.postValue(response.data!!)
+                    _issue.postValue(response.data?.toMutableList())
                 } else {
                     //TODO 에러처리
                 }

@@ -10,6 +10,9 @@ import com.example.android_repo_04.data.dto.search.Search
 import com.example.android_repo_04.utils.DataResponse
 import com.example.android_repo_04.view.Event
 import com.example.android_repo_04.view.emit
+import com.example.android_repo_04.utils.debounce
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SearchViewModel(private val repository: GitHubApiRepository): ViewModel() {
@@ -37,7 +40,7 @@ class SearchViewModel(private val repository: GitHubApiRepository): ViewModel() 
                             val tempItems = it.items.toMutableList()
                             tempItems.addAll(response.data!!.items)
                             _searchItems.postValue(
-                                Search(tempItems, it.total_count)
+                                Search(tempItems, it.totalCount)
                             )
                         }
                     }
@@ -58,5 +61,9 @@ class SearchViewModel(private val repository: GitHubApiRepository): ViewModel() 
 
     fun setRefreshEvent() {
         _refreshEvent.emit()
+    }
+
+    fun change(time: Long, callback: () -> Unit) {
+        debounce(time, viewModelScope, callback)
     }
 }

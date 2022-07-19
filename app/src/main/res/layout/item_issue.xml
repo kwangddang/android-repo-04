@@ -7,7 +7,7 @@
     <data>
         <variable
             name="issue"
-            type="com.example.android_repo_04.data.dto.issue.IssueItem" />
+            type="com.example.android_repo_04.data.dto.issue.Issue" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +34,7 @@
             android:maxLines="1"
             android:textColor="@color/grey"
             android:textSize="16sp"
-            android:text="@{issue.repository.full_name}"
+            android:text="@{issue.repository.fullName}"
             app:layout_constraintEnd_toStartOf="@id/text_issue_date"
             app:layout_constraintStart_toEndOf="@id/img_issue_state"
             app:layout_constraintTop_toTopOf="@id/img_issue_state"
@@ -48,7 +48,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/img_issue_state"
-            bind:issueDate="@{issue.updated_at}"
+            bind:issueDate="@{issue.updatedAt}"
             tools:text="1일 전" />
 
         <TextView

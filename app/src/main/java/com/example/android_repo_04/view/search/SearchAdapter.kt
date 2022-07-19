@@ -3,12 +3,9 @@ package com.example.android_repo_04.view.search
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android_repo_04.data.dto.issue.IssueItem
-import com.example.android_repo_04.data.dto.search.Search
 import com.example.android_repo_04.data.dto.search.SearchItem
 import com.example.android_repo_04.databinding.ItemSearchBinding
 

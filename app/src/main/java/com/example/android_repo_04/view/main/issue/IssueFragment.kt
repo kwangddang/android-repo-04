@@ -29,8 +29,8 @@ class IssueFragment: Fragment() {
         SpinnerAdapter(requireContext())
     }
 
-    private val issueObserver: (Issue) -> Unit = { issue ->
-        issueAdapter.replaceItem(issue)
+    private val issueObserver: (List<Issue>) -> Unit = { issues ->
+        issueAdapter.replaceItem(issues)
         binding.refreshIssueIssue.isRefreshing = false
     }
 

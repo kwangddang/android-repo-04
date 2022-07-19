@@ -35,6 +35,11 @@ class SearchActivity : AppCompatActivity(), SearchRefreshListener {
             binding.progressSearchLoading.visibility = View.INVISIBLE
             showHintText()
         }
+        viewModel.change(500L) {
+            if (text.isNotEmpty() && text.isNotBlank()) {
+                showProgress()
+                getSearchItems(text)
+            }
     }
 
     private val clickEventObserver: (Event<Int>) -> Unit = { event ->
@@ -53,7 +58,11 @@ class SearchActivity : AppCompatActivity(), SearchRefreshListener {
     private val searchAdapter: SearchAdapter by lazy {
         SearchAdapter(viewModel)
     }
-    
+
+    private val imgSearchClickListener: (View) -> Unit = {
+        getSearchItems(binding.editSearchSearch.text.toString())
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchBinding.inflate(layoutInflater)
@@ -90,7 +99,7 @@ class SearchActivity : AppCompatActivity(), SearchRefreshListener {
         viewModel.clickEvent.observe(this, clickEventObserver)
         viewModel.refreshEvent.observe(this, refreshEventObserver)
     }
-            
+
     private fun getSearchItems(query: String) {
         viewModel.requestSearchRepositories(query)
     }

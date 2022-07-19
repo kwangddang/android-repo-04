@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="vm"
             type="com.example.android_repo_04.viewmodel.MainViewModel" />
@@ -27,12 +26,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:letterSpacing="0.05"
                 android:text="@string/main_title"
                 android:textColor="@color/white"
                 android:textSize="16dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:letterSpacing="0.05"
+                android:layout_marginStart="24dp" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_main_profile"

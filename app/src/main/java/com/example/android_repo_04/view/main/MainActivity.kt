@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.databinding.ActivityMainBinding
-import com.example.android_repo_04.view.Event
 import com.example.android_repo_04.view.main.issue.IssueFragment
 import com.example.android_repo_04.view.main.notification.NotificationFragment
 import com.example.android_repo_04.view.profile.ProfileActivity
