@@ -29,16 +29,16 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
         NotificationAdapter(viewModel)
     }
 
-    private val notificationObserver: (MutableList<Notification>) -> Unit = {
-        notificationAdapter.notifications = it
-        notificationAdapter.notifyDataSetChanged()
+    private val notificationObserver: (MutableList<Notification>) -> Unit = { notification ->
+        notificationAdapter.submitList(notification)
         binding.refreshNotifications.isRefreshing = false
     }
 
-    private val readNotificationObserver: (Int) -> Unit = {
-        if (it >= 0) {
-            notificationAdapter.notifications.removeAt(it)
-            notificationAdapter.notifyItemRemoved(it)
+    private val readNotificationObserver: (Int) -> Unit = { position ->
+        if (position >= 0) {
+            val newList = notificationAdapter.currentList.toMutableList()
+            newList.removeAt(position)
+            notificationAdapter.submitList(newList)
         } else {
             Toast.makeText(context, requireContext().getString(R.string.toast_error_notification), Toast.LENGTH_SHORT).show()
         }
