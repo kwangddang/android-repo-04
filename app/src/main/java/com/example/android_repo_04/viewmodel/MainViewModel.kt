@@ -32,6 +32,7 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
     val issue: LiveData<Issue> get() = _issue
 
     val user = MutableLiveData<User>()
+    val starCount = MutableLiveData<Int>()
 
     var selectedIssue = 0
 
@@ -78,6 +79,18 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
                     user.postValue(response.data!!)
                 } else {
                     //TODO 에러처리
+                }
+            }
+        }
+    }
+
+    fun requestUserStarred() {
+        viewModelScope.launch {
+            gitHubApiRepository.requestUserStarredCount { response ->
+                if(response is DataResponse.Success) {
+                    starCount.postValue(response.data!!)
+                } else {
+
                 }
             }
         }

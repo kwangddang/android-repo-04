@@ -58,7 +58,8 @@ class MainActivity : AppCompatActivity() {
     private val imgProfileClickListener: (View) -> Unit = {
         val intent = Intent(this, ProfileActivity::class.java)
         intent.putExtra(getString(R.string.user_info),viewModel.user.value)
-        startActivity(Intent(this, ProfileActivity::class.java))
+        intent.putExtra(getString(R.string.star_count), viewModel.starCount.value)
+        startActivity(intent)
     }
 
     private val imgSearchClickListener: (View) -> Unit = {
@@ -75,9 +76,14 @@ class MainActivity : AppCompatActivity() {
         observeData()
         setOnClickListeners()
         initFragmentManager()
+        requestApi()
+    }
+
+    private fun requestApi() {
         getIssues()
         getNotifications()
         getUser()
+        getUserStarred()
     }
 
     private fun initViewModel() {
@@ -122,6 +128,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun getUser() {
         viewModel.requestUser()
+    }
+
+    private fun getUserStarred() {
+        viewModel.requestUserStarred()
     }
 
     private fun selectIssue(){

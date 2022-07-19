@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
+import com.example.android_repo_04.data.dto.profile.User
 import com.example.android_repo_04.data.dto.search.Search
 import com.example.android_repo_04.databinding.ActivitySearchBinding
 import com.example.android_repo_04.viewmodel.CustomViewModelFactory

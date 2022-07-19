@@ -9,6 +9,7 @@
         <variable
             name="vm"
             type="com.example.android_repo_04.viewmodel.ProfileViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
