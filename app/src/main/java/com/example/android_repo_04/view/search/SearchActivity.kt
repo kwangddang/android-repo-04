@@ -40,6 +40,7 @@ class SearchActivity : AppCompatActivity(), SearchRefreshListener {
                 showProgress()
                 getSearchItems(text)
             }
+        }
     }
 
     private val clickEventObserver: (Event<Int>) -> Unit = { event ->
@@ -51,7 +52,13 @@ class SearchActivity : AppCompatActivity(), SearchRefreshListener {
 
     private val refreshEventObserver: (Event<Unit>) -> Unit = { event ->
         if(event.getContentIfNotHandled() != null) {
-            getSearchItems(binding.editSearchSearch.text.toString())
+            binding.editSearchSearch.run {
+                if(this.text.isEmpty() || this.text.isBlank()) {
+                    binding.refreshSearch.isRefreshing = false
+                } else {
+                    getSearchItems(this.text.toString())
+                }
+            }
         }
     }
 
