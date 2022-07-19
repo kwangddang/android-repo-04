@@ -41,6 +41,7 @@ android {
     def notifications_url = properties.getProperty("NOTIFICATIONS_URL")
     def notifications_read_url = properties.getProperty("NOTIFICATIONS_READ_URL")
     def comments_url = properties.getProperty("COMMENTS_URL")
+    def search_url = properties.getProperty("SEARCH_URL")
 
     // param
     def state_param = properties.getProperty("STATE_PARAM")
@@ -81,6 +82,7 @@ android {
         buildConfigField "String", 'NOTIFICATIONS_URL', notifications_url
         buildConfigField "String", 'NOTIFICATIONS_READ_URL', notifications_read_url
         buildConfigField "String", 'COMMENTS_URL', comments_url
+        buildConfigField "String", 'SEARCH_URL', search_url
 
         buildConfigField "String", 'STATE_PARAM', state_param
         buildConfigField "String", 'FILTER_PARAM', filter_param

@@ -40,7 +40,7 @@ interface GitHubApiService {
         @Path(BuildConfig.ID_PATH) id: String,
     ): Response<String>
 
-    @GET("search/repositories")
+    @GET(BuildConfig.SEARCH_URL)
     suspend fun requestSearchRepositories(
         @Query("q") query: String,
         @Query("page") page: Int
