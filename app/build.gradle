@@ -46,6 +46,7 @@ android {
     // param
     def state_param = properties.getProperty("STATE_PARAM")
     def filter_param = properties.getProperty("FILTER_PARAM")
+    def pulls_param = properties.getProperty("PULLS_PARAM")
     def client_id_param = properties.getProperty("CLIENT_ID_PARAM")
     def client_secret_param = properties.getProperty("CLIENT_SECRET_PARAM")
     def code_param = properties.getProperty("CODE_PARAM")
@@ -86,6 +87,7 @@ android {
 
         buildConfigField "String", 'STATE_PARAM', state_param
         buildConfigField "String", 'FILTER_PARAM', filter_param
+        buildConfigField "String", 'PULLS_PARAM', pulls_param
         buildConfigField "String", 'CLIENT_ID_PARAM', client_id_param
         buildConfigField "String", 'CLIENT_SECRET_PARAM', client_secret_param
         buildConfigField "String", 'CODE_PARAM', code_param
