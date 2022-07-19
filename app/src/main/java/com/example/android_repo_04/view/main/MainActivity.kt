@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
+import androidx.lifecycle.ViewModelProvider
 import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.databinding.ActivityMainBinding
@@ -13,6 +14,7 @@ import com.example.android_repo_04.view.main.issue.IssueFragment
 import com.example.android_repo_04.view.main.notification.NotificationFragment
 import com.example.android_repo_04.view.profile.ProfileActivity
 import com.example.android_repo_04.view.search.SearchActivity
+import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -87,7 +89,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        viewModel = MainViewModel.getInstance(GitHubApiRepository.getGitInstance()!!)
+        viewModel = ViewModelProvider(this,
+            CustomViewModelFactory(GitHubApiRepository.getGitInstance()!!)
+        )[MainViewModel::class.java]
     }
 
     private fun initBinding() {
