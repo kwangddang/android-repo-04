@@ -39,7 +39,7 @@
                 android:layout_height="56dp"
                 android:padding="16dp"
                 android:layout_gravity="end"
-                bind:profileImage="@{vm.user.avatar_url}"/>
+                bind:profileImage="@{vm.user.avatarUrl}"/>
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/img_main_search"

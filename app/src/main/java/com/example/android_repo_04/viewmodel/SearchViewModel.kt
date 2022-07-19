@@ -31,7 +31,7 @@ class SearchViewModel(private val repository: GitHubApiRepository): ViewModel() 
                             val tempItems = it.items.toMutableList()
                             tempItems.addAll(response.data!!.items)
                             _searchItems.postValue(
-                                Search(tempItems, it.total_count)
+                                Search(tempItems, it.totalCount)
                             )
                         }
                     }

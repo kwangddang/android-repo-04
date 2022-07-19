@@ -18,7 +18,7 @@ interface GitHubApiService {
     suspend fun requestIssues(
         @Query(BuildConfig.STATE_PARAM) state: String,
         @Query(BuildConfig.FILTER_PARAM) filter: String
-    ): Response<Issue>
+    ): Response<List<Issue>>
 
     @GET(BuildConfig.USER_URL)
     suspend fun requestUser(): Response<User>
@@ -40,7 +40,7 @@ interface GitHubApiService {
         @Path(BuildConfig.ID_PATH) id: String,
     ): Response<String>
 
-    @GET("search/repositories")
+    @GET(BuildConfig.SEARCH_URL)
     suspend fun requestSearchRepositories(
         @Query("q") query: String,
         @Query("page") page: Int

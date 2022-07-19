@@ -1,6 +1,5 @@
 package com.example.android_repo_04.api
 
-import android.util.Log
 import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.data.dto.notification.Notification
 import com.example.android_repo_04.data.dto.profile.User
@@ -8,7 +7,7 @@ import com.example.android_repo_04.data.dto.search.Search
 import com.example.android_repo_04.utils.DataResponse
 
 class GitHubApiRepository {
-    suspend fun requestIssues(state: String, filter: String, callback: (DataResponse<Issue?>) -> Unit) {
+    suspend fun requestIssues(state: String, filter: String, callback: (DataResponse<List<Issue>?>) -> Unit) {
         val response = RetrofitFactory.createApiService()!!.requestIssues(state, filter)
 
         if (response.isSuccessful) {

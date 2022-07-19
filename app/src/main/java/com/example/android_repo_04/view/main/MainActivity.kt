@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
 
     private val imgProfileClickListener: (View) -> Unit = {
         val intent = Intent(this, ProfileActivity::class.java)
-        intent.putExtra(getString(R.string.user_info),viewModel.user.value)
+        intent.putExtra(getString(R.string.user_info), viewModel.user.value)
         intent.putExtra(getString(R.string.star_count), viewModel.starCount.value)
         startActivity(intent)
     }
