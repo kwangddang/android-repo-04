@@ -1,11 +1,13 @@
 package com.example.android_repo_04.view.search
 
 import android.os.Bundle
+import android.text.Editable
 import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
@@ -34,23 +36,16 @@ class SearchActivity : AppCompatActivity(), SearchRefreshListener {
             binding.progressSearchLoading.visibility = View.INVISIBLE
             showHintText()
         }
-    }
-
-    private val editorActionListener: (TextView, Int, KeyEvent?) -> Boolean = { view, actionId, event ->
-        if(actionId == EditorInfo.IME_ACTION_DONE) {
-            showProgress()
-            getSearchItems(view.text.toString())
-            true
+        viewModel.change(500L) {
+            if (text.isNotEmpty() && text.isNotBlank()) {
+                showProgress()
+                getSearchItems(text)
+            }
         }
-        false
     }
 
     private val searchAdapter: SearchAdapter by lazy {
         SearchAdapter(viewModel)
-    }
-
-    private val imgSearchClickListener: (View) -> Unit = {
-        getSearchItems(binding.editSearchSearch.text.toString())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,7 +57,6 @@ class SearchActivity : AppCompatActivity(), SearchRefreshListener {
         initAdapter()
         setOnClickListeners()
         setRefreshListener()
-        setOnEditorActionListener()
         setOnScrollListener()
         observeData()
     }
@@ -83,7 +77,6 @@ class SearchActivity : AppCompatActivity(), SearchRefreshListener {
     }
 
     private fun setOnClickListeners() {
-        binding.imgSearchSearch.setOnClickListener(imgSearchClickListener)
         binding.imgSearchBack.setOnClickListener { onBackPressed() }
         binding.imgSearchCancel.setOnClickListener { binding.editSearchSearch.setText("") }
     }
@@ -92,10 +85,6 @@ class SearchActivity : AppCompatActivity(), SearchRefreshListener {
         binding.refreshSearch.setOnRefreshListener {
             getSearchItems(binding.editSearchSearch.text.toString())
         }
-    }
-
-    private fun setOnEditorActionListener() {
-        binding.editSearchSearch.setOnEditorActionListener(editorActionListener)
     }
 
     private fun setOnScrollListener() {
