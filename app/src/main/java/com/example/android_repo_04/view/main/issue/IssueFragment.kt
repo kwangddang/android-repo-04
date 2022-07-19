@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.databinding.FragmentIssueBinding
+import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.MainViewModel
 
 class IssueFragment: Fragment() {
@@ -28,6 +30,7 @@ class IssueFragment: Fragment() {
 
     private val issueObserver: (Issue) -> Unit = { issue ->
         issueAdapter.replaceItem(issue)
+        binding.refreshIssueIssue.isRefreshing = false
     }
 
     private val spinnerItemSelectedListener = object: AdapterView.OnItemSelectedListener{
@@ -65,13 +68,16 @@ class IssueFragment: Fragment() {
         initViewModel()
         initRecyclerAdapter()
         initSpinnerAdapter()
+        setRefreshListener()
         setSpinnerClickListener()
         setOnClickListener()
         observeData()
     }
 
     private fun initViewModel() {
-        viewModel = MainViewModel.getInstance(GitHubApiRepository.getGitInstance()!!)
+        viewModel = ViewModelProvider(requireActivity(),
+            CustomViewModelFactory(GitHubApiRepository.getGitInstance()!!)
+        )[MainViewModel::class.java]
     }
 
     private fun initRecyclerAdapter() {
@@ -80,6 +86,12 @@ class IssueFragment: Fragment() {
 
     private fun initSpinnerAdapter() {
         binding.spinnerIssueOption.adapter = spinnerAdapter
+    }
+
+    private fun setRefreshListener() {
+        binding.refreshIssueIssue.setOnRefreshListener {
+            getSelectedIssues(spinnerAdapter.selectedPosition)
+        }
     }
 
     private fun setSpinnerClickListener() {
