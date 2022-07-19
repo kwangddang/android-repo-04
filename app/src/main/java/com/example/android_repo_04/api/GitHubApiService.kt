@@ -17,7 +17,8 @@ interface GitHubApiService {
     @GET(BuildConfig.ISSUE_URL)
     suspend fun requestIssues(
         @Query(BuildConfig.STATE_PARAM) state: String,
-        @Query(BuildConfig.FILTER_PARAM) filter: String
+        @Query(BuildConfig.FILTER_PARAM) filter: String,
+        @Query(BuildConfig.PULLS_PARAM) pulls: Boolean = false
     ): Response<List<Issue>>
 
     @GET(BuildConfig.USER_URL)
