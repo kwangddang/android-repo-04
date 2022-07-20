@@ -69,9 +69,9 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
         }
     }
 
-    fun requestIssues(state: String = "all", filter: String = "all") {
+    fun requestIssues(state: String) {
         viewModelScope.launch {
-            gitHubApiRepository.requestIssues(state, filter) { response ->
+            gitHubApiRepository.requestIssues(state) { response ->
                 if(response is DataResponse.Success) {
                     _issue.postValue(response.data?.toMutableList())
                 } else {
