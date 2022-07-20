@@ -10,3 +10,8 @@ fun dpToPx(context: Context, dp: Float): Int {
         context.resources.displayMetrics
     ).toInt()
 }
+
+fun pxToDp(context: Context, px: Int): Int {
+    val scale = context.resources.displayMetrics.density
+    return (px * scale + 0.5f).toInt()
+}

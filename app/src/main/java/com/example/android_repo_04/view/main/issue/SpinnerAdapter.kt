@@ -10,6 +10,7 @@ import android.widget.CheckedTextView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.example.android_repo_04.R
+import com.example.android_repo_04.utils.pxToDp
 
 class SpinnerAdapter(private val context: Context) : BaseAdapter(){
 
@@ -37,19 +38,25 @@ class SpinnerAdapter(private val context: Context) : BaseAdapter(){
     }
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
+        var contentView: CheckedTextView
         if(convertView == null) {
             val view = inflater.inflate(R.layout.spinner_content, parent, false)
-            val textView = view.findViewById<CheckedTextView>(R.id.text_spinner_content)
-            textView.text = list[position]
-            setChecked(position, textView)
+            contentView = view.findViewById(R.id.text_spinner_content)
+            contentView.text = list[position]
+            setChecked(position, contentView)
             return view
         } else {
-            convertView.findViewById<CheckedTextView>(R.id.text_spinner_content).text = list[position]
+            contentView = convertView.findViewById(R.id.text_spinner_content)
+            contentView.text = list[position]
         }
-        setChecked(position, convertView.findViewById(R.id.text_spinner_content))
+        if(position == 2) setLastItemPadding(contentView)
+        setChecked(position, contentView)
         return convertView
     }
 
+    private fun setLastItemPadding(contentView: CheckedTextView) {
+        contentView.apply { setPadding(pxToDp(context, 20), pxToDp(context, 16), pxToDp(context, 20), pxToDp(context, 16)) }
+    }
 
     private fun setChecked(position: Int, view: CheckedTextView) {
         if(position == selectedPosition) {
