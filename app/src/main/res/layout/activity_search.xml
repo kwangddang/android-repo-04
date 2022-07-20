@@ -37,7 +37,7 @@
 
             <TextView
                 android:id="@+id/text_search_title"
-                style="@style/PrimaryTextBold"
+                style="@style/TitleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -130,10 +130,9 @@
 
         <TextView
             android:id="@+id/text_search_empty_title"
-            style="@style/PrimaryTextBold"
+            style="@style/TitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:letterSpacing="0.1"
             android:paddingBottom="32dp"
             android:text="@string/search_empty_title"
             android:textSize="18sp"
@@ -146,11 +145,10 @@
 
         <TextView
             android:id="@+id/text_search_empty_description"
-            style="@style/SubText"
+            style="@style/SubTitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:letterSpacing="0.1"
             android:lineSpacingExtra="4dp"
             android:maxLines="5"
             android:text="@string/search_empty_description"

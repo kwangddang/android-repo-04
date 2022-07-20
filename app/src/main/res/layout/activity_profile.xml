@@ -40,7 +40,7 @@
 
             <TextView
                 android:id="@+id/text_profile_title"
-                style="@style/PrimaryTextBold"
+                style="@style/TitleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -286,7 +286,7 @@
 
             <TextView
                 android:id="@+id/text_profile_repository_count"
-                style="@style/PrimaryText"
+                style="@style/PrimaryTextBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{Integer.toString(vm.user.publicRepos + vm.user.totalPrivateRepos)}"
@@ -327,7 +327,7 @@
 
             <TextView
                 android:id="@+id/text_profile_star_count"
-                style="@style/PrimaryText"
+                style="@style/PrimaryTextBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{Integer.toString(vm.star)}"

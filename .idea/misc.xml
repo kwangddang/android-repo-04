@@ -19,6 +19,10 @@
         <entry key="app/src/main/res/drawable/ic_back.xml" value="0.216" />
         <entry key="app/src/main/res/drawable/ic_star.xml" value="0.1065" />
         <entry key="app/src/main/res/drawable/icon_ripple_effect.xml" value="0.209" />
+        <entry key="app/src/main/res/font-v26/kopubworld_dotum_font_family.xml" value="0.40208333333333335" />
+        <entry key="app/src/main/res/font-v26/outfit_font_family.xml" value="0.10555555555555556" />
+        <entry key="app/src/main/res/font/kopubworld_dotum_font_family.xml" value="0.25" />
+        <entry key="app/src/main/res/font/outfit_font_family.xml" value="0.10555555555555556" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_profile.xml" value="0.3729166666666667" />
