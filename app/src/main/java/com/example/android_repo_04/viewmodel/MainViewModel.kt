@@ -1,12 +1,10 @@
 package com.example.android_repo_04.viewmodel
 
-import android.content.Context
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.data.dto.notification.Notification
@@ -20,9 +18,6 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
 
     private var _notifications = MutableLiveData<MutableList<Notification>>()
     val notifications: LiveData<MutableList<Notification>> get() = _notifications
-
-    private var _readNotification = MutableLiveData<Int>()
-    val readNotification: LiveData<Int> get() = _readNotification
 
     private val _issue = MutableLiveData<MutableList<Issue>>()
     val issue: LiveData<MutableList<Issue>> get() = _issue
@@ -61,9 +56,12 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
         viewModelScope.launch {
             gitHubApiRepository.requestToReadNotification(notifications.value!![position].id) { response ->
                 if (response is DataResponse.Success) {
-                    _readNotification.postValue(position)
+                    val temp = _notifications.value!!
+                    temp.removeAt(position)
+                    _notifications.postValue(temp)
                 } else if (response is DataResponse.Error) {
                     createErrorToast(response.errorCode)
+                    _notifications.postValue(_notifications.value!!)
                 }
             }
         }

@@ -30,17 +30,11 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
     }
 
     private val notificationObserver: (MutableList<Notification>) -> Unit = { notification ->
-        notificationAdapter.submitList(notification)
+        notificationAdapter.submitList(notification.toMutableList())
         binding.refreshNotifications.isRefreshing = false
     }
 
-    private val readNotificationObserver: (Int) -> Unit = { position ->
-        val newList = notificationAdapter.currentList.toMutableList()
-        newList.removeAt(position)
-        notificationAdapter.submitList(newList)
-    }
-
-    private val notificationRefreshEventObserver: (Unit) -> Unit = { event ->
+    private val notificationRefreshEventObserver: (Unit) -> Unit = {
         viewModel.requestNotifications()
     }
 
@@ -79,7 +73,6 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
 
     private fun observeData() {
         viewModel.notifications.observe(viewLifecycleOwner, notificationObserver)
-        viewModel.readNotification.observe(viewLifecycleOwner, readNotificationObserver)
         viewModel.notificationRefreshEvent.observe(viewLifecycleOwner, EventObserver(notificationRefreshEventObserver))
     }
 
