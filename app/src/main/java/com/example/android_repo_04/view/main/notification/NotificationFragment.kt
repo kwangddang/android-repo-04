@@ -35,6 +35,13 @@ class NotificationFragment: Fragment(), NotificationSwipeListener, RefreshListen
         notificationAdapter.submitList(notification.toMutableList())
         binding.refreshNotifications.isRefreshing = false
         binding.progressNotificationLoading.visibility = View.INVISIBLE
+        if (notification.isEmpty()) {
+            binding.refreshNotifications.visibility = View.INVISIBLE
+            binding.textNotificationsEmpty.visibility = View.VISIBLE
+        } else {
+            binding.refreshNotifications.visibility = View.VISIBLE
+            binding.textNotificationsEmpty.visibility = View.INVISIBLE
+        }
     }
 
     private val notificationRefreshEventObserver: (Unit) -> Unit = {

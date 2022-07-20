@@ -35,6 +35,13 @@ class IssueFragment: Fragment(), RefreshListener {
         issueAdapter.replaceItem(issues)
         binding.refreshIssueIssue.isRefreshing = false
         binding.progressIssueLoading.visibility = View.INVISIBLE
+        if (issues.isEmpty()) {
+            binding.refreshIssueIssue.visibility = View.INVISIBLE
+            binding.textIssueEmpty.visibility = View.VISIBLE
+        } else {
+            binding.refreshIssueIssue.visibility = View.VISIBLE
+            binding.textIssueEmpty.visibility = View.INVISIBLE
+        }
     }
 
     private val issueRefreshEventObserver: (Unit) -> Unit = {

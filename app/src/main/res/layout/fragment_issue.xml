@@ -62,6 +62,19 @@
                 bind:selectedSpinnerItem="@={vm.selectedIssue}" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <TextView
+            android:id="@+id/text_issue_empty"
+            style="@style/PrimaryTextBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_empty_list"
+            android:letterSpacing="0.1"
+            app:layout_constraintTop_toBottomOf="@id/layout_issue_inner_container"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="invisible"/>
+
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/refresh_issue_issue"
             android:layout_width="match_parent"
