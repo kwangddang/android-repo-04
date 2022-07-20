@@ -21,7 +21,7 @@ class LoginViewModel(private val gitHubLoginRepository: GitHubLoginRepository) :
 
     fun requestToken(code: String) {
         viewModelScope.launch {
-            gitHubLoginRepository.requestToken(BuildConfig.CLIENT_ID, BuildConfig.CLIENT_SECRET, code) { response ->
+            gitHubLoginRepository.requestToken(code) { response ->
                 if (response is DataResponse.Success) {
                     _token.postValue(response.data!!.accessToken)
                 } else if(response is DataResponse.Error) {
