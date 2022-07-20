@@ -12,10 +12,12 @@ import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.databinding.FragmentIssueBinding
 import com.example.android_repo_04.utils.Event
 import com.example.android_repo_04.utils.EventObserver
+import com.example.android_repo_04.view.listener.RefreshListener
+import com.example.android_repo_04.view.listener.ScrollListener
 import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.MainViewModel
 
-class IssueFragment: Fragment() {
+class IssueFragment: Fragment(), RefreshListener {
     private var _binding: FragmentIssueBinding? = null
     private val binding get() = _binding!!
 
@@ -32,20 +34,22 @@ class IssueFragment: Fragment() {
     private val issueObserver: (List<Issue>) -> Unit = { issues ->
         issueAdapter.replaceItem(issues)
         binding.refreshIssueIssue.isRefreshing = false
+        binding.progressIssueLoading.visibility = View.INVISIBLE
     }
 
-    private val issueRefreshEventObserver: (Unit) -> Unit = { event ->
-        getSelectedIssues(viewModel.selectedIssue.value!!)
+    private val issueRefreshEventObserver: (Unit) -> Unit = {
+        getSelectedIssues(viewModel.selectedIssue.value!!, 1)
     }
 
-    private val issueClickEventObserver: (Unit) -> Unit = { event ->
+    private val issueClickEventObserver: (Unit) -> Unit = {
         binding.spinnerIssueOption.performClick()
     }
 
     private val selectedIssueObserver: (Int) -> Unit = { position ->
-        if(viewModel.prevSelectedIssue != position) {
+        if (viewModel.prevSelectedIssue != position) {
+            showProgress()
             viewModel.prevSelectedIssue = position
-            getSelectedIssues(position)
+            getSelectedIssues(position, 1)
         }
     }
 
@@ -64,6 +68,7 @@ class IssueFragment: Fragment() {
         initSpinnerAdapter()
         initBinding()
         initRecyclerAdapter()
+        setOnScrollListener()
         observeData()
     }
 
@@ -86,6 +91,11 @@ class IssueFragment: Fragment() {
         binding.recyclerIssueIssue.adapter = issueAdapter
     }
 
+    private fun setOnScrollListener() {
+        binding.recyclerIssueIssue.addOnScrollListener(ScrollListener(this) { nextPage ->
+            getSelectedIssues(viewModel.prevSelectedIssue, nextPage)
+        })
+    }
 
     private fun observeData() {
         viewModel.issue.observe(viewLifecycleOwner, issueObserver)
@@ -94,16 +104,20 @@ class IssueFragment: Fragment() {
         viewModel.selectedIssue.observe(viewLifecycleOwner, selectedIssueObserver)
     }
 
-    private fun getSelectedIssues(position: Int) {
+    private fun getSelectedIssues(position: Int, page: Int) {
         when (position) {
-            0 -> viewModel.requestIssues(getString(R.string.state_open))
-            1 -> viewModel.requestIssues(getString(R.string.state_closed))
-            2 -> viewModel.requestIssues(getString(R.string.state_all))
+            0 -> viewModel.requestIssues(getString(R.string.state_open), page)
+            1 -> viewModel.requestIssues(getString(R.string.state_closed), page)
+            2 -> viewModel.requestIssues(getString(R.string.state_all), page)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun showProgress() {
+        binding.progressIssueLoading.visibility = View.VISIBLE
     }
 }
