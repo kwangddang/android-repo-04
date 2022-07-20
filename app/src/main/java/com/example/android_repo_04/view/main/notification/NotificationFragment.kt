@@ -15,11 +15,13 @@ import com.example.android_repo_04.data.dto.notification.Notification
 import com.example.android_repo_04.databinding.FragmentNotificationBinding
 import com.example.android_repo_04.utils.Event
 import com.example.android_repo_04.utils.EventObserver
+import com.example.android_repo_04.view.listener.RefreshListener
+import com.example.android_repo_04.view.listener.ScrollListener
 import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.MainViewModel
 
 
-class NotificationFragment: Fragment(), NotificationSwipeListener {
+class NotificationFragment: Fragment(), NotificationSwipeListener, RefreshListener {
     private var _binding: FragmentNotificationBinding? = null
     private val binding get() = _binding!!
 
@@ -32,6 +34,7 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
     private val notificationObserver: (MutableList<Notification>) -> Unit = { notification ->
         notificationAdapter.submitList(notification.toMutableList())
         binding.refreshNotifications.isRefreshing = false
+        binding.progressNotificationLoading.visibility = View.INVISIBLE
     }
 
     private val notificationRefreshEventObserver: (Unit) -> Unit = {
@@ -52,6 +55,7 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
         initViewModel()
         initBinding()
         initAdapter()
+        setOnScrollListener()
         observeData()
         setItemTouchHelper()
     }
@@ -69,6 +73,12 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
 
     private fun initAdapter() {
         binding.recyclerNotifications.adapter = notificationAdapter
+    }
+
+    private fun setOnScrollListener() {
+        binding.recyclerNotifications.addOnScrollListener(ScrollListener(this) { nextPage ->
+            viewModel.requestNotifications(nextPage)
+        })
     }
 
     private fun observeData() {
@@ -93,5 +103,9 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
      */
     override fun swipe(viewHolder: RecyclerView.ViewHolder, direction: Int, position: Int) {
         viewModel.requestToReadNotification(position)
+    }
+
+    override fun showProgress() {
+        binding.progressNotificationLoading.visibility = View.VISIBLE
     }
 }
