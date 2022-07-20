@@ -18,7 +18,8 @@ interface GitHubApiService {
     suspend fun requestIssues(
         @Query(BuildConfig.STATE_PARAM) state: String,
         @Query(BuildConfig.FILTER_PARAM) filter: String = BuildConfig.FILTER_VALUE,
-        @Query(BuildConfig.PULLS_PARAM) pulls: Boolean = false
+        @Query(BuildConfig.PULLS_PARAM) pulls: Boolean = false,
+        @Query(BuildConfig.PAGE_PARAM) page: Int
     ): Response<List<Issue>>
 
     @GET(BuildConfig.USER_URL)
@@ -28,7 +29,9 @@ interface GitHubApiService {
     suspend fun requestUserStarred(): Response<List<Star>>
 
     @GET(BuildConfig.NOTIFICATIONS_URL)
-    suspend fun requestNotifications(): Response<List<Notification>>
+    suspend fun requestNotifications(
+        @Query(BuildConfig.PAGE_PARAM) page: Int
+    ): Response<List<Notification>>
 
     @GET(BuildConfig.COMMENTS_URL)
     suspend fun requestComments(
@@ -43,7 +46,7 @@ interface GitHubApiService {
 
     @GET(BuildConfig.SEARCH_URL)
     suspend fun requestSearchRepositories(
-        @Query("q") query: String,
-        @Query("page") page: Int
+        @Query(BuildConfig.QUERY_PARAM) query: String,
+        @Query(BuildConfig.PAGE_PARAM) page: Int
     ): Response<Search>
 }

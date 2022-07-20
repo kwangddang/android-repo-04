@@ -7,8 +7,8 @@ import com.example.android_repo_04.data.dto.search.Search
 import com.example.android_repo_04.utils.DataResponse
 
 class GitHubApiRepository {
-    suspend fun requestIssues(state: String, callback: (DataResponse<List<Issue>?>) -> Unit) {
-        val response = RetrofitFactory.createApiService()!!.requestIssues(state)
+    suspend fun requestIssues(state: String, page: Int, callback: (DataResponse<List<Issue>?>) -> Unit) {
+        val response = RetrofitFactory.createApiService()!!.requestIssues(state, page = page)
         if (response.isSuccessful) {
             callback(DataResponse.Success(data = response.body()))
         } else {
@@ -34,8 +34,8 @@ class GitHubApiRepository {
         }
     }
 
-    suspend fun requestNotifications(callback: (DataResponse<List<Notification>?>) -> Unit) {
-        val response = RetrofitFactory.createApiService()!!.requestNotifications()
+    suspend fun requestNotifications(page: Int, callback: (DataResponse<List<Notification>?>) -> Unit) {
+        val response = RetrofitFactory.createApiService()!!.requestNotifications(page)
         if (response.isSuccessful) {
             callback(DataResponse.Success(data = response.body()))
         } else {
@@ -62,7 +62,7 @@ class GitHubApiRepository {
     }
 
     suspend fun requestSearchRepositories(query: String, page: Int, callback: (DataResponse<Search>) -> Unit) {
-        val response = RetrofitFactory.createApiService()!!.requestSearchRepositories(query,page)
+        val response = RetrofitFactory.createApiService()!!.requestSearchRepositories(query, page)
         if(response.isSuccessful) {
             callback(DataResponse.Success(data = response.body()))
         } else {
