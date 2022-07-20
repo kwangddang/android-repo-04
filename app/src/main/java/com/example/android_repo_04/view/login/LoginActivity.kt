@@ -26,7 +26,6 @@ class LoginActivity : AppCompatActivity() {
 
     private val tokenObserver: (String) -> Unit = { token ->
         if (token.length < 5 && token != "") {
-            Toast.makeText(this, getString(R.string.toast_error_token), Toast.LENGTH_SHORT).show()
             binding.apply {
                 progressLoginLogin.visibility = View.INVISIBLE
                 btnLoginLogin.visibility = View.VISIBLE

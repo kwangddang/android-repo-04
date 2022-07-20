@@ -1,17 +1,17 @@
 package com.example.android_repo_04.viewmodel
 
+import android.content.Context
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.data.dto.notification.Notification
 import com.example.android_repo_04.data.dto.profile.User
-import com.example.android_repo_04.utils.DataResponse
-import com.example.android_repo_04.utils.Event
-import com.example.android_repo_04.utils.emit
+import com.example.android_repo_04.utils.*
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewModel() {
@@ -50,8 +50,8 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
             gitHubApiRepository.requestNotifications() { response ->
                 if (response is DataResponse.Success) {
                     _notifications.postValue(response.data?.toMutableList())
-                } else {
-                    //TODO 에러처리
+                } else if (response is DataResponse.Error) {
+                    createErrorToast(response.errorCode)
                 }
             }
         }
@@ -62,8 +62,8 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
             gitHubApiRepository.requestToReadNotification(notifications.value!![position].id) { response ->
                 if (response is DataResponse.Success) {
                     _readNotification.postValue(position)
-                } else {
-                    _readNotification.postValue(-1)
+                } else if (response is DataResponse.Error) {
+                    createErrorToast(response.errorCode)
                 }
             }
         }
@@ -74,8 +74,8 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
             gitHubApiRepository.requestIssues(state, filter) { response ->
                 if(response is DataResponse.Success) {
                     _issue.postValue(response.data?.toMutableList())
-                } else {
-                    //TODO 에러처리
+                } else if (response is DataResponse.Error) {
+                    createErrorToast(response.errorCode)
                 }
             }
         }
@@ -86,8 +86,8 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
             gitHubApiRepository.requestUser() { response ->
                 if(response is DataResponse.Success) {
                     user.postValue(response.data!!)
-                } else {
-                    //TODO 에러처리
+                } else if (response is DataResponse.Error) {
+                    createErrorToast(response.errorCode)
                 }
             }
         }
@@ -98,8 +98,8 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
             gitHubApiRepository.requestUserStarredCount { response ->
                 if(response is DataResponse.Success) {
                     starCount.postValue(response.data!!)
-                } else {
-
+                } else if (response is DataResponse.Error) {
+                    createErrorToast(response.errorCode)
                 }
             }
         }

@@ -6,9 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.android_repo_04.BuildConfig
 import com.example.android_repo_04.api.GitHubLoginRepository
-import com.example.android_repo_04.utils.DataResponse
-import com.example.android_repo_04.utils.Event
-import com.example.android_repo_04.utils.emit
+import com.example.android_repo_04.utils.*
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val gitHubLoginRepository: GitHubLoginRepository) : ViewModel() {
@@ -25,7 +23,7 @@ class LoginViewModel(private val gitHubLoginRepository: GitHubLoginRepository) :
                 if (response is DataResponse.Success) {
                     _token.postValue(response.data!!.accessToken)
                 } else if(response is DataResponse.Error) {
-                    _token.postValue(response.errorCode?.toString())
+                    createTokenErrorToast()
                 }
             }
         }

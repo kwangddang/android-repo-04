@@ -35,13 +35,9 @@ class NotificationFragment: Fragment(), NotificationSwipeListener {
     }
 
     private val readNotificationObserver: (Int) -> Unit = { position ->
-        if (position >= 0) {
-            val newList = notificationAdapter.currentList.toMutableList()
-            newList.removeAt(position)
-            notificationAdapter.submitList(newList)
-        } else {
-            Toast.makeText(context, requireContext().getString(R.string.toast_error_notification), Toast.LENGTH_SHORT).show()
-        }
+        val newList = notificationAdapter.currentList.toMutableList()
+        newList.removeAt(position)
+        notificationAdapter.submitList(newList)
     }
 
     private val notificationRefreshEventObserver: (Unit) -> Unit = { event ->
