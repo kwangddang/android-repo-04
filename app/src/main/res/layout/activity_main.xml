@@ -41,6 +41,7 @@
                 android:onClick="@{(view) -> vm.setMainClickEvent(view)}"
                 android:padding="16dp"
                 bind:profileImage="@{vm.user.avatarUrl}"
+                bind:viewModel="@{vm}"
                 tools:src="@color/primary" />
 
             <androidx.appcompat.widget.AppCompatImageButton

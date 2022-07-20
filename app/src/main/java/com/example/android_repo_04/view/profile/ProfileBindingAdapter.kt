@@ -2,17 +2,18 @@ package com.example.android_repo_04.view.profile
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
+import androidx.lifecycle.ViewModel
 import com.example.android_repo_04.R
+import com.example.android_repo_04.utils.urlToBitmap
 import de.hdodenhof.circleimageview.CircleImageView
 
 object ProfileBindingAdapter {
     @JvmStatic
-    @BindingAdapter("profileImage")
-    fun setProfileImage(view: CircleImageView, url: String?){
-        Glide.with(view.context)
-            .load(url)
-            .into(view)
+    @BindingAdapter("profileImage", "viewModel")
+    fun setProfileImage(view: CircleImageView, url: String?, viewModel: ViewModel){
+        urlToBitmap(url.orEmpty(),viewModel) { bitmap ->
+            view.setImageBitmap(bitmap)
+        }
     }
 
     @JvmStatic

@@ -6,11 +6,8 @@ import android.widget.*
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
-import com.bumptech.glide.Glide
 import com.example.android_repo_04.R
 import com.example.android_repo_04.utils.dateToFormattedString
-import java.text.SimpleDateFormat
-import java.util.*
 
 object IssueBindingAdapter {
 
@@ -22,10 +19,7 @@ object IssueBindingAdapter {
         } else {
             R.drawable.ic_issue_closed
         }
-        Glide.with(view.context)
-            .load(drawableId)
-            .override(48, 48)
-            .into(view)
+        view.setImageResource(drawableId)
     }
 
     @JvmStatic

@@ -15,9 +15,9 @@ object NotificationBindingAdapter {
 
     @JvmStatic
     @BindingAdapter("notificationOwnerAvatar", "viewModel")
-    fun setNotificationOwnerAvatar(view: ImageView, avatarUrl: String, viewModel: ViewModel) {
-        urlToBitmap(avatarUrl, viewModel) {
-            view.setImageBitmap(it)
+    fun setNotificationOwnerAvatar(view: ImageView, avatarUrl: String?, viewModel: ViewModel) {
+        urlToBitmap(avatarUrl.orEmpty(), viewModel) { bitmap ->
+            view.setImageBitmap(bitmap)
         }
     }
 

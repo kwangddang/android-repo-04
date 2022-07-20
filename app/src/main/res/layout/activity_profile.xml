@@ -56,6 +56,7 @@
             android:background="@drawable/ic_user"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_profile_toolbar"
+            bind:viewModel="@{vm}"
             bind:profileImage="@{vm.user.avatarUrl}" />
 
         <TextView
