@@ -8,7 +8,6 @@ buildscript {
     ext{
         retrofit_version = "2.9.0"
         okhttp_version = "4.9.3"
-        glide_version = "4.13.2"
         circle_imageview_version = "3.1.0"
         fragment_ktx_version = "1.5.0"
         viewmodel_ktx_version = "2.6.0-alpha01"
