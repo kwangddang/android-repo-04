@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="vm"
             type="com.example.android_repo_04.viewmodel.MainViewModel" />
@@ -13,8 +14,8 @@
         android:id="@+id/refresh_notifications"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:onRefreshListener="@{() -> vm.setNotificationRefreshEvent()}"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        app:onRefreshListener="@{() -> vm.setNotificationRefreshEvent()}">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_notifications"

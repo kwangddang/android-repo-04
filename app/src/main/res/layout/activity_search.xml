@@ -37,13 +37,11 @@
 
             <TextView
                 android:id="@+id/text_search_title"
+                style="@style/PrimaryTextBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/search_title"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:text="@string/search_title" />
         </androidx.appcompat.widget.Toolbar>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -69,17 +67,15 @@
 
             <EditText
                 android:id="@+id/edit_search_search"
+                style="@style/PrimaryText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:hint="Search GitHub"
                 android:imeOptions="actionDone"
                 android:inputType="text"
-                android:maxLines="1"
                 android:paddingHorizontal="16dp"
-                android:textColor="@color/white"
                 android:textColorHint="@color/grey"
-                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/img_search_cancel"
                 app:layout_constraintStart_toEndOf="@id/img_search_search"
@@ -134,14 +130,13 @@
 
         <TextView
             android:id="@+id/text_search_empty_title"
+            style="@style/PrimaryTextBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:letterSpacing="0.1"
             android:paddingBottom="32dp"
             android:text="@string/search_empty_title"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"
+            android:textSize="18sp"
             android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -151,14 +146,14 @@
 
         <TextView
             android:id="@+id/text_search_empty_description"
+            style="@style/SubText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:letterSpacing="0.1"
             android:lineSpacingExtra="4dp"
+            android:maxLines="5"
             android:text="@string/search_empty_description"
-            android:textColor="@color/grey"
-            android:textSize="14sp"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
