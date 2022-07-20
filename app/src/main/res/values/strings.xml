@@ -7,6 +7,7 @@
     <string name="main_title">What\'s In My GitHub</string>
     <string name="main_issue">Issue</string>
     <string name="main_notification">Notification</string>
+    <string name="main_empty_list">Empty !</string>
 
     <string name="profile_title">Profile</string>
     <string name="profile_repository">Repositories</string>

@@ -40,11 +40,20 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
     var selectedIssue = MutableLiveData(0)
     var prevSelectedIssue = 0
 
-    fun requestNotifications() {
+    fun requestNotifications(page: Int = 1) {
         viewModelScope.launch {
-            gitHubApiRepository.requestNotifications() { response ->
+            gitHubApiRepository.requestNotifications(page) { response ->
                 if (response is DataResponse.Success) {
-                    _notifications.postValue(response.data?.toMutableList())
+                    if (page == 1) {
+                        _notifications.postValue(response.data?.toMutableList())
+                    } else {
+                        val tempNotifications = notifications.value
+                        tempNotifications?.let {
+                            val tempItems = it.toMutableList()
+                            tempItems.addAll(response.data!!)
+                            _notifications.postValue(tempItems)
+                        }
+                    }
                 } else if (response is DataResponse.Error) {
                     createErrorToast(response.errorCode)
                 }
@@ -67,11 +76,20 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
         }
     }
 
-    fun requestIssues(state: String) {
+    fun requestIssues(state: String, page: Int = 1) {
         viewModelScope.launch {
-            gitHubApiRepository.requestIssues(state) { response ->
+            gitHubApiRepository.requestIssues(state, page) { response ->
                 if(response is DataResponse.Success) {
-                    _issue.postValue(response.data?.toMutableList())
+                    if (page == 1) {
+                        _issue.postValue(response.data?.toMutableList())
+                    } else {
+                        val tempIssues = issue.value
+                        tempIssues?.let {
+                            val tempItems = it.toMutableList()
+                            tempItems.addAll(response.data!!)
+                            _issue.postValue(tempItems)
+                        }
+                    }
                 } else if (response is DataResponse.Error) {
                     createErrorToast(response.errorCode)
                 }

@@ -1,12 +1,11 @@
-package com.example.android_repo_04.view.search
+package com.example.android_repo_04.view.listener
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android_repo_04.viewmodel.SearchViewModel
 
-class SearchScrollListener(
-    private val viewModel: SearchViewModel,
-    private val listener: SearchRefreshListener
+class ScrollListener(
+    private val listener: RefreshListener,
+    private val requestNextPage: (Int) -> Unit
 ): RecyclerView.OnScrollListener() {
     override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
@@ -15,10 +14,7 @@ class SearchScrollListener(
 
         if (lastVisibleItemPosition == itemTotalCount && itemTotalCount >= 0) {
             listener.showProgress()
-            viewModel.requestSearchRepositories(
-                viewModel.searchText.value.toString(),
-                itemTotalCount/29 + 1
-            )
+            requestNextPage(itemTotalCount/29 + 1)
         }
     }
 }

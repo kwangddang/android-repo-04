@@ -8,12 +8,13 @@ import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.search.Search
 import com.example.android_repo_04.databinding.ActivitySearchBinding
-import com.example.android_repo_04.utils.Event
 import com.example.android_repo_04.utils.EventObserver
+import com.example.android_repo_04.view.listener.RefreshListener
+import com.example.android_repo_04.view.listener.ScrollListener
 import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.SearchViewModel
 
-class SearchActivity : AppCompatActivity(), SearchRefreshListener {
+class SearchActivity : AppCompatActivity(), RefreshListener {
 
     private lateinit var viewModel: SearchViewModel
     private lateinit var binding: ActivitySearchBinding
@@ -88,7 +89,12 @@ class SearchActivity : AppCompatActivity(), SearchRefreshListener {
     }
 
     private fun setOnScrollListener() {
-        binding.recyclerSearch.addOnScrollListener(SearchScrollListener(viewModel, this))
+        binding.recyclerSearch.addOnScrollListener(ScrollListener(this) { nextPage ->
+            viewModel.requestSearchRepositories(
+                viewModel.searchText.value.toString(),
+                nextPage
+            )
+        })
     }
 
     private fun observeData() {

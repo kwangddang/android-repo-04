@@ -51,6 +51,8 @@ android {
     def client_secret_param = properties.getProperty("CLIENT_SECRET_PARAM")
     def code_param = properties.getProperty("CODE_PARAM")
     def scope_param = properties.getProperty("SCOPE_PARAM")
+    def query_param = properties.getProperty("QUERY_PARAM")
+    def page_param = properties.getProperty("PAGE_PARAM")
 
     // param-value
     def filter_value = properties.getProperty("FILTER_VALUE")
@@ -95,6 +97,8 @@ android {
         buildConfigField "String", 'CLIENT_SECRET_PARAM', client_secret_param
         buildConfigField "String", 'CODE_PARAM', code_param
         buildConfigField "String", 'SCOPE_PARAM', scope_param
+        buildConfigField "String", 'QUERY_PARAM', query_param
+        buildConfigField "String", 'PAGE_PARAM', page_param
 
         buildConfigField "String", 'FILTER_VALUE', filter_value
 
