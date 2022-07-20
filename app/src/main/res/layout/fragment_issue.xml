@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="vm"
             type="com.example.android_repo_04.viewmodel.MainViewModel" />
@@ -14,51 +15,50 @@
         android:id="@+id/layout_issue_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/background_gradient"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:background="@drawable/background_gradient">
+        android:padding="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_issue_inner_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
             android:background="@drawable/background_issue_filter"
-            android:onClick="@{() -> vm.setIssueClickEvent()}">
+            android:onClick="@{() -> vm.setIssueClickEvent()}"
+            android:padding="16dp">
 
             <ImageView
                 android:id="@+id/img_issue_filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_filter"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/text_issue_filter"
+                style="@style/PrimaryText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:text="@string/issue_filter"
                 android:layout_marginStart="16dp"
+                android:text="@string/issue_filter"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/img_issue_filter"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Spinner
                 android:id="@+id/spinner_issue_option"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:popupBackground="@drawable/background_spinner"
-                android:dropDownVerticalOffset="48dp"
-                android:dropDownWidth="180dp"
                 android:backgroundTint="@color/white"
+                android:dropDownWidth="180dp"
+                android:dropDownVerticalOffset="48dp"
+                android:popupBackground="@drawable/background_spinner"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                bind:selectedSpinnerItem="@={vm.selectedIssue}"/>
+                bind:selectedSpinnerItem="@={vm.selectedIssue}" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

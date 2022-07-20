@@ -10,11 +10,10 @@
 
     <CheckedTextView
         android:id="@+id/text_spinner_content"
+        style="@style/PrimaryText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:gravity="center|start"
         android:checkMark="@drawable/custom_checkbox"
-        android:textSize="16sp"
-        android:textColor="@color/white" />
+        android:gravity="center|start"
+        android:padding="16dp" />
 </LinearLayout>

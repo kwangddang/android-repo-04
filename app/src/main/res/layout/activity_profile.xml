@@ -34,19 +34,17 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/icon_ripple_effect"
-                android:padding="8dp"
                 android:onClick="@{() -> vm.setClickEvent()}"
+                android:padding="8dp"
                 android:src="@drawable/ic_back" />
 
             <TextView
                 android:id="@+id/text_profile_title"
+                style="@style/PrimaryTextBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/profile_title"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
+                android:text="@string/profile_title" />
         </androidx.appcompat.widget.Toolbar>
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -62,15 +60,12 @@
 
         <TextView
             android:id="@+id/text_profile_display_name"
+            style="@style/PrimaryTextBold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:ellipsize="end"
-            android:maxLines="1"
             android:text="@{vm.user.login}"
-            android:textColor="@color/white"
             android:textSize="18sp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/img_profile_profile"
             app:layout_constraintTop_toTopOf="@id/img_profile_profile"
@@ -78,13 +73,10 @@
 
         <TextView
             android:id="@+id/text_profile_user_name"
+            style="@style/SubText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@{vm.user.name}"
-            android:textColor="@color/grey"
-            android:textSize="16sp"
-            android:maxLines="1"
-            android:ellipsize="end"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/text_profile_display_name"
             app:layout_constraintTop_toBottomOf="@id/text_profile_display_name"
@@ -92,16 +84,14 @@
 
         <TextView
             android:id="@+id/text_profile_bio"
+            style="@style/SubText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/background_round_navy"
-            android:ellipsize="end"
             android:maxLines="2"
             android:paddingHorizontal="12dp"
             android:text="@{vm.user.bio}"
-            android:textColor="@color/grey"
-            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@id/text_profile_display_name"
             app:layout_constraintTop_toBottomOf="@id/text_profile_user_name"
             tools:text="Android Developer" />
@@ -128,17 +118,16 @@
 
         <TextView
             android:id="@+id/text_profile_location"
+            style="@style/PrimaryText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:maxLines="1"
-            android:ellipsize="end"
             app:layout_constraintBottom_toBottomOf="@id/img_profile_location"
-            app:layout_constraintStart_toEndOf="@id/img_profile_location"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/img_profile_location"
             app:layout_constraintTop_toTopOf="@id/img_profile_location"
+            app:layout_constraintVertical_bias="1.0"
             bind:locationText="@{vm.user.location}"
             tools:text="Seoul, Korea" />
 
@@ -153,17 +142,14 @@
 
         <TextView
             android:id="@+id/text_profile_link"
+            style="@style/PrimaryText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:maxLines="1"
-            android:ellipsize="end"
             app:layout_constraintBottom_toBottomOf="@id/img_profile_link"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/img_profile_link"
             app:layout_constraintTop_toTopOf="@id/img_profile_link"
-            app:layout_constraintEnd_toEndOf="parent"
             bind:blogText="@{vm.user.blog}"
             tools:text="http://medium.com/@sam" />
 
@@ -178,17 +164,14 @@
 
         <TextView
             android:id="@+id/text_profile_mail"
+            style="@style/PrimaryText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:maxLines="1"
-            android:ellipsize="end"
             app:layout_constraintBottom_toBottomOf="@id/img_profile_mail"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/img_profile_mail"
             app:layout_constraintTop_toTopOf="@id/img_profile_mail"
-            app:layout_constraintEnd_toEndOf="parent"
             bind:mailText="@{vm.user.email}"
             tools:text="sam@gmail.com" />
 
@@ -203,12 +186,10 @@
 
         <TextView
             android:id="@+id/text_profile_follower_count"
+            style="@style/PrimaryTextBold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"
             android:text="@{Integer.toString(vm.user.followers)}"
             app:layout_constraintBottom_toBottomOf="@id/img_profile_follower"
             app:layout_constraintStart_toEndOf="@id/img_profile_follower"
@@ -217,12 +198,11 @@
 
         <TextView
             android:id="@+id/text_profile_follower"
+            style="@style/PrimaryText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:text="@string/profile_follower"
-            android:textColor="@color/white"
-            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@id/img_profile_follower"
             app:layout_constraintStart_toEndOf="@id/text_profile_follower_count"
             app:layout_constraintTop_toTopOf="@id/img_profile_follower" />
@@ -230,24 +210,21 @@
 
         <TextView
             android:id="@+id/text_profile_point"
+            style="@style/PrimaryText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="4dp"
             android:text="@string/profile_point"
-            android:textColor="@color/white"
-            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@id/img_profile_follower"
             app:layout_constraintStart_toEndOf="@id/text_profile_follower"
             app:layout_constraintTop_toTopOf="@id/img_profile_follower" />
 
         <TextView
             android:id="@+id/text_profile_following_count"
+            style="@style/PrimaryTextBold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"
             android:text="@{Integer.toString(vm.user.following)}"
             app:layout_constraintBottom_toBottomOf="@id/img_profile_follower"
             app:layout_constraintStart_toEndOf="@id/text_profile_point"
@@ -256,12 +233,11 @@
 
         <TextView
             android:id="@+id/text_profile_following"
+            style="@style/PrimaryText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:text="@string/profile_following"
-            android:textColor="@color/white"
-            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@id/img_profile_follower"
             app:layout_constraintStart_toEndOf="@id/text_profile_following_count"
             app:layout_constraintTop_toTopOf="@id/img_profile_follower" />
@@ -298,23 +274,21 @@
 
             <TextView
                 android:id="@+id/text_profile_repository"
+                style="@style/PrimaryText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="@string/profile_repository"
-                android:textColor="@color/white"
-                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/view_profile_repository"
                 app:layout_constraintStart_toEndOf="@id/view_profile_repository"
                 app:layout_constraintTop_toTopOf="@id/view_profile_repository" />
 
             <TextView
                 android:id="@+id/text_profile_repository_count"
+                style="@style/PrimaryText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{Integer.toString(vm.user.publicRepos + vm.user.totalPrivateRepos)}"
-                android:textColor="@color/white"
-                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/text_profile_repository"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/text_profile_repository"
@@ -341,23 +315,21 @@
 
             <TextView
                 android:id="@+id/text_profile_star"
+                style="@style/PrimaryText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="@string/profile_star"
-                android:textColor="@color/white"
-                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/view_profile_star"
                 app:layout_constraintStart_toEndOf="@id/view_profile_star"
                 app:layout_constraintTop_toTopOf="@id/view_profile_star" />
 
             <TextView
                 android:id="@+id/text_profile_star_count"
+                style="@style/PrimaryText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{Integer.toString(vm.star)}"
-                android:textColor="@color/white"
-                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/text_profile_star"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/text_profile_star"
