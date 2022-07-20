@@ -26,7 +26,7 @@
 
             <TextView
                 android:id="@+id/text_main_title"
-                style="@style/PrimaryTextBold"
+                style="@style/TitleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -57,7 +57,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_main_issue"
-            style="@style/PrimaryText"
+            style="@style/PrimaryTextBold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -74,7 +74,7 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_main_notification"
-            style="@style/PrimaryText"
+            style="@style/PrimaryTextBold"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

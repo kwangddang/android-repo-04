@@ -10,7 +10,7 @@
 
     <CheckedTextView
         android:id="@+id/text_spinner_content"
-        style="@style/PrimaryText"
+        style="@style/PrimaryTextBold"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:checkMark="@drawable/custom_checkbox"
