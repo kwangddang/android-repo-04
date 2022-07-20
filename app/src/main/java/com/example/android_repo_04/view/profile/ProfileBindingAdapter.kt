@@ -7,42 +7,36 @@ import com.example.android_repo_04.R
 import com.example.android_repo_04.utils.urlToBitmap
 import de.hdodenhof.circleimageview.CircleImageView
 
-object ProfileBindingAdapter {
-    @JvmStatic
-    @BindingAdapter("profileImage", "viewModel")
-    fun setProfileImage(view: CircleImageView, url: String?, viewModel: ViewModel){
-        urlToBitmap(url.orEmpty(),viewModel) { bitmap ->
-            view.setImageBitmap(bitmap)
-        }
+@BindingAdapter("profileImage", "viewModel")
+fun CircleImageView.setProfileImage(url: String?, viewModel: ViewModel) {
+    urlToBitmap(url.orEmpty(), viewModel) { bitmap ->
+        setImageBitmap(bitmap)
     }
+}
 
-    @JvmStatic
-    @BindingAdapter("locationText")
-    fun setLocationText(view: TextView, text: String?) {
-        if(text == null || text == "") {
-            view.text = view.context.getString(R.string.no_location)
-        } else {
-            view.text = text
-        }
+@BindingAdapter("locationText")
+fun TextView.setLocationText(location: String?) {
+    if (location == null || location == "") {
+        text = context.getString(R.string.no_location)
+    } else {
+        text = location
     }
+}
 
-    @JvmStatic
-    @BindingAdapter("blogText")
-    fun setBlogText(view: TextView, text: String?) {
-        if(text == null || text == "") {
-            view.text = view.context.getString(R.string.no_blog)
-        } else {
-            view.text = text
-        }
+@BindingAdapter("blogText")
+fun TextView.setBlogText(blog: String?) {
+    if (blog == null || blog == "") {
+        text = context.getString(R.string.no_blog)
+    } else {
+        text = blog
     }
+}
 
-    @JvmStatic
-    @BindingAdapter("mailText")
-    fun setMailText(view: TextView, text: String?) {
-        if(text == null || text == "") {
-            view.text = view.context.getString(R.string.no_email)
-        } else {
-            view.text = text
-        }
+@BindingAdapter("mailText")
+fun TextView.setMailText(mail: String?) {
+    if (mail == null || mail == "") {
+        text = context.getString(R.string.no_email)
+    } else {
+        text = mail
     }
 }
