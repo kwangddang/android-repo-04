@@ -52,7 +52,7 @@ class GitHubApiRepository {
         }
     }
 
-    suspend fun requestToReadNotification(id: String, callback: (DataResponse<String>) -> Unit) {
+    suspend fun requestToReadNotification(id: Long, callback: (DataResponse<String>) -> Unit) {
         val response = RetrofitFactory.createApiService()!!.requestToReadNotification(id)
         if (response.isSuccessful) {
             callback(DataResponse.Success())
