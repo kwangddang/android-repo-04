@@ -13,8 +13,8 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(private val gitHubLoginRepository: GitHubLoginRepository) : ViewModel() {
 
-    private val _token = MutableLiveData("")
-    val token: LiveData<String> get() = _token
+    private val _tokenEvent = MutableLiveData<Event<String>>()
+    val tokenEvent: MutableLiveData<Event<String>> get() = _tokenEvent
 
     private val _clickEvent = MutableLiveData<Event<Unit>>()
     val clickEvent: LiveData<Event<Unit>> get() = _clickEvent
@@ -23,7 +23,7 @@ class LoginViewModel(private val gitHubLoginRepository: GitHubLoginRepository) :
         viewModelScope.launch {
             gitHubLoginRepository.requestToken(code) { response ->
                 if (response is DataResponse.Success) {
-                    _token.postValue(response.data!!.accessToken)
+                    _tokenEvent.postValue(Event(response.data!!.accessToken))
                 } else if(response is DataResponse.Error) {
                     createTokenErrorToast()
                 }

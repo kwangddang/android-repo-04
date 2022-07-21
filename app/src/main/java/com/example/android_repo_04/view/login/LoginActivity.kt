@@ -23,7 +23,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var viewModel: LoginViewModel
 
     private val tokenObserver: (String) -> Unit = { token ->
-        //TODO Event로 바꾸자
         if (token.isNotEmpty()) {
             startMainActivity(token)
         } else {
@@ -57,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun observeData() {
-        viewModel.token.observe(this, tokenObserver)
+        viewModel.tokenEvent.observe(this, EventObserver(tokenObserver))
         viewModel.clickEvent.observe(this, EventObserver(clickEventObserver))
     }
 

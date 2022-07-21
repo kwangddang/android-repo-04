@@ -53,7 +53,6 @@ class IssueFragment: Fragment(), RefreshListener {
     }
 
     private val selectedIssueObserver: (Int) -> Unit = { position ->
-        //TODO Event로 바꾸기
         if (viewModel.prevSelectedIssue != position) {
             showProgress()
             viewModel.prevSelectedIssue = position
