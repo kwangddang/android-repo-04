@@ -41,7 +41,7 @@ interface GitHubApiService {
 
     @PATCH(BuildConfig.NOTIFICATIONS_READ_URL)
     suspend fun requestToReadNotification(
-        @Path(BuildConfig.ID_PATH) id: String,
+        @Path(BuildConfig.ID_PATH) id: Long,
     ): Response<String>
 
     @GET(BuildConfig.SEARCH_URL)
