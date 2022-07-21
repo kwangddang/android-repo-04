@@ -47,6 +47,11 @@ class IssueFragment: Fragment(), RefreshListener {
         binding.spinnerIssueOption.performClick()
     }
 
+    private val issueReloadClickEventObserver: (Unit) -> Unit = {
+        getSelectedIssues(viewModel.selectedIssue.value!!, 1)
+        showEmptyProgress()
+    }
+
     private val selectedIssueObserver: (Int) -> Unit = { position ->
         //TODO Event로 바꾸기
         if (viewModel.prevSelectedIssue != position) {
@@ -104,6 +109,7 @@ class IssueFragment: Fragment(), RefreshListener {
         viewModel.issue.observe(viewLifecycleOwner, issueObserver)
         viewModel.issueRefreshEvent.observe(viewLifecycleOwner, EventObserver(issueRefreshEventObserver))
         viewModel.issueClickEvent.observe(viewLifecycleOwner, EventObserver(issueClickEventObserver))
+        viewModel.issueReloadClickEvent.observe(viewLifecycleOwner, EventObserver(issueReloadClickEventObserver))
         viewModel.selectedIssue.observe(viewLifecycleOwner, selectedIssueObserver)
     }
 
@@ -116,19 +122,32 @@ class IssueFragment: Fragment(), RefreshListener {
     }
 
     private fun showList() {
-        binding.refreshIssueIssue.visibility = View.VISIBLE
-        binding.textIssueEmpty.visibility = View.INVISIBLE
+        binding.apply {
+            refreshIssueIssue.visibility = View.VISIBLE
+            textIssueEmpty.visibility = View.INVISIBLE
+            btnIssueEmpty.visibility = View.INVISIBLE
+            progressIssueEmpty.visibility = View.INVISIBLE
+        }
     }
 
     private fun showEmptyText() {
-        binding.refreshIssueIssue.visibility = View.INVISIBLE
-        binding.textIssueEmpty.visibility = View.VISIBLE
+        binding.apply {
+            refreshIssueIssue.visibility = View.INVISIBLE
+            textIssueEmpty.visibility = View.VISIBLE
+            btnIssueEmpty.visibility = View.VISIBLE
+            progressIssueEmpty.visibility = View.INVISIBLE
+        }
     }
 
     private fun setIssues(issues: List<Issue>) {
         issueAdapter.submitList(issues)
         binding.refreshIssueIssue.isRefreshing = false
         binding.progressIssueLoading.visibility = View.INVISIBLE
+    }
+
+    private fun showEmptyProgress() {
+        binding.progressIssueEmpty.visibility = View.VISIBLE
+        binding.btnIssueEmpty.visibility = View.INVISIBLE
     }
 
     override fun onDestroyView() {

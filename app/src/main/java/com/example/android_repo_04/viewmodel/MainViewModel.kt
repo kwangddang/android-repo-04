@@ -31,11 +31,17 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
     private val _notificationRefreshEvent = MutableLiveData<Event<Unit>>()
     val notificationRefreshEvent: LiveData<Event<Unit>> get() = _notificationRefreshEvent
 
+    private val _notificationReloadClickEvent = MutableLiveData<Event<Unit>>()
+    val notificationReloadClickEvent: LiveData<Event<Unit>> get() = _notificationReloadClickEvent
+
     private val _issueRefreshEvent = MutableLiveData<Event<Unit>>()
     val issueRefreshEvent: LiveData<Event<Unit>> get() = _issueRefreshEvent
 
     private val _issueClickEvent = MutableLiveData<Event<Unit>>()
     val issueClickEvent: LiveData<Event<Unit>> get() = _issueClickEvent
+
+    private val _issueReloadClickEvent = MutableLiveData<Event<Unit>>()
+    val issueReloadClickEvent: LiveData<Event<Unit>> get() = _issueReloadClickEvent
 
     val user = MutableLiveData<User>()
     val starCount = MutableLiveData<Int>()
@@ -132,11 +138,19 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
         _notificationRefreshEvent.emit()
     }
 
+    fun setNotificationReloadClickEvent() {
+        _notificationReloadClickEvent.emit()
+    }
+
     fun setIssueRefreshEvent() {
         _issueRefreshEvent.emit()
     }
 
     fun setIssueClickEvent() {
         _issueClickEvent.emit()
+    }
+
+    fun setIssueReloadClickEvent() {
+        _issueReloadClickEvent.emit()
     }
 }
