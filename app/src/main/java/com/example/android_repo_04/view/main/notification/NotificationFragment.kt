@@ -41,6 +41,11 @@ class NotificationFragment: Fragment(), NotificationSwipeListener, RefreshListen
         viewModel.requestNotifications()
     }
 
+    private val notificationReloadEventObserver: (Unit) -> Unit = {
+        viewModel.requestNotifications()
+        showEmptyProgress()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -84,6 +89,7 @@ class NotificationFragment: Fragment(), NotificationSwipeListener, RefreshListen
     private fun observeData() {
         viewModel.notifications.observe(viewLifecycleOwner, notificationObserver)
         viewModel.notificationRefreshEvent.observe(viewLifecycleOwner, EventObserver(notificationRefreshEventObserver))
+        viewModel.notificationReloadClickEvent.observe(viewLifecycleOwner, EventObserver(notificationReloadEventObserver))
     }
 
     private fun setItemTouchHelper() {
@@ -105,13 +111,26 @@ class NotificationFragment: Fragment(), NotificationSwipeListener, RefreshListen
     }
 
     private fun showList() {
-        binding.refreshNotifications.visibility = View.VISIBLE
-        binding.textNotificationsEmpty.visibility = View.INVISIBLE
+        binding.apply {
+            refreshNotifications.visibility = View.VISIBLE
+            textNotificationsEmpty.visibility = View.INVISIBLE
+            btnNotificationsEmpty.visibility = View.INVISIBLE
+            progressNotificationEmpty.visibility = View.INVISIBLE
+        }
     }
 
     private fun showEmptyText() {
-        binding.refreshNotifications.visibility = View.INVISIBLE
-        binding.textNotificationsEmpty.visibility = View.VISIBLE
+        binding.apply {
+            refreshNotifications.visibility = View.INVISIBLE
+            textNotificationsEmpty.visibility = View.VISIBLE
+            btnNotificationsEmpty.visibility = View.VISIBLE
+            progressNotificationEmpty.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun showEmptyProgress() {
+        binding.progressNotificationEmpty.visibility = View.VISIBLE
+        binding.btnNotificationsEmpty.visibility = View.INVISIBLE
     }
 
     /**

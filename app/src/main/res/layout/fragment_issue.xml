@@ -15,7 +15,6 @@
         android:id="@+id/layout_issue_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background_gradient"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -70,7 +69,33 @@
             android:text="@string/main_empty_list"
             android:letterSpacing="0.1"
             app:layout_constraintTop_toBottomOf="@id/layout_issue_inner_container"
+            app:layout_constraintBottom_toTopOf="@id/btn_issue_empty"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            android:visibility="invisible"/>
+
+        <Button
+            android:id="@+id/btn_issue_empty"
+            style="@style/PrimaryTextBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/primary"
+            android:text="@string/main_empty_btn"
+            android:textAllCaps="false"
+            android:onClick="@{() -> vm.setIssueReloadClickEvent()}"
+            app:layout_constraintTop_toBottomOf="@id/text_issue_empty"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="invisible"/>
+
+        <ProgressBar
+            android:id="@+id/progress_issue_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/btn_issue_empty"
+            app:layout_constraintBottom_toBottomOf="@id/btn_issue_empty"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="invisible"/>
