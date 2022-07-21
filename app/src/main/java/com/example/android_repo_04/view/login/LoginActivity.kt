@@ -40,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         initViewModel()
         initBinding()
-        getUserCode()
+        getToken()
         observeData()
     }
 
@@ -60,7 +60,7 @@ class LoginActivity : AppCompatActivity() {
         viewModel.clickEvent.observe(this, EventObserver(clickEventObserver))
     }
 
-    private fun getUserCode() {
+    private fun getToken() {
         if (intent.data != null) {
             viewModel.requestToken(intent.data?.getQueryParameter(getString(R.string.code))!!)
             showProgress()
