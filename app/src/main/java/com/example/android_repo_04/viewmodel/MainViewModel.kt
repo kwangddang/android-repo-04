@@ -9,7 +9,10 @@ import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.data.dto.notification.Notification
 import com.example.android_repo_04.data.dto.profile.User
-import com.example.android_repo_04.utils.*
+import com.example.android_repo_04.utils.DataResponse
+import com.example.android_repo_04.utils.Event
+import com.example.android_repo_04.utils.createErrorToast
+import com.example.android_repo_04.utils.emit
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewModel() {
@@ -65,7 +68,7 @@ class MainViewModel(private val gitHubApiRepository: GitHubApiRepository): ViewM
         viewModelScope.launch {
             gitHubApiRepository.requestToReadNotification(notifications.value!![position].id) { response ->
                 if (response is DataResponse.Success) {
-                    val temp = _notifications.value!!
+                    val temp = _notifications.value!!.toMutableList()
                     temp.removeAt(position)
                     _notifications.postValue(temp)
                 } else if (response is DataResponse.Error) {

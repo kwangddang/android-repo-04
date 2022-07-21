@@ -20,25 +20,17 @@ class SearchActivity : AppCompatActivity(), RefreshListener {
     private lateinit var binding: ActivitySearchBinding
 
     private val searchItemsObserver: (Search) -> Unit = { search ->
-        binding.progressSearchLoading.visibility = View.INVISIBLE
-        searchAdapter.replaceItem(search.items)
-        binding.refreshSearch.isRefreshing = false
+        setSearchItems(search)
     }
 
     private val searchTextObserver: (String) -> Unit = { text ->
         if (text.isNotEmpty()) {
-            showItems()
+            showSearchItems()
         } else {
-            viewModel.clearItems()
-            binding.progressSearchLoading.visibility = View.INVISIBLE
             showHintText()
         }
-        viewModel.change(500L) {
-            if (text.isNotEmpty() && text.isNotBlank()) {
-                showProgress()
-                getSearchItems(text)
-            }
-        }
+
+        debounceSearchText(text)
     }
 
     private val clickEventObserver: (Int) -> Unit = { event ->
@@ -109,6 +101,8 @@ class SearchActivity : AppCompatActivity(), RefreshListener {
     }
 
     private fun showHintText() {
+        viewModel.clearItems()
+        binding.progressSearchLoading.visibility = View.INVISIBLE
         binding.apply {
             layoutSearchInnerContainer.setBackgroundResource(R.drawable.background_round_navy)
             imgSearchCancel.visibility = View.GONE
@@ -119,7 +113,7 @@ class SearchActivity : AppCompatActivity(), RefreshListener {
         }
     }
 
-    private fun showItems() {
+    private fun showSearchItems() {
         binding.apply {
             layoutSearchInnerContainer.setBackgroundResource(R.drawable.background_round_navy_selected)
             imgSearchCancel.visibility = View.VISIBLE
@@ -127,6 +121,21 @@ class SearchActivity : AppCompatActivity(), RefreshListener {
             recyclerSearch.visibility = View.VISIBLE
             textSearchEmptyTitle.visibility = View.INVISIBLE
             textSearchEmptyDescription.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun setSearchItems(search: Search) {
+        searchAdapter.submitList(search.items)
+        binding.progressSearchLoading.visibility = View.INVISIBLE
+        binding.refreshSearch.isRefreshing = false
+    }
+
+    private fun debounceSearchText(text: String) {
+        viewModel.debounce(500L) {
+            if (text.isNotEmpty() && text.isNotBlank()) {
+                showProgress()
+                getSearchItems(text)
+            }
         }
     }
 

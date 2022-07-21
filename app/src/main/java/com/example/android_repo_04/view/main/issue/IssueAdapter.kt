@@ -18,10 +18,6 @@ class IssueAdapter: ListAdapter<Issue, IssueViewHolder>(diffUtil) {
         holder.bind(getItem(position))
     }
 
-    fun replaceItem(item: List<Issue>) {
-        submitList(item)
-    }
-
     companion object {
         val diffUtil = object: DiffUtil.ItemCallback<Issue>() {
             override fun areContentsTheSame(oldItem: Issue, newItem: Issue) =

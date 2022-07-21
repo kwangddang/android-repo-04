@@ -4,10 +4,6 @@ import android.widget.Toast
 import com.example.android_repo_04.GitHubApplication
 import com.example.android_repo_04.R
 
-fun createToast(msg: String) {
-    Toast.makeText(GitHubApplication.instance, msg, Toast.LENGTH_LONG).show()
-}
-
 fun createTokenErrorToast() {
     Toast.makeText(
         GitHubApplication.instance,

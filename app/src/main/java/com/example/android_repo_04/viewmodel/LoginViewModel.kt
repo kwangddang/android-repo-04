@@ -4,9 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.android_repo_04.BuildConfig
 import com.example.android_repo_04.api.GitHubLoginRepository
-import com.example.android_repo_04.utils.*
+import com.example.android_repo_04.utils.DataResponse
+import com.example.android_repo_04.utils.Event
+import com.example.android_repo_04.utils.createTokenErrorToast
+import com.example.android_repo_04.utils.emit
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val gitHubLoginRepository: GitHubLoginRepository) : ViewModel() {

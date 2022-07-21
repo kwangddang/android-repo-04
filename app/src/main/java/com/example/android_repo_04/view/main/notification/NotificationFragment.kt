@@ -4,16 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.notification.Notification
 import com.example.android_repo_04.databinding.FragmentNotificationBinding
-import com.example.android_repo_04.utils.Event
 import com.example.android_repo_04.utils.EventObserver
 import com.example.android_repo_04.view.listener.RefreshListener
 import com.example.android_repo_04.view.listener.ScrollListener
@@ -32,15 +29,11 @@ class NotificationFragment: Fragment(), NotificationSwipeListener, RefreshListen
     }
 
     private val notificationObserver: (MutableList<Notification>) -> Unit = { notification ->
-        notificationAdapter.submitList(notification.toMutableList())
-        binding.refreshNotifications.isRefreshing = false
-        binding.progressNotificationLoading.visibility = View.INVISIBLE
+        setNotifications(notification)
         if (notification.isEmpty()) {
-            binding.refreshNotifications.visibility = View.INVISIBLE
-            binding.textNotificationsEmpty.visibility = View.VISIBLE
+            showEmptyText()
         } else {
-            binding.refreshNotifications.visibility = View.VISIBLE
-            binding.textNotificationsEmpty.visibility = View.INVISIBLE
+            showList()
         }
     }
 
@@ -103,6 +96,22 @@ class NotificationFragment: Fragment(), NotificationSwipeListener, RefreshListen
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setNotifications(notification: MutableList<Notification>) {
+        notificationAdapter.submitList(notification)
+        binding.refreshNotifications.isRefreshing = false
+        binding.progressNotificationLoading.visibility = View.INVISIBLE
+    }
+
+    private fun showList() {
+        binding.refreshNotifications.visibility = View.VISIBLE
+        binding.textNotificationsEmpty.visibility = View.INVISIBLE
+    }
+
+    private fun showEmptyText() {
+        binding.refreshNotifications.visibility = View.INVISIBLE
+        binding.textNotificationsEmpty.visibility = View.VISIBLE
     }
 
     /**

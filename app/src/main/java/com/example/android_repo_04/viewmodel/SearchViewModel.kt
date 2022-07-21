@@ -47,6 +47,10 @@ class SearchViewModel(private val repository: GitHubApiRepository): ViewModel() 
         }
     }
 
+    fun debounce(time: Long, callback: () -> Unit) {
+        debounce(time, viewModelScope, callback)
+    }
+
     fun clearItems() {
         _searchItems.postValue(Search(listOf(), 0))
     }
@@ -57,9 +61,5 @@ class SearchViewModel(private val repository: GitHubApiRepository): ViewModel() 
 
     fun setRefreshEvent() {
         _refreshEvent.emit()
-    }
-
-    fun change(time: Long, callback: () -> Unit) {
-        debounce(time, viewModelScope, callback)
     }
 }

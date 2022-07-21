@@ -19,10 +19,6 @@ class SearchAdapter(private val viewModel: ViewModel): ListAdapter<SearchItem, S
         holder.bind(getItem(position), viewModel)
     }
 
-    fun replaceItem(item: List<SearchItem>) {
-        submitList(item)
-    }
-
     companion object {
         val diffUtil = object: DiffUtil.ItemCallback<SearchItem>() {
             override fun areContentsTheSame(oldItem: SearchItem, newItem: SearchItem) =

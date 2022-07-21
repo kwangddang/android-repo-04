@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.android_repo_04.BuildConfig
@@ -12,7 +11,6 @@ import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubLoginRepository
 import com.example.android_repo_04.api.RetrofitFactory
 import com.example.android_repo_04.databinding.ActivityLoginBinding
-import com.example.android_repo_04.utils.Event
 import com.example.android_repo_04.utils.EventObserver
 import com.example.android_repo_04.view.main.MainActivity
 import com.example.android_repo_04.viewmodel.CustomViewModelFactory
@@ -25,24 +23,16 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var viewModel: LoginViewModel
 
     private val tokenObserver: (String) -> Unit = { token ->
-        if (token.length < 5 && token != "") {
-            binding.apply {
-                progressLoginLogin.visibility = View.INVISIBLE
-                btnLoginLogin.visibility = View.VISIBLE
-            }
-        } else if (token != "") {
-            RetrofitFactory.accessToken = token
-            startMainActivity()
+        //TODO Event로 바꾸자
+        if (token.isNotEmpty()) {
+            startMainActivity(token)
+        } else {
+            showButton()
         }
     }
 
     private val clickEventObserver: (Unit) -> Unit = { event ->
-        val loginUri = Uri.parse(BuildConfig.LOGIN_URL).buildUpon()
-            .appendPath(getString(R.string.login_path_auth))
-            .appendQueryParameter(BuildConfig.CLIENT_ID_PARAM, BuildConfig.CLIENT_ID)
-            .appendQueryParameter(BuildConfig.SCOPE_PARAM, getString(R.string.login_query_scope))
-            .build()
-        startActivity(Intent(Intent.ACTION_VIEW, loginUri))
+        login()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,14 +64,31 @@ class LoginActivity : AppCompatActivity() {
     private fun getUserCode() {
         if (intent.data != null) {
             viewModel.requestToken(intent.data?.getQueryParameter(getString(R.string.code))!!)
-            binding.apply {
-                progressLoginLogin.visibility = View.VISIBLE
-                btnLoginLogin.visibility = View.INVISIBLE
-            }
+            showProgress()
         }
     }
 
-    private fun startMainActivity(){
+    private fun login() {
+        val loginUri = Uri.parse(BuildConfig.LOGIN_URL).buildUpon()
+            .appendPath(getString(R.string.login_path_auth))
+            .appendQueryParameter(BuildConfig.CLIENT_ID_PARAM, BuildConfig.CLIENT_ID)
+            .appendQueryParameter(BuildConfig.SCOPE_PARAM, getString(R.string.login_query_scope))
+            .build()
+        startActivity(Intent(Intent.ACTION_VIEW, loginUri))
+    }
+
+    private fun showButton() {
+        binding.progressLoginLogin.visibility = View.INVISIBLE
+        binding.btnLoginLogin.visibility = View.VISIBLE
+    }
+
+    private fun showProgress() {
+        binding.progressLoginLogin.visibility = View.VISIBLE
+        binding.btnLoginLogin.visibility = View.INVISIBLE
+    }
+
+    private fun startMainActivity(token: String){
+        RetrofitFactory.accessToken = token
         finishAffinity()
         startActivity(Intent(this, MainActivity::class.java))
     }

@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.android_repo_04.R
 import com.example.android_repo_04.data.dto.profile.User
 import com.example.android_repo_04.databinding.ActivityProfileBinding
-import com.example.android_repo_04.utils.Event
 import com.example.android_repo_04.utils.EventObserver
 import com.example.android_repo_04.viewmodel.CustomViewModelFactory
 import com.example.android_repo_04.viewmodel.ProfileViewModel
@@ -30,6 +29,7 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
         getUserInfo()
         initViewModel()
+        initViews()
         initBinding()
         observeData()
     }
@@ -43,16 +43,16 @@ class ProfileActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this,
             CustomViewModelFactory(null)
         )[ProfileViewModel::class.java]
+    }
 
+    private fun initViews() {
         viewModel.user.value = user
         viewModel.star.value = starCount
     }
 
     private fun initBinding() {
-        binding.apply {
-            vm = viewModel
-            lifecycleOwner = this@ProfileActivity
-        }
+        binding.vm = viewModel
+        binding.lifecycleOwner = this
     }
 
     private fun observeData() {

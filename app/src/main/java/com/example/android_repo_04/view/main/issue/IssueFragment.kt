@@ -10,7 +10,6 @@ import com.example.android_repo_04.R
 import com.example.android_repo_04.api.GitHubApiRepository
 import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.databinding.FragmentIssueBinding
-import com.example.android_repo_04.utils.Event
 import com.example.android_repo_04.utils.EventObserver
 import com.example.android_repo_04.view.listener.RefreshListener
 import com.example.android_repo_04.view.listener.ScrollListener
@@ -32,15 +31,11 @@ class IssueFragment: Fragment(), RefreshListener {
     }
 
     private val issueObserver: (List<Issue>) -> Unit = { issues ->
-        issueAdapter.replaceItem(issues)
-        binding.refreshIssueIssue.isRefreshing = false
-        binding.progressIssueLoading.visibility = View.INVISIBLE
+        setIssues(issues)
         if (issues.isEmpty()) {
-            binding.refreshIssueIssue.visibility = View.INVISIBLE
-            binding.textIssueEmpty.visibility = View.VISIBLE
+            showEmptyText()
         } else {
-            binding.refreshIssueIssue.visibility = View.VISIBLE
-            binding.textIssueEmpty.visibility = View.INVISIBLE
+            showList()
         }
     }
 
@@ -53,6 +48,7 @@ class IssueFragment: Fragment(), RefreshListener {
     }
 
     private val selectedIssueObserver: (Int) -> Unit = { position ->
+        //TODO Event로 바꾸기
         if (viewModel.prevSelectedIssue != position) {
             showProgress()
             viewModel.prevSelectedIssue = position
@@ -117,6 +113,22 @@ class IssueFragment: Fragment(), RefreshListener {
             1 -> viewModel.requestIssues(getString(R.string.state_closed), page)
             2 -> viewModel.requestIssues(getString(R.string.state_all), page)
         }
+    }
+
+    private fun showList() {
+        binding.refreshIssueIssue.visibility = View.VISIBLE
+        binding.textIssueEmpty.visibility = View.INVISIBLE
+    }
+
+    private fun showEmptyText() {
+        binding.refreshIssueIssue.visibility = View.INVISIBLE
+        binding.textIssueEmpty.visibility = View.VISIBLE
+    }
+
+    private fun setIssues(issues: List<Issue>) {
+        issueAdapter.submitList(issues)
+        binding.refreshIssueIssue.isRefreshing = false
+        binding.progressIssueLoading.visibility = View.INVISIBLE
     }
 
     override fun onDestroyView() {
