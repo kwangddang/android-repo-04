@@ -1,5 +1,6 @@
-package com.example.android_repo_04.api
+package com.example.android_repo_04.repository
 
+import com.example.android_repo_04.api.RetrofitFactory
 import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.data.dto.notification.Notification
 import com.example.android_repo_04.data.dto.profile.User

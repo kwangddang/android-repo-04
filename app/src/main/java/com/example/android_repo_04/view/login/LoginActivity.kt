@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.android_repo_04.BuildConfig
 import com.example.android_repo_04.R
-import com.example.android_repo_04.api.GitHubLoginRepository
+import com.example.android_repo_04.repository.GitHubLoginRepository
 import com.example.android_repo_04.api.RetrofitFactory
 import com.example.android_repo_04.databinding.ActivityLoginBinding
 import com.example.android_repo_04.utils.EventObserver

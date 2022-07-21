@@ -2,8 +2,8 @@ package com.example.android_repo_04.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.android_repo_04.api.GitHubApiRepository
-import com.example.android_repo_04.api.GitHubLoginRepository
+import com.example.android_repo_04.repository.GitHubApiRepository
+import com.example.android_repo_04.repository.GitHubLoginRepository
 
 class CustomViewModelFactory(private val repository: Any?) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.android_repo_04.api.GitHubApiRepository
+import com.example.android_repo_04.repository.GitHubApiRepository
 import com.example.android_repo_04.data.dto.search.Search
 import com.example.android_repo_04.utils.*
 import kotlinx.coroutines.launch

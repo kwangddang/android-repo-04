@@ -1,5 +1,6 @@
-package com.example.android_repo_04.api
+package com.example.android_repo_04.repository
 
+import com.example.android_repo_04.api.RetrofitFactory
 import com.example.android_repo_04.data.dto.token.AuthToken
 import com.example.android_repo_04.utils.DataResponse
 

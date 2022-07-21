@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.android_repo_04.R
-import com.example.android_repo_04.api.GitHubApiRepository
+import com.example.android_repo_04.repository.GitHubApiRepository
 import com.example.android_repo_04.data.dto.issue.Issue
 import com.example.android_repo_04.databinding.FragmentIssueBinding
 import com.example.android_repo_04.utils.EventObserver
